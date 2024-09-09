@@ -1,6 +1,6 @@
 function tmux_load_session() {
   source $1
-  if [ $SESSION_NAME -ne "helloworld" ]; then
+  if [ ! $SESSION_NAME = "helloworld" ]; then
     tmux has-session -t $SESSION_NAME >/dev/null 2>&1
     if [ $? -ne 0 ]; then
       tmux new-session -s $SESSION_NAME -c $SESSION_PATH -d
