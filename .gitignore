@@ -26,4 +26,5 @@
 !.scripts/modules
 .scripts/modules/**
 !.scripts/modules/tmux_autoload.sh
+!.scripts/modules/fzf.sh
 
