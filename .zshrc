@@ -29,6 +29,9 @@ antigen bundle zsh-users/zsh-autosuggestions
 antigen bundle zsh-users/zsh-completions
 fpath+=${ZSH_CUSTOM:-${ZSH:-~/.oh-my-zsh}/custom}/plugins/zsh-completions/src
 
+# Zsh history fzf
+antigen bundle joshskidmore/zsh-fzf-history-search
+
 # Set powerlevel10k theme
 antigen theme romkatv/powerlevel10k
 
@@ -37,9 +40,6 @@ antigen apply
 
 # Set vi-mode
 bindkey -v
-
-# Fix reverse search in vi-mode
-bindkey "^R" history-incremental-search-backward
 
 # Aliases
 alias ll="ls -la"
