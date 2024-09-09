@@ -27,4 +27,5 @@
 .scripts/modules/**
 !.scripts/modules/tmux_autoload.sh
 !.scripts/modules/fzf.sh
+!.scripts/modules/weather.sh
 
