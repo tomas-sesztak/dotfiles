@@ -1,5 +1,3 @@
-#!/bin/bash
-
 # Scripts Edit
 function se() {
   local findPath="${1:-.}"
