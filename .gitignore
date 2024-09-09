@@ -10,4 +10,20 @@
 
 # Tmux
 !.tmux.conf
+!.config
+.config/*
+!.config/tmux
+.config/tmux/*
+!.config/tmux/tmux-sessions
+.config/tmux/tmux-sessions/*
+!.config/tmux/tmux-sessions/00_example.conf
+
+# Scripts
+!.scripts
+.scripts/**
+!.scripts/SOURCE_ME.sh
+
+!.scripts/modules
+.scripts/modules/**
+!.scripts/modules/tmux_autoload.sh
 

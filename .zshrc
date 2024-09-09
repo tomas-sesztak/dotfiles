@@ -44,3 +44,6 @@ bindkey -v
 # Aliases
 alias ll="ls -la"
 
+# Source scripts
+source ~/.scripts/SOURCE_ME.sh
+
