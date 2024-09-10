@@ -20,13 +20,4 @@
 
 # Scripts
 !.scripts
-.scripts/**
-!.scripts/SOURCE_ME.sh
-
-!.scripts/modules
-.scripts/modules/**
-!.scripts/modules/brew.sh
-!.scripts/modules/fzf.sh
-!.scripts/modules/tmux_autoload.sh
-!.scripts/modules/weather.sh
 
