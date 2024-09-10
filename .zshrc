@@ -47,3 +47,8 @@ alias ll="ls -la"
 # Source scripts
 source ~/.scripts/SOURCE_ME.sh
 
+# Zsh completion
+export fpath=( ~/.config/zsh/completion ${fpath[@]} )
+autoload -U compinit
+compinit -I
+
