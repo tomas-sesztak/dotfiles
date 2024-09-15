@@ -7,6 +7,8 @@ return {
     conform.setup({
       formatters_by_ft = {
         bash = { "beautysh" },
+        sh = { "beautysh" },
+        zsh = { "beautysh" },
         lua = { "stylua" },
         yaml = { "prettier" },
       },
