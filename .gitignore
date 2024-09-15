@@ -18,10 +18,7 @@
 .config/tmux/tmux-sessions/*
 !.config/tmux/tmux-sessions/00_example.conf
 
-# Zsh functions
-!.config/zsh
-
-# Zsh autocomplete
+# Zsh configuration
 !.config/zsh**
 
 # Neovim configuration
