@@ -1,0 +1,4 @@
+brew bundle dump
+cat Brewfile
+rm -f Brewfile
+echo "Done"

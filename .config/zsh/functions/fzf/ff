@@ -1,0 +1,4 @@
+local findPath="${1:-.}"
+local file
+file="$(find "${findPath}" -type f 2>/dev/null |grep -v -e '\.git' |fzf -i --border=rounded --preview 'less {}')"
+[ -n "$file" ] && nvim "$file"
