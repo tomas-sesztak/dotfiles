@@ -24,3 +24,6 @@
 # Zsh autocomplete
 !.config/zsh**
 
+# Neovim configuration
+!.config/nvim**
+
