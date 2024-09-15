@@ -1,0 +1,3 @@
+local findPath="${1:-.}"
+local path="$(find "${findPath}" -type d 2>/dev/null |grep -v -e '\.git' |fzf -i --border=rounded)"
+[ -n "$path" ] && cd "$path" || exit 0

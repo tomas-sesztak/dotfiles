@@ -27,7 +27,6 @@ antigen bundle zsh-users/zsh-autosuggestions
 
 # Zsh completions
 export fpath=( ~/.config/zsh/completion ${fpath[@]} )
-export fpath=(${ZSH_CUSTOM:-${ZSH:-~/.oh-my-zsh}/custom}/plugins/zsh-completions/src ${fpath[@]})
 antigen bundle zsh-users/zsh-completions
 
 # Zsh history fzf
@@ -45,7 +44,8 @@ bindkey -v
 # Aliases
 alias ll="ls -la"
 
-# Source scripts
-source ~/.scripts/SOURCE_ME.sh
+# Load custom functions
+export fpath=( ~/.config/zsh/functions/* ${fpath[@]} )
+autoload ~/.config/zsh/functions/*/*(:t)
 
-
+tmux_autoload

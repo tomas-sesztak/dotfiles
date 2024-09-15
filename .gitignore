@@ -18,9 +18,8 @@
 .config/tmux/tmux-sessions/*
 !.config/tmux/tmux-sessions/00_example.conf
 
-# Scripts
-!.scripts
-!.scripts/**
+# Zsh functions
+!.config/zsh
 
 # Zsh autocomplete
 !.config/zsh**
