@@ -20,6 +20,7 @@
 
 # Scripts
 !.scripts
+!.scripts/**
 
 # Zsh autocomplete
 !.config/zsh**
