@@ -26,8 +26,9 @@ antigen bundle zsh-users/zsh-syntax-highlighting
 antigen bundle zsh-users/zsh-autosuggestions
 
 # Zsh completions
+export fpath=( ~/.config/zsh/completion ${fpath[@]} )
+export fpath=(${ZSH_CUSTOM:-${ZSH:-~/.oh-my-zsh}/custom}/plugins/zsh-completions/src ${fpath[@]})
 antigen bundle zsh-users/zsh-completions
-fpath+=${ZSH_CUSTOM:-${ZSH:-~/.oh-my-zsh}/custom}/plugins/zsh-completions/src
 
 # Zsh history fzf
 antigen bundle joshskidmore/zsh-fzf-history-search
@@ -47,8 +48,4 @@ alias ll="ls -la"
 # Source scripts
 source ~/.scripts/SOURCE_ME.sh
 
-# Zsh completion
-export fpath=( ~/.config/zsh/completion ${fpath[@]} )
-autoload -U compinit
-compinit -I
 
