@@ -1,26 +1,10 @@
-*
-!.gitignore
-!README.md
+### Zsh ###
+# Zsh compiled script + zrecompile backup
+*.zwc
+*.zwc.old
+**/*.zwc
+**/*.zwc.old
 
-# ZSH
-!.zshrc
-
-# Powerlevel10k
-!.p10k.zsh
-
-# Tmux
-!.tmux.conf
-!.config
-.config/*
-!.config/tmux
-.config/tmux/*
-!.config/tmux/tmux-sessions
-.config/tmux/tmux-sessions/*
-!.config/tmux/tmux-sessions/00_example.conf
-
-# Zsh configuration
-!.config/zsh**
-
-# Neovim configuration
-!.config/nvim**
-
+# Mac
+.DS_Store
+**/.DS_Store
