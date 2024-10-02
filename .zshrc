@@ -49,3 +49,5 @@ export fpath=( ~/.config/zsh/functions/* ${fpath[@]} )
 autoload ~/.config/zsh/functions/*/*(:t)
 
 tmux_autoload
+
+export EDITOR="nvim"
