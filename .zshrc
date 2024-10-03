@@ -43,6 +43,7 @@ bindkey -v
 
 # Aliases
 alias ll="ls -la"
+alias vim="nvim"
 
 # Load custom functions
 export fpath=( ~/.config/zsh/functions/* ${fpath[@]} )
