@@ -29,7 +29,7 @@ opt.signcolumn = "yes" -- show sign column so that text doesn't shift
 opt.backspace = "indent,eol,start" -- allow backspace on indent, EOL or insert mode start position
 
 -- clipboard
-opt.clipboard:append("unnamedplus") -- use system clipboard as default register, enable copy&paste between neovim and system
+--opt.clipboard:append("unnamedplus") -- use system clipboard as default register, enable copy&paste between neovim and system
 
 -- split windows
 opt.splitright = true -- split vertical window to the right
