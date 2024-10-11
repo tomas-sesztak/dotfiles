@@ -34,3 +34,7 @@ opt.backspace = "indent,eol,start" -- allow backspace on indent, EOL or insert m
 -- split windows
 opt.splitright = true -- split vertical window to the right
 opt.splitbelow = true -- split horizontal window to the bottom
+
+-- whitespace highlighting
+opt.list = true
+opt.listchars = { trail = "~", tab = ">~" }
