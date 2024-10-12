@@ -1,0 +1,2 @@
+find ~ -type l -maxdepth 1 ! -exec test -e {} \; -print |xargs -I % unlink %
+find ~/.config -type l ! -exec test -e {} \; -print |xargs -I % unlink %
