@@ -23,7 +23,7 @@ return {
         "lua_ls",
         "pylsp",
         "yamlls",
-        "markdown-oxide",
+        "markdown_oxide",
       },
     })
 
