@@ -27,7 +27,9 @@ return {
           "--line-number",
           "--column",
           "--smart-case",
-          "--hidden"
+          "--hidden",
+          "-g",
+          "!**/.git/"
         }
       },
     })
