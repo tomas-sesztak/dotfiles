@@ -1,5 +1,9 @@
 # Setup
 
+## GNU-Stow
+Symlink all configuration to homedir from this git repo
+> stow --adopt .
+
 ## Zsh
 Relaunch zsh to use new ~/.zshrc
 
