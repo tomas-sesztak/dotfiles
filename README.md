@@ -1,6 +1,8 @@
 # Setup
 
 ## GNU-Stow
+Install GNU-stow
+> brew install stow
 Symlink all configuration to homedir from this git repo
 > stow --adopt .
 
