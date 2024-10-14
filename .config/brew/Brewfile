@@ -1,36 +1,51 @@
-tap "hashicorp/tap"
+# homebrew
 tap "homebrew/bundle"
-brew "antigen"
-brew "coreutils"
-brew "fd"
+
+# neovim and dependencies
+brew "neovim"
+
 brew "fzf"
-brew "gh"
-brew "git"
+brew "fd"
+brew "prettier"
+brew "ripgrep"
+brew "stylua"
+
+# tmux and dependencies
+brew "tmux"
+
+# zsh and dependencies
+brew "antigen"
+
+# core utilities
+brew "coreutils"
 brew "gnu-sed"
 brew "ipcalc"
 brew "jq"
+brew "nmap"
+brew "openssh"
+brew "rclone"
+brew "shellcheck"
+brew "stow"
+brew "telnet"
+brew "tree"
+brew "watch"
+
+# git
+brew "gh"
+brew "git"
+brew "lazygit"
+
+# iterm2 and dependencies
+cask "iterm2"
+
+cask "font-meslo-lg-nerd-font"
+
+# kubernetes
 brew "k9s"
 brew "kubectx"
 brew "kubeseal"
-brew "lazygit"
-brew "libfido2"
-brew "neovim"
-brew "nmap"
-brew "node"
-brew "openssh"
-brew "prettier"
-brew "rclone"
-brew "ripgrep"
-brew "shellcheck"
-brew "stow"
-brew "stylua"
-brew "telnet"
-brew "tmux"
-brew "tree"
-brew "watch"
-brew "hashicorp/tap/terraform"
-cask "font-meslo-lg-nerd-font"
-cask "iterm2"
+
+# misc
 cask "keepassxc"
 cask "keystore-explorer"
 cask "signal"
