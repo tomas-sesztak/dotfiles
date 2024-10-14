@@ -13,6 +13,7 @@ brew "stylua"
 # tmux and dependencies
 brew "tmux"
 
+# zsh and dependencies
 brew "antigen"
 
 # core utilities
