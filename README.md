@@ -10,14 +10,14 @@ Relaunch zsh to use new ~/.zshrc
 Install tpm
 > git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 Then install plugins from within tmux
-> \<prefix\>+I
+> \<prefix\> + I
 
 ## Neovim
 
 ### Neovim plugins
 Open Lazy and let it update
-> <Prefix> + L
+> \<Prefix\> + L
 
 ### Mason plugins
 Open Mason and let it update
-> <Prefix> + M
+> \<Prefix\> + M
