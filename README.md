@@ -3,6 +3,7 @@
 ## GNU-Stow
 Install GNU-stow
 > brew install stow
+
 Symlink all configuration to homedir from this git repo
 > stow --adopt .
 
@@ -15,6 +16,7 @@ Relaunch zsh to use new ~/.zshrc
 ## Tmux
 Install tpm
 > git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+
 Then install plugins from within tmux
 > \<prefix\> + I
 
