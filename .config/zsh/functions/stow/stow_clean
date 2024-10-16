@@ -1,2 +1,14 @@
-find ~ -type l -maxdepth 1 ! -exec test -e {} \; -print |xargs -I % unlink %
-find ~/.config -type l ! -exec test -e {} \; -print |xargs -I % unlink %
+# local function
+function() {
+  local SEARCH_PATHS=( ${HOME} ${HOME}/.config )
+  local search_path=""
+  local FOUND_PATHS=()
+  local found_path=""
+  for search_path in ${SEARCH_PATHS[@]}; do
+    FOUND_PATHS+=($(find $search_path -type l -maxdepth 1 ! -exec test -e {} \; -print))
+  done
+  for found_path in ${FOUND_PATHS[@]}; do
+    echo "Unlinking unused link $found_path"
+    unlink $found_path
+  done
+}
