@@ -22,5 +22,16 @@ keymap.set("n", "<leader>tn", "<cmd>tabn<CR>", { desc = "Go to next tab" }) -- g
 keymap.set("n", "<leader>tp", "<cmd>tabp<CR>", { desc = "Go to previous tab" }) -- go to previous tab
 keymap.set("n", "<leader>tf", "<cmd>tabnew %<CR>", { desc = "Open current buffer in new tab" }) -- open current buffer in new tab
 
+-- moving metween tabs
+keymap.set("n", "<leader>t1", "1gt", { desc = "Switch to tab #1" })
+keymap.set("n", "<leader>t2", "2gt", { desc = "Switch to tab #2" })
+keymap.set("n", "<leader>t3", "3gt", { desc = "Switch to tab #3" })
+keymap.set("n", "<leader>t4", "4gt", { desc = "Switch to tab #4" })
+keymap.set("n", "<leader>t5", "5gt", { desc = "Switch to tab #5" })
+keymap.set("n", "<leader>t6", "6gt", { desc = "Switch to tab #6" })
+keymap.set("n", "<leader>t7", "7gt", { desc = "Switch to tab #7" })
+keymap.set("n", "<leader>t8", "8gt", { desc = "Switch to tab #8" })
+keymap.set("n", "<leader>t9", "9gt", { desc = "Switch to tab #9" })
+
 -- open terminal in new tab
 keymap.set("n", "<leader>tt", "<cmd>tabnew<CR>:terminal<CR>", { desc = "Open terminal in new tab" })
