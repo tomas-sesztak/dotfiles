@@ -29,8 +29,8 @@ return {
           "--smart-case",
           "--hidden",
           "-g",
-          "!**/.git/"
-        }
+          "!**/.git/",
+        },
       },
     })
 
