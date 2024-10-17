@@ -51,5 +51,9 @@ autoload ~/.config/zsh/functions/*/*(:t)
 
 export EDITOR="nvim"
 
+# custom keybindings
+zle -N open_nvim
+bindkey "^n" open_nvim
+
 # has to be last line
 tmux_autoload
