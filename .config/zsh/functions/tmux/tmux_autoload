@@ -1,4 +1,5 @@
-# local function() {
+# local function
+function() {
   local file
   for file in ~/.config/tmux/tmux-sessions/*
   do
