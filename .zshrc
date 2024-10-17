@@ -55,5 +55,8 @@ export EDITOR="nvim"
 zle -N open_nvim
 bindkey "^n" open_nvim
 
+zle -N tmux_autoload
+bindkey "^l" tmux_autoload
+
 # has to be last line
 tmux_autoload
