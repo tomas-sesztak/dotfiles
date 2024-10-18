@@ -43,8 +43,5 @@ antigen apply
 export fpath=( ~/.config/zsh/plugins/**/functions ${fpath[@]} )
 autoload ~/.config/zsh/plugins/**/functions/*(:t)
 
-zle -N tmux_autoload
-bindkey "^l" tmux_autoload
-
 # has to be last line
 tmux_autoload
