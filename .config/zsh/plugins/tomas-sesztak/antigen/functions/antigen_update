@@ -1,0 +1,4 @@
+local ANTIGEN_LOCATION="${HOME}/.config/zsh/plugins/zsh-users/antigen"
+curl -L git.io/antigen > "${ANTIGEN_LOCATION}/antigen.zsh"
+source "${ANTIGEN_LOCATION}/antigen.zsh"
+antigen update
