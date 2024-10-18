@@ -4,6 +4,12 @@ export PATH="/opt/homebrew/bin:${HOME}/.bin:${PATH}"
 # Fix modern sed version
 export PATH="/opt/homebrew/opt/gnu-sed/libexec/gnubin:$PATH"
 
+# Completions managed by plugins/completion
+export COMPLETIONS_MANAGED=(
+  "gh completion -s zsh"
+  "oc completion zsh"
+)
+
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
@@ -27,7 +33,6 @@ antigen bundle zsh-users/zsh-syntax-highlighting
 antigen bundle zsh-users/zsh-autosuggestions
 
 # Zsh completions
-export fpath=( ~/.config/zsh/completion ${fpath[@]} )
 antigen bundle zsh-users/zsh-completions
 
 # Zsh history fzf
