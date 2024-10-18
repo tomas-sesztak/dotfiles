@@ -1,0 +1,3 @@
+if [ ! -d "${TMUX_TPM_DIRECTORY}" ]; then
+  git clone https://github.com/tmux-plugins/tpm "${TMUX_TPM_DIRECTORY}"
+fi
