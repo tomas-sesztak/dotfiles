@@ -7,17 +7,18 @@ export PATH="/opt/homebrew/opt/gnu-sed/libexec/gnubin:$PATH"
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-# Antigen plugin manager
+# Install antigen if not present
+function() {
+  ANTIGEN_LOCATION="${HOME}/.config/zsh/plugins/zsh-users/antigen"
+  if [ ! -f "${ANTIGEN_LOCATION}/antigen.zsh" ]; then
+    echo "Installing antigen"
+    mkdir -p "${ANTIGEN_LOCATION}"
+    curl -L git.io/antigen > "${ANTIGEN_LOCATION}/antigen.zsh"
+  fi
+}
 
-source /opt/homebrew/share/antigen/antigen.zsh
-
-# Oh-My-Zsh addon
-antigen use oh-my-zsh
-
-antigen bundle git
-antigen bundle pip
-antigen bundle web-search
-antigen bundle vi-mode
+# Load manually managed plugins
+for f (${HOME}/.config/zsh/plugins/**/*.zsh) source "$f"
 
 # Syntax highlighting bundle.
 antigen bundle zsh-users/zsh-syntax-highlighting
@@ -38,22 +39,9 @@ antigen theme romkatv/powerlevel10k
 # Apply all settings
 antigen apply
 
-# Set vi-mode
-bindkey -v
-
-# Aliases
-alias ll="ls -la"
-alias vim="nvim"
-
 # Load custom functions
-export fpath=( ~/.config/zsh/functions/* ${fpath[@]} )
-autoload ~/.config/zsh/functions/*/*(:t)
-
-export EDITOR="nvim"
-
-# custom keybindings
-zle -N open_nvim
-bindkey "^n" open_nvim
+export fpath=( ~/.config/zsh/plugins/**/functions ${fpath[@]} )
+autoload ~/.config/zsh/plugins/**/functions/*(:t)
 
 zle -N tmux_autoload
 bindkey "^l" tmux_autoload
