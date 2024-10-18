@@ -12,4 +12,7 @@ function() {
     echo "Unlinking unused link $found_path"
     unlink $found_path
   done
+  cd "${HOME}/.dotfiles" >/dev/null
+  stow --adopt .
+  cd - >/dev/null
 }
