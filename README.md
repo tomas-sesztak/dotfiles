@@ -15,7 +15,7 @@ Relaunch zsh to use new ~/.zshrc
 
 ## Tmux
 Install tpm
-> git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+> tmux_initialize_tpm
 
 Then install plugins from within tmux
 > \<prefix\> + I
