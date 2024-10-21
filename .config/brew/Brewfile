@@ -45,5 +45,4 @@ brew "kubeseal"
 # misc
 cask "keepassxc"
 cask "keystore-explorer"
-cask "signal"
 cask "wireshark"
