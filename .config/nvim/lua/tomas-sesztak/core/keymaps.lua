@@ -32,6 +32,3 @@ keymap.set("n", "<leader>t6", "6gt", { desc = "Switch to tab #6" })
 keymap.set("n", "<leader>t7", "7gt", { desc = "Switch to tab #7" })
 keymap.set("n", "<leader>t8", "8gt", { desc = "Switch to tab #8" })
 keymap.set("n", "<leader>t9", "9gt", { desc = "Switch to tab #9" })
-
--- open terminal in new tab
-keymap.set("n", "<leader>tt", "<cmd>tabnew<CR>:terminal<CR>", { desc = "Open terminal in new tab" })
