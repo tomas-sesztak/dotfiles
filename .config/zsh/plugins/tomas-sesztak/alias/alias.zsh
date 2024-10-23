@@ -1,3 +1,3 @@
-alias ll="ls -la"
+alias ll="ls -la --color"
 alias vim="nvim"
 
