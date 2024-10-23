@@ -10,12 +10,6 @@ export PATH="/opt/homebrew/opt/coreutils/libexec/gnubin:$PATH"
 # Tmux directory for TPM
 export TMUX_TPM_DIRECTORY="${HOME}/.config/tmux/plugins/tpm"
 
-# Completions managed by plugins/completion
-export COMPLETIONS_MANAGED=(
-  "gh completion -s zsh"
-  "oc completion zsh"
-)
-
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 

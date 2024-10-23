@@ -1,3 +1,9 @@
+# list of managed completions
+export COMPLETIONS_MANAGED=(
+  "gh completion -s zsh"
+  "oc completion zsh"
+)
+
 # where custom completion lives
 export COMPLETIONS_DIR="${HOME}/.config/zsh/completion"
 
