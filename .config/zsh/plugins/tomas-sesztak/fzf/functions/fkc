@@ -1,0 +1,3 @@
+# fuzzy kubeconfig switcher
+
+export KUBECONFIG="$(find ~/.kube/clusters -type f |fzf)"
