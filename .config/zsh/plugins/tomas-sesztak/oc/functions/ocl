@@ -1,0 +1,2 @@
+# oc login through web
+oc login --web
