@@ -1,2 +1,2 @@
 # oc login through web
-oc login --web
+oc login --web $@
