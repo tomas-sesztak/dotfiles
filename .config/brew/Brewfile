@@ -24,6 +24,7 @@ brew "rclone"
 brew "shellcheck"
 brew "stow"
 brew "telnet"
+brew "tldr"
 brew "tree"
 brew "watch"
 
