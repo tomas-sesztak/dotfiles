@@ -1,9 +1,9 @@
 for c ( ${COMPLETIONS_MANAGED[@]} ) {
-  bin="${c%% *}"
-  if ! command -v -- "$bin" >/dev/null 2>&1; then
-    echo "${bin} not found"
-    continue
-  fi
-  echo "Generating completion for ${bin}"
-  zsh -c "$c" > "${HOME}/.config/zsh/completion/_${bin}"
+	bin="${c%% *}"
+	if ! command -v -- "$bin" >/dev/null 2>&1; then
+		echo "${bin} not found"
+		continue
+	fi
+	echo "Generating completion for ${bin}"
+	zsh -c "$c" > "${HOME}/.config/zsh/completion/_${bin}"
 }

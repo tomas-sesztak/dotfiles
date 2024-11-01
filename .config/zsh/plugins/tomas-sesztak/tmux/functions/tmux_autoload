@@ -1,18 +1,18 @@
 # local function
 function() {
-  local file
-  for file in ~/.config/tmux/tmux-sessions/*
-  do
-    source "$file"
-    if [ ! "$SESSION_NAME" = "helloworld" ]; then
-      if ! tmux has-session -t "$SESSION_NAME" >/dev/null 2>&1; then
-        tmux new-session -s "$SESSION_NAME" -c "$SESSION_PATH" -n "${SESSION_WINDOW_NAME:-${SESSION_NAME}}" -d
-        tmux send -t "$SESSION_NAME" "$SESSION_COMMAND" Enter
-      fi
-    fi
-    unset SESSION_NAME
-    unset SESSION_PATH
-    unset SESSION_WINDOW_NAME
-    unset SESSION_COMMAND
-  done
+	local file
+	for file in ~/.config/tmux/tmux-sessions/*
+	do
+		source "$file"
+		if [ ! "$SESSION_NAME" = "helloworld" ]; then
+			if ! tmux has-session -t "$SESSION_NAME" >/dev/null 2>&1; then
+				tmux new-session -s "$SESSION_NAME" -c "$SESSION_PATH" -n "${SESSION_WINDOW_NAME:-${SESSION_NAME}}" -d
+				tmux send -t "$SESSION_NAME" "$SESSION_COMMAND" Enter
+			fi
+		fi
+		unset SESSION_NAME
+		unset SESSION_PATH
+		unset SESSION_WINDOW_NAME
+		unset SESSION_COMMAND
+	done
 }

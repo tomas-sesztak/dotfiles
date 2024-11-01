@@ -15,12 +15,12 @@ export TMUX_TPM_DIRECTORY="${HOME}/.config/tmux/plugins/tpm"
 
 # Install antigen if not present
 function() {
-  ANTIGEN_LOCATION="${HOME}/.config/zsh/plugins/zsh-users/antigen"
-  if [ ! -f "${ANTIGEN_LOCATION}/antigen.zsh" ]; then
-    echo "Installing antigen"
-    mkdir -p "${ANTIGEN_LOCATION}"
-    curl -L git.io/antigen > "${ANTIGEN_LOCATION}/antigen.zsh"
-  fi
+	ANTIGEN_LOCATION="${HOME}/.config/zsh/plugins/zsh-users/antigen"
+	if [ ! -f "${ANTIGEN_LOCATION}/antigen.zsh" ]; then
+		echo "Installing antigen"
+		mkdir -p "${ANTIGEN_LOCATION}"
+		curl -L git.io/antigen > "${ANTIGEN_LOCATION}/antigen.zsh"
+	fi
 }
 
 # Load manually managed plugins
