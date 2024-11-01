@@ -8,7 +8,7 @@ opt.number = true
 -- tabs & indentation
 opt.tabstop = 2 -- 2 spaces for tabs
 opt.shiftwidth = 2 -- 2 spaces for indent width
-opt.expandtab = true -- expand tab to spaces
+opt.expandtab = false -- expand tab to spaces
 opt.autoindent = true -- copy indent from current line when starting new one
 
 opt.wrap = true
@@ -38,3 +38,12 @@ opt.splitbelow = true -- split horizontal window to the bottom
 -- whitespace highlighting
 opt.list = true
 opt.listchars = { trail = "~", tab = ">~" }
+
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "markdown",
+  callback = function()
+    vim.opt_local.tabstop = 2      -- Number of spaces that a <Tab> counts for
+    vim.opt_local.shiftwidth = 2   -- Number of spaces for each step of (auto)indent
+    vim.opt_local.expandtab = false -- Use actual tab characters instead of spaces
+  end,
+})
