@@ -24,6 +24,7 @@ return {
         "pylsp",
         "yamlls",
         "markdown_oxide",
+        "gopls",
       },
     })
 
