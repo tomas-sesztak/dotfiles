@@ -2,20 +2,28 @@
 
 ## GNU-Stow
 Install GNU-stow
-> brew install stow
+```bash
+brew install stow
+```
 
 Symlink all configuration to homedir from this git repo
-> stow --adopt .
+```bash
+stow --adopt .
+```
 
 ## Zsh
 Relaunch zsh to use new ~/.zshrc
 
 ## Brew dependencies
-> brew_update
+```bash
+brew_update
+```
 
 ## Tmux
 Install tpm
-> tmux_initialize_tpm
+```bash
+tmux_initialize_tpm
+```
 
 Then install plugins from within tmux
 > \<prefix\> + I
