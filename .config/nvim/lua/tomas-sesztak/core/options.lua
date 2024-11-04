@@ -40,31 +40,10 @@ opt.list = true
 opt.listchars = { trail = "~", tab = ">~" }
 
 -- settings for MarkDown
-vim.api.nvim_create_autocmd("FileType", {
-	pattern = "markdown",
-	callback = function()
-		vim.opt_local.tabstop = 2      -- Number of spaces that a <Tab> counts for
-		vim.opt_local.shiftwidth = 2   -- Number of spaces for each step of (auto)indent
-		vim.opt_local.expandtab = false -- Use actual tab characters instead of spaces
-	end,
-})
+require("tomas-sesztak.core.options.markdown")
 
 -- settings for GO
-vim.api.nvim_create_autocmd("FileType", {
-	pattern = "go",
-	callback = function()
-		vim.opt_local.tabstop = 2      -- Number of spaces that a <Tab> counts for
-		vim.opt_local.shiftwidth = 2   -- Number of spaces for each step of (auto)indent
-		vim.opt_local.expandtab = false -- Use actual tab characters instead of spaces
-	end,
-})
+require("tomas-sesztak.core.options.go")
 
 -- settings for .dotfiles
-vim.api.nvim_create_autocmd("BufEnter", {
-	pattern = os.getenv("HOME") .. "/.dotfiles/*",
-	callback = function()
-		vim.opt_local.tabstop = 2      -- Number of spaces that a <Tab> counts for
-		vim.opt_local.shiftwidth = 2   -- Number of spaces for each step of (auto)indent
-		vim.opt_local.expandtab = false -- Use actual tab characters instead of spaces
-	end,
-})
+require("tomas-sesztak.core.options.dotfiles")
