@@ -4,6 +4,7 @@ vim.api.nvim_create_autocmd("FileType", {
 		vim.opt_local.tabstop = 2      -- Number of spaces that a <Tab> counts for
 		vim.opt_local.shiftwidth = 2   -- Number of spaces for each step of (auto)indent
 		vim.opt_local.expandtab = false -- Use actual tab characters instead of spaces
+		vim.keymap.set("n", "<leader>fh", "<cmd>/^#<CR>", { desc = "Find header", silent = true, buffer = true, noremap = true })
 	end,
 })
 
