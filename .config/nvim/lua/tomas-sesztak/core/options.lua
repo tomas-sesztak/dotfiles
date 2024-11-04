@@ -8,7 +8,7 @@ opt.number = true
 -- tabs & indentation
 opt.tabstop = 2 -- 2 spaces for tabs
 opt.shiftwidth = 2 -- 2 spaces for indent width
-opt.expandtab = false -- expand tab to spaces
+opt.expandtab = true -- expand tab to spaces
 opt.autoindent = true -- copy indent from current line when starting new one
 
 opt.wrap = true
@@ -39,8 +39,29 @@ opt.splitbelow = true -- split horizontal window to the bottom
 opt.list = true
 opt.listchars = { trail = "~", tab = ">~" }
 
+-- settings for MarkDown
 vim.api.nvim_create_autocmd("FileType", {
 	pattern = "markdown",
+	callback = function()
+		vim.opt_local.tabstop = 2      -- Number of spaces that a <Tab> counts for
+		vim.opt_local.shiftwidth = 2   -- Number of spaces for each step of (auto)indent
+		vim.opt_local.expandtab = false -- Use actual tab characters instead of spaces
+	end,
+})
+
+-- settings for GO
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = "go",
+	callback = function()
+		vim.opt_local.tabstop = 2      -- Number of spaces that a <Tab> counts for
+		vim.opt_local.shiftwidth = 2   -- Number of spaces for each step of (auto)indent
+		vim.opt_local.expandtab = false -- Use actual tab characters instead of spaces
+	end,
+})
+
+-- settings for .dotfiles
+vim.api.nvim_create_autocmd("BufEnter", {
+	pattern = os.getenv("HOME") .. "/.dotfiles/*",
 	callback = function()
 		vim.opt_local.tabstop = 2      -- Number of spaces that a <Tab> counts for
 		vim.opt_local.shiftwidth = 2   -- Number of spaces for each step of (auto)indent
