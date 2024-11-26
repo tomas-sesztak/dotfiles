@@ -42,6 +42,8 @@ cask "font-meslo-lg-nerd-font"
 brew "k9s"
 brew "kubectx"
 brew "kubeseal"
+brew "podman"
+cask "podman-desktop"
 
 # misc
 cask "keepassxc"
