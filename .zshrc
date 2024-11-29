@@ -1,18 +1,3 @@
-# Add homebrew to PATH
-export PATH="/opt/homebrew/bin:${HOME}/.bin:${PATH}"
-
-# Fix modern sed version
-export PATH="/opt/homebrew/opt/gnu-sed/libexec/gnubin:$PATH"
-
-# Add coreutils to PATH
-export PATH="/opt/homebrew/opt/coreutils/libexec/gnubin:$PATH"
-
-# Tmux directory for TPM
-export TMUX_TPM_DIRECTORY="${HOME}/.config/tmux/plugins/tpm"
-
-# Smartcase
-setopt NO_CASE_GLOB
-
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
