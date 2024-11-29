@@ -32,9 +32,5 @@ antigen theme romkatv/powerlevel10k
 # Apply all settings
 antigen apply
 
-# Load custom functions
-export fpath=( ~/.config/zsh/plugins/**/functions ${fpath[@]} )
-autoload ~/.config/zsh/plugins/**/functions/*(:t)
-
 # has to be last line
 tmux_autoload
