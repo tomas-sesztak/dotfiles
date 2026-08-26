@@ -10,3 +10,7 @@
 - CLAUDE.md / AGENTS.md: Goal and Rules are managed by user, other sections by agents
 - test every change, note tools used
 
+## Current State
+- Repo is scaffolding only: `CLAUDE.md`, `AGENTS.md` (symlink to `CLAUDE.md`), `LICENSE`
+- `setup.sh` referenced in Goal does not exist yet — no dotfiles or Stow packages have been added
+- No build/lint/test tooling exists; nothing to run yet
