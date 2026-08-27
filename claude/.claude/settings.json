@@ -1,0 +1,8 @@
+{
+  "theme": "dark",
+  "remoteControlAtStartup": true,
+  "agentPushNotifEnabled": true,
+  "permissions": {
+    "defaultMode": "auto"
+  }
+}
