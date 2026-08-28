@@ -24,14 +24,20 @@ new one.
 |---|---|---|
 | `claude/` | `~/.claude` | Only `CLAUDE.md` and `settings.json` are tracked; the rest of `~/.claude` is runtime/secret state, excluded via `.gitignore` allowlisting. |
 | `nvim/` | `~/.config/nvim` | Fully tracked — no runtime state lives under this directory. |
+| `tmux/` | `~/.tmux.conf` | Fully tracked — no runtime state lives under this directory. |
 
 ## Hotkeys
 
-Neovim's leader key is `<Space>`. Claude Code has no custom keybindings configured
-in this repo, so it isn't listed below.
+Neovim's leader key is `<Space>`. tmux's prefix is `C-a` (remapped from the default
+`C-b`). Claude Code has no custom keybindings configured in this repo, so it isn't
+listed below.
 
 | Action | Hotkey | Tool |
 |---|---|---|
+| Reload config | `<prefix> r` | tmux |
+| Split pane vertically | `<prefix> s` then `h` | tmux |
+| Split pane horizontally | `<prefix> s` then `v` | tmux |
+| Fuzzy window switcher | `<prefix> w` | tmux |
 | Exit insert mode | `jk` | nvim |
 | Exit visual mode | `jk` | nvim |
 | Clear search highlights | `<leader>,` | nvim |

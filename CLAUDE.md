@@ -16,4 +16,5 @@
 	- `claude/` → `~/.claude` (whole dir stowed). Holds real runtime/secret state alongside tracked config; `.gitignore` allowlists via `claude/.claude/**` then `!`-negates tracked files (currently `CLAUDE.md`, `settings.json`). New trackable files need their own `!` line.
 	- `nvim/` → `~/.config/nvim` (whole dir stowed, fully tracked — no runtime state here, no allowlisting needed).
 	- `bash/` — stows `.bashrc` only (no shared subdir to stow as a whole). `.bash_profile`/`.bash_logout` remain unmanaged; `.bash_history` excluded (runtime state).
+	- `tmux/` — stows `.tmux.conf` only (no shared subdir to stow as a whole). Fully tracked, no runtime state.
 - No build/lint/test tooling; verify via `./setup.sh deploy` + `ls -la` on the resulting symlinks.
