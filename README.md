@@ -54,20 +54,20 @@ across the two editors and tmux.
 |---|---|---|---|
 | Split vertically | `<leader>sv` | `<leader>sv` | `<prefix> s` then `h` |
 | Split horizontally | `<leader>sh` | `<leader>sh` | `<prefix> s` then `v` |
-| Make splits equal size | `<leader>se` | ❌ | ❌ |
-| Close current split/pane | `<leader>sx` | ❌ | ❌ |
+| Make splits equal size | `<leader>se` | `<leader>se` | ❌ |
+| Close current split/pane | `<leader>sx` | `<leader>sx` | ❌ |
 | Reload config | ❌ | `<leader>r` | `<prefix> r` |
 
 ### Tabs & windows
 
 | Action | nvim | vim | tmux |
 |---|---|---|---|
-| Open new tab/window | `<leader>to` | ❌ | ❌ |
-| Close current tab | `<leader>tx` | ❌ | ❌ |
-| Go to next tab | `<leader>tn` | ❌ | ❌ |
-| Go to previous tab | `<leader>tp` | ❌ | ❌ |
-| Open current buffer in new tab | `<leader>tf` | ❌ | ❌ |
-| Switch to tab/window #1-9 | `<leader>t1` … `<leader>t9` | ❌ | ❌ |
+| Open new tab/window | `<leader>to` | `<leader>to` | ❌ |
+| Close current tab | `<leader>tx` | `<leader>tx` | ❌ |
+| Go to next tab | `<leader>tn` | `<leader>tn` | ❌ |
+| Go to previous tab | `<leader>tp` | `<leader>tp` | ❌ |
+| Open current buffer in new tab | `<leader>tf` | `<leader>tf` | ❌ |
+| Switch to tab/window #1-9 | `<leader>t1` … `<leader>t9` | `<leader>t1` … `<leader>t9` | ❌ |
 | Fuzzy window switcher | ❌ | ❌ | `<prefix> w` |
 
 ### Fuzzy find
@@ -83,10 +83,10 @@ across the two editors and tmux.
 | Action | nvim | vim | tmux |
 |---|---|---|---|
 | Exit insert mode | `jk` | `jk` | ❌ |
-| Exit visual mode | `jk` | ❌ | ❌ |
+| Exit visual mode | `jk` | `jk` | ❌ |
 | Clear search highlights | `<leader>,` | `<leader>,` | ❌ |
-| Increment number | `<leader>+` | ❌ | ❌ |
-| Decrement number | `<leader>-` | ❌ | ❌ |
+| Increment number | `<leader>+` | `<leader>+` | ❌ |
+| Decrement number | `<leader>-` | `<leader>-` | ❌ |
 
 ### LSP
 
