@@ -9,6 +9,7 @@
 ## Rules
 - CLAUDE.md / AGENTS.md: Goal and Rules are managed by user, other sections by agents
 - test every change, note tools used
+- don't read color themes unless instructed to
 
 ## Current State
 - `setup.sh [deploy|undeploy] [--no-claude]`: auto-discovers each top-level dir (except `.git`) as a Stow package, runs `stow -R`/`stow -D` against `$HOME`. `--no-claude` skips the `claude/` package — avoids unlinking `~/.claude` mid-session when testing other packages live.
