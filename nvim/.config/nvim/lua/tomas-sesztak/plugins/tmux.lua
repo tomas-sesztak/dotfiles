@@ -1,5 +1,7 @@
 local M = {}
 
+require("tomas-sesztak.core.deps").check("tmux.lua", { "tmux" })
+
 function M.move(direction)
   local old_win = vim.api.nvim_get_current_win()
 

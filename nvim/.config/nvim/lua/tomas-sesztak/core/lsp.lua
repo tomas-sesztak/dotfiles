@@ -1,9 +1,28 @@
-vim.lsp.enable({
+local deps = require("tomas-sesztak.core.deps")
+
+local servers = {
   "ansiblels",
   "bashls",
   "lua_ls",
   "yamlls",
-})
+}
+
+local available = {}
+for _, name in ipairs(servers) do
+  local cfg = vim.lsp.config[name]
+  local primary = cfg and type(cfg.cmd) == "table" and cfg.cmd[1]
+
+  if primary and vim.fn.executable(primary) == 1 then
+    table.insert(available, name)
+    if cfg.deps then
+      deps.check(name, cfg.deps)
+    end
+  else
+    deps.check(name, { primary or name })
+  end
+end
+
+vim.lsp.enable(available)
 
 vim.diagnostic.config({
   virtual_text = true,

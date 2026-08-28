@@ -2,6 +2,7 @@ return {
   name = "bashls",
   cmd = { "bash-language-server", "start" },
   filetypes = { "sh", "bash", "zsh" },
+  deps = { "shellcheck", "shfmt" },
   settings = {
     bashIde = {
       -- Background analysis and globbing
