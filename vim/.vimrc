@@ -108,12 +108,35 @@ map <silent> <leader>, :nohl<cr>
 " Splits
 nnoremap <leader>sv :vsplit<CR>
 nnoremap <leader>sh :split<CR>
+nnoremap <leader>se <C-w>=
+nnoremap <leader>sx :close<CR>
+
+" Tabs
+nnoremap <leader>to :tabnew<CR>
+nnoremap <leader>tx :tabclose<CR>
+nnoremap <leader>tn :tabn<CR>
+nnoremap <leader>tp :tabp<CR>
+nnoremap <leader>tf :tabnew %<CR>
+nnoremap <leader>t1 1gt
+nnoremap <leader>t2 2gt
+nnoremap <leader>t3 3gt
+nnoremap <leader>t4 4gt
+nnoremap <leader>t5 5gt
+nnoremap <leader>t6 6gt
+nnoremap <leader>t7 7gt
+nnoremap <leader>t8 8gt
+nnoremap <leader>t9 9gt
 
 set list
 set listchars=tab:\ \ ,trail:<
 
-" exit insert mode with jk
+" exit insert/visual mode with jk
 inoremap jk <esc>
+vnoremap jk <esc>
+
+" Increment/decrement numbers
+nnoremap <leader>+ <C-a>
+nnoremap <leader>- <C-x>
 
 " Reload configuration
 map <leader>r :source ~/.vimrc<cr>
