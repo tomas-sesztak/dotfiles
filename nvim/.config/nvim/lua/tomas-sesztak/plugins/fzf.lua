@@ -142,6 +142,8 @@ function M.fzf_buffer_picker()
 end
 
 function M.setup(user_opts)
+  require("tomas-sesztak.core.deps").check("fzf.lua", { "fzf", "rg" })
+
   -- Merge any user-provided options
   M.config = vim.tbl_deep_extend("force", M.config, user_opts or {})
 
