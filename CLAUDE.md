@@ -11,10 +11,9 @@
 - test every change, note tools used
 
 ## Current State
-- `setup.sh` exists: discovers every top-level directory (except `.git`) as a Stow package and runs `stow -R`/`stow -D` against `$HOME`
-- `setup.sh` accepts an optional `--no-claude` flag (either before or after the action) that excludes the `claude/` package from the run. Use this when testing `undeploy`/`deploy` in a live Claude Code session — unstowing `claude/` breaks `~/.claude` mid-session and requires re-login/re-linking, so testing other packages should skip it.
-- Stow packages:
-	- `claude/` — stows the entire `~/.claude` directory (per Goal: manage directories where possible, not single files), so `~/.claude` itself becomes a symlink into `claude/.claude/` in this repo. This means `claude/.claude/` holds real runtime/secret state (credentials, sessions, history, caches, etc.) alongside the config we actually want to version. Design pattern: `.gitignore` allowlists `claude/.claude/` — ignore everything (`claude/.claude/**`), then `!`-negate only the specific files that should be tracked (currently `CLAUDE.md` and `settings.json`). Any new file to be versioned from that directory needs its own `!` negation line.
-	- `nvim/` — stows the entire `~/.config/nvim` directory, so `~/.config/nvim` becomes a symlink into `nvim/.config/nvim/` in this repo. Unlike `claude/`, this directory holds only version-controlled config (no runtime/secret state), so no `.gitignore` allowlisting is needed — everything under it is tracked.
-	- `bash/` — stows `.bashrc` directly into `$HOME`, since (unlike `nvim`) there's no shared subdirectory to stow as a whole. Only `.bashrc` is tracked (user preference — no login/logout shell config needed); `.bash_profile` and `.bash_logout` remain plain unmanaged files in `$HOME`. `.bash_history` is intentionally excluded (runtime state, not config).
-- No build/lint/test tooling exists; verify changes by running `./setup.sh deploy` and checking symlinks with `ls -la`
+- `setup.sh [deploy|undeploy] [--no-claude]`: auto-discovers each top-level dir (except `.git`) as a Stow package, runs `stow -R`/`stow -D` against `$HOME`. `--no-claude` skips the `claude/` package — avoids unlinking `~/.claude` mid-session when testing other packages live.
+- Packages:
+	- `claude/` → `~/.claude` (whole dir stowed). Holds real runtime/secret state alongside tracked config; `.gitignore` allowlists via `claude/.claude/**` then `!`-negates tracked files (currently `CLAUDE.md`, `settings.json`). New trackable files need their own `!` line.
+	- `nvim/` → `~/.config/nvim` (whole dir stowed, fully tracked — no runtime state here, no allowlisting needed).
+	- `bash/` — stows `.bashrc` only (no shared subdir to stow as a whole). `.bash_profile`/`.bash_logout` remain unmanaged; `.bash_history` excluded (runtime state).
+- No build/lint/test tooling; verify via `./setup.sh deploy` + `ls -la` on the resulting symlinks.
