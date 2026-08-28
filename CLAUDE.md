@@ -19,4 +19,5 @@
 	- `bash/` — stows `.bashrc` only (no shared subdir to stow as a whole). `.bash_profile`/`.bash_logout` remain unmanaged; `.bash_history` excluded (runtime state).
 	- `tmux/` — stows `.tmux.conf` only (no shared subdir to stow as a whole). Fully tracked, no runtime state.
 	- `vim/` → `~/.vimrc` + `~/.vim` (whole dir stowed). Fully tracked, no runtime state. `~/.vimrc` sources `~/.vim/config/tmux.vim`, which was never present on disk and isn't tracked — that `source` line errors non-fatally on every startup until the file is added.
+	- `zsh/` → `~/.zshrc` + `~/.config/zsh/functions` (whole dir stowed). `~/.zshrc` globs and sources every `~/.config/zsh/functions/**/*.zsh` file. `~/.config/zsh/completions` is excluded — it's generated at runtime by `generate_completions()` (defined in `functions/completions.zsh`), not tracked.
 - No build/lint/test tooling; verify via `./setup.sh deploy` + `ls -la` on the resulting symlinks.
