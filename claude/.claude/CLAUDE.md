@@ -2,9 +2,10 @@
 
 ## Tooling & Workflows
 - **Git:** 
-	- Never commit directly to `main` or `master`, always create a new branch
+    - Never commit directly to `main` or `master`, always create a new branch
+    - When finished commit, push, PR
 - **Podman:**
-	- Ask before running commands containing prune rm or delete
+    - Ask before running commands containing prune rm or delete
 - **Safety:** Do not execute destructive file system operations (`rm -rf`, raw database drops) without explicit permission
 
 ## Code Style & Formatting
