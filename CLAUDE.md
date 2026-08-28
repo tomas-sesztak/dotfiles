@@ -11,6 +11,7 @@
 - test every change, note tools used
 
 ## Current State
-- Repo is scaffolding only: `CLAUDE.md`, `AGENTS.md` (symlink to `CLAUDE.md`), `LICENSE`
-- `setup.sh` referenced in Goal does not exist yet — no dotfiles or Stow packages have been added
-- No build/lint/test tooling exists; nothing to run yet
+- `setup.sh` exists: discovers every top-level directory (except `.git`) as a Stow package and runs `stow -R`/`stow -D` against `$HOME`
+- Stow packages:
+	- `claude/` — stows the entire `~/.claude` directory (per Goal: manage directories where possible, not single files), so `~/.claude` itself becomes a symlink into `claude/.claude/` in this repo. This means `claude/.claude/` holds real runtime/secret state (credentials, sessions, history, caches, etc.) alongside the config we actually want to version. Design pattern: `.gitignore` allowlists `claude/.claude/` — ignore everything (`claude/.claude/**`), then `!`-negate only the specific files that should be tracked (currently `CLAUDE.md` and `settings.json`). Any new file to be versioned from that directory needs its own `!` negation line.
+- No build/lint/test tooling exists; verify changes by running `./setup.sh deploy` and checking symlinks with `ls -la`

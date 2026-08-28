@@ -1,0 +1,3 @@
+claude/.claude/**
+!claude/.claude/CLAUDE.md
+!claude/.claude/settings.json
