@@ -1,7 +1,7 @@
 # Global Instructions
 
 ## Tooling & Workflows
-- **Git:** 
+- **Git:**
     - Never commit directly to `main` or `master`, always pull fresh main and create new branch
     - When finished commit, push, PR
 - **Podman:**
