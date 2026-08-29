@@ -99,6 +99,7 @@ set signcolumn=auto
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Plugins
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+source ${HOME}/.vim/config/deps.vim
 source ${HOME}/.vim/config/fzf.vim
 source ${HOME}/.vim/config/tmux.vim
 

@@ -1,3 +1,5 @@
+if CheckDeps('fzf.vim', ['fzf', 'rg'])
+
 function! FZF() abort
   let l:tempname = tempname()
   " fzf | awk '{ print $1":1:0" }' > file
@@ -67,4 +69,6 @@ function! FZFBuffers() abort
 endfunction
 
 nnoremap <leader>fb :call FZFBuffers()<CR>
+
+endif
 
