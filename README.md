@@ -24,6 +24,7 @@ new one.
 |---|---|---|
 | `claude/` | `~/.claude` | Only `CLAUDE.md` and `settings.json` are tracked; the rest of `~/.claude` is runtime/secret state, excluded via `.gitignore` allowlisting. |
 | `copilot/` | `~/.copilot` | Only file is `copilot-instructions.md`, a symlink to `claude/.claude/CLAUDE.md` so both tools share one global instructions source. |
+| `herdr/` | `~/.config/herdr` | Only `config.toml` is tracked; the rest (logs, sockets, session state) is runtime state, excluded via `.gitignore` allowlisting. |
 | `nvim/` | `~/.config/nvim` | Fully tracked — no runtime state lives under this directory. |
 | `tmux/` | `~/.tmux.conf` | Fully tracked — no runtime state lives under this directory. |
 | `vim/` | `~/.vimrc`, `~/.vim` | Fully tracked — no runtime state lives under this directory. `~/.vimrc` sources `~/.vim/config/tmux.vim`, which isn't tracked (never existed on disk); that `source` line errors on load until the file is added. |
