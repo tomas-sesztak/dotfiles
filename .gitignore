@@ -1,3 +1,4 @@
 claude/.claude/**
 !claude/.claude/CLAUDE.md
 !claude/.claude/settings.json
+!claude/.claude/statusline-command.sh
