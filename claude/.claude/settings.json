@@ -1,8 +1,14 @@
 {
-  "theme": "dark",
-  "remoteControlAtStartup": true,
-  "agentPushNotifEnabled": true,
   "permissions": {
     "defaultMode": "auto"
-  }
+  },
+  "worktree": {
+    "baseRef": "fresh"
+  },
+  "theme": "dark",
+  "editorMode": "normal",
+  "preferredNotifChannel": "auto",
+  "terminalProgressBarEnabled": true,
+  "remoteControlAtStartup": true,
+  "agentPushNotifEnabled": true
 }

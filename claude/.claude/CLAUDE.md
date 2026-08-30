@@ -4,6 +4,7 @@
 - **Git:**
     - Never commit directly to `main` or `master`, always pull fresh main and create new branch
     - When finished commit, push, PR
+    - Delete feature branch after merging
 - **Podman:**
     - Ask before running commands containing prune rm or delete
 - **Safety:** Do not execute destructive file system operations (`rm -rf`, raw database drops) without explicit permission
