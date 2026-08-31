@@ -28,7 +28,7 @@ new one.
 | `nvim/` | `~/.config/nvim` | Fully tracked — no runtime state lives under this directory. |
 | `tmux/` | `~/.tmux.conf` | Fully tracked — no runtime state lives under this directory. |
 | `vim/` | `~/.vimrc`, `~/.vim` | Fully tracked — no runtime state lives under this directory. `~/.vimrc` sources `~/.vim/config/tmux.vim`, which isn't tracked (never existed on disk); that `source` line errors on load until the file is added. |
-| `zsh/` | `~/.zshrc`, `~/.config/zsh/functions` | `~/.config/zsh/completions` is excluded — it's generated at runtime and isn't tracked. |
+| `zsh/` | `~/.zshrc`, `~/.config/zsh/functions` | `~/.config/zsh/completions` is excluded — it's generated at runtime and isn't tracked. `.zshrc` prepends the [XDG](https://specifications.freedesktop.org/basedir-spec/latest/) standard `~/.local/bin` to `PATH` (if present) for user-supplied binaries. |
 
 ## Hotkeys
 
