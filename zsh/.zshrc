@@ -8,6 +8,12 @@ if [[ "$OSTYPE" == darwin* ]]; then
   export PATH
 fi
 
+# User-local binaries
+if [ -d "${HOME}/.local/bin" ]; then
+  PATH="${HOME}/.local/bin:${PATH}"
+  export PATH
+fi
+
 # Load custom configuration from ~/.config/zsh
 
 for FILE in ${HOME}/.config/zsh/functions/**/*.zsh; do
