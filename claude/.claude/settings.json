@@ -1,16 +1,16 @@
 {
-  "statusLine": {
-    "type": "command",
-    "command": "bash ~/.claude/statusline-command.sh"
-  },
   "permissions": {
     "defaultMode": "auto"
   },
   "worktree": {
     "baseRef": "fresh"
   },
+  "statusLine": {
+    "type": "command",
+    "command": "bash ~/.claude/statusline-command.sh"
+  },
   "theme": "dark",
-  "editorMode": "normal",
+  "editorMode": "vim",
   "preferredNotifChannel": "auto",
   "terminalProgressBarEnabled": true,
   "remoteControlAtStartup": true,
