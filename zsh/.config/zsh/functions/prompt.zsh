@@ -101,15 +101,15 @@ _prompt_git_status_color() {
 
   # Logic: If 'dirty' is not empty OR 'ahead_behind' contains any number > 0
   if [[ -n "$dirty" ]] || [[ "$ahead_behind" =~ [1-9] ]]; then
-    ZSH_THEME_GIT_PROMPT_PREFIX_COLOR="%F{red}" # Red if changes exist
+    ZSH_THEME_GIT_PROMPT_PREFIX_COLOR="%F{#f7768e}" # Red if changes exist
   else
-    ZSH_THEME_GIT_PROMPT_PREFIX_COLOR="%F{green}" # Green if totally clean/synced
+    ZSH_THEME_GIT_PROMPT_PREFIX_COLOR="%F{#9ece6a}" # Green if totally clean/synced
   fi
 }
 
 _prompt_git_info() {
   _prompt_git_status_color
-  [ ! -z "$vcs_info_msg_0_" ] && echo "${ZSH_THEME_GIT_PROMPT_PREFIX_COLOR}$ZSH_THEME_GIT_PROMPT_PREFIX%F{white}$vcs_info_msg_0_%f$ZSH_THEME_GIT_PROMPT_SUFFIX"
+  [ ! -z "$vcs_info_msg_0_" ] && echo "${ZSH_THEME_GIT_PROMPT_PREFIX_COLOR}$ZSH_THEME_GIT_PROMPT_PREFIX%F{#c0caf5}$vcs_info_msg_0_%f$ZSH_THEME_GIT_PROMPT_SUFFIX"
 }
 
 _prompt_precmd() {
@@ -137,19 +137,19 @@ _prompt_setup() {
   ZSH_THEME_GIT_PROMPT_DIRTY=""
   ZSH_THEME_GIT_PROMPT_CLEAN=""
 
-  ZSH_THEME_GIT_PROMPT_ADDED="%F{green}+%f "
-  ZSH_THEME_GIT_PROMPT_MODIFIED="%F{blue}\u2605%f "
-  ZSH_THEME_GIT_PROMPT_DELETED="%F{red}x%f "
-  ZSH_THEME_GIT_PROMPT_RENAMED="%F{magenta}\u279c%f "
-  ZSH_THEME_GIT_PROMPT_UNMERGED="%F{yellow}=%f "
-  ZSH_THEME_GIT_PROMPT_UNTRACKED="%F{white}\u25cf%f "
-  ZSH_THEME_GIT_PROMPT_STASHED="%B%F{red}\u2757%f%b "
-  ZSH_THEME_GIT_PROMPT_BEHIND="%B%F{red}\u2193%f%b "
-  ZSH_THEME_GIT_PROMPT_AHEAD="%B%F{green}\u2191%f%b "
+  ZSH_THEME_GIT_PROMPT_ADDED="%F{#9ece6a}+%f "
+  ZSH_THEME_GIT_PROMPT_MODIFIED="%F{#7aa2f7}\u2605%f "
+  ZSH_THEME_GIT_PROMPT_DELETED="%F{#f7768e}x%f "
+  ZSH_THEME_GIT_PROMPT_RENAMED="%F{#bb9af7}\u279c%f "
+  ZSH_THEME_GIT_PROMPT_UNMERGED="%F{#e0af68}=%f "
+  ZSH_THEME_GIT_PROMPT_UNTRACKED="%F{#c0caf5}\u25cf%f "
+  ZSH_THEME_GIT_PROMPT_STASHED="%B%F{#f7768e}\u2757%f%b "
+  ZSH_THEME_GIT_PROMPT_BEHIND="%B%F{#f7768e}\u2193%f%b "
+  ZSH_THEME_GIT_PROMPT_AHEAD="%B%F{#9ece6a}\u2191%f%b "
 
   _prompt_git_branch
   RPROMPT='$(_prompt_git_info) $(_git_prompt_status) %*'
-  PROMPT=$'%F{white}%n%f@%F{blue}%m:%F{white}%~\n%B%F{blue}>%f%b '
+  PROMPT=$'%F{#c0caf5}%n%f@%F{#7aa2f7}%m:%F{#c0caf5}%~\n%B%F{#7aa2f7}>%f%b '
 }
 
 _prompt_setup
