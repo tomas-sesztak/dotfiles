@@ -34,12 +34,18 @@ function herdr-fork-agent {
 		return 1
 	fi
 
-	command herdr agent start "$worktree_name" --kind "$agent" --pane "$pane" >/dev/null 2>&1 || {
+	local -a start_args=(agent start "$worktree_name" --kind "$agent" --pane "$pane")
+	case "$agent" in
+		claude) start_args+=(-- -n "$worktree_name") ;;
+	esac
+	command herdr "${start_args[@]}" >/dev/null 2>&1 || {
 		echo "herdr-fork-agent: failed to start agent in worktree $worktree_name" >&2
 		return 1
 	}
 
-	(( $#opt_command )) && command herdr agent prompt "$worktree_name" "${opt_command[-1]}" >/dev/null 2>&1
+	if (( $#opt_command )); then
+		command herdr agent prompt "$worktree_name" "${opt_command[-1]}" >/dev/null 2>&1
+	fi
 }
 
 function herdr-fork-agent-help {
@@ -54,6 +60,8 @@ function herdr-fork-agent-help {
 	  -a <agent>          Agent kind to launch (passed to \`herdr agent start
 	                      --kind\`). Run \`herdr agent start --help\` for the
 	                      supported list (e.g. claude, codex, copilot, gemini).
+	                      When <agent> is claude, its session is named after
+	                      <worktree_name> via -n.
 	  -w <worktree_name>  Name for the new git branch/worktree, also used as
 	                      the herdr agent name.
 	  -c <command>        Optional prompt sent to the agent once it's running
