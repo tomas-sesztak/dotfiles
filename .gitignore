@@ -5,3 +5,5 @@ claude/.claude/**
 
 herdr/.config/herdr/**
 !herdr/.config/herdr/config.toml
+!herdr/.config/herdr/scripts/
+!herdr/.config/herdr/scripts/smart-pane-nav.sh

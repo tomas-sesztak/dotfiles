@@ -13,3 +13,26 @@ delivery = "herdr"
 
 [keys]
 prefix = "ctrl+a"
+reload_config = "prefix+r"
+split_horizontal = "prefix+h"
+split_vertical = "prefix+v"
+
+[[keys.command]]
+key = "ctrl+h"
+type = "shell"
+command = "~/.config/herdr/scripts/smart-pane-nav.sh left"
+
+[[keys.command]]
+key = "ctrl+j"
+type = "shell"
+command = "~/.config/herdr/scripts/smart-pane-nav.sh down"
+
+[[keys.command]]
+key = "ctrl+k"
+type = "shell"
+command = "~/.config/herdr/scripts/smart-pane-nav.sh up"
+
+[[keys.command]]
+key = "ctrl+l"
+type = "shell"
+command = "~/.config/herdr/scripts/smart-pane-nav.sh right"
