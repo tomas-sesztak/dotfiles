@@ -16,6 +16,8 @@ prefix = "ctrl+a"
 reload_config = "prefix+r"
 split_horizontal = "prefix+h"
 split_vertical = "prefix+v"
+previous_workspace = "prefix+{"
+next_workspace = "prefix+}"
 
 [[keys.command]]
 key = "ctrl+h"
