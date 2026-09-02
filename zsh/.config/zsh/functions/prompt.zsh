@@ -13,41 +13,41 @@ setopt transient_rprompt
 _git_prompt_status() {
   local INDEX STATUS
 
-  INDEX=$(command git status --porcelain -b 2> /dev/null)
+  INDEX=$(command git status --porcelain -b 2>/dev/null)
 
   STATUS=""
 
-  if $(echo "$INDEX" | command grep -E '^\?\? ' &> /dev/null); then
+  if $(echo "$INDEX" | command grep -E '^\?\? ' &>/dev/null); then
     STATUS="$ZSH_THEME_GIT_PROMPT_UNTRACKED$STATUS"
   fi
 
-  if $(echo "$INDEX" | grep '^A  ' &> /dev/null); then
+  if $(echo "$INDEX" | grep '^A  ' &>/dev/null); then
     STATUS="$ZSH_THEME_GIT_PROMPT_ADDED$STATUS"
-  elif $(echo "$INDEX" | grep '^M  ' &> /dev/null); then
+  elif $(echo "$INDEX" | grep '^M  ' &>/dev/null); then
     STATUS="$ZSH_THEME_GIT_PROMPT_ADDED$STATUS"
-  elif $(echo "$INDEX" | grep '^MM ' &> /dev/null); then
+  elif $(echo "$INDEX" | grep '^MM ' &>/dev/null); then
     STATUS="$ZSH_THEME_GIT_PROMPT_ADDED$STATUS"
   fi
 
-  if $(echo "$INDEX" | grep '^ M ' &> /dev/null); then
+  if $(echo "$INDEX" | grep '^ M ' &>/dev/null); then
     STATUS="$ZSH_THEME_GIT_PROMPT_MODIFIED$STATUS"
-  elif $(echo "$INDEX" | grep '^AM ' &> /dev/null); then
+  elif $(echo "$INDEX" | grep '^AM ' &>/dev/null); then
     STATUS="$ZSH_THEME_GIT_PROMPT_MODIFIED$STATUS"
-  elif $(echo "$INDEX" | grep '^MM ' &> /dev/null); then
+  elif $(echo "$INDEX" | grep '^MM ' &>/dev/null); then
     STATUS="$ZSH_THEME_GIT_PROMPT_MODIFIED$STATUS"
-  elif $(echo "$INDEX" | grep '^ T ' &> /dev/null); then
+  elif $(echo "$INDEX" | grep '^ T ' &>/dev/null); then
     STATUS="$ZSH_THEME_GIT_PROMPT_MODIFIED$STATUS"
   fi
 
-  if $(echo "$INDEX" | grep '^R  ' &> /dev/null); then
+  if $(echo "$INDEX" | grep '^R  ' &>/dev/null); then
     STATUS="$ZSH_THEME_GIT_PROMPT_RENAMED$STATUS"
   fi
 
-  if $(echo "$INDEX" | grep '^ D ' &> /dev/null); then
+  if $(echo "$INDEX" | grep '^ D ' &>/dev/null); then
     STATUS="$ZSH_THEME_GIT_PROMPT_DELETED$STATUS"
-  elif $(echo "$INDEX" | grep '^D  ' &> /dev/null); then
+  elif $(echo "$INDEX" | grep '^D  ' &>/dev/null); then
     STATUS="$ZSH_THEME_GIT_PROMPT_DELETED$STATUS"
-  elif $(echo "$INDEX" | grep '^AD ' &> /dev/null); then
+  elif $(echo "$INDEX" | grep '^AD ' &>/dev/null); then
     STATUS="$ZSH_THEME_GIT_PROMPT_DELETED$STATUS"
   fi
 
@@ -55,19 +55,19 @@ _git_prompt_status() {
     STATUS="$ZSH_THEME_GIT_PROMPT_STASHED$STATUS"
   fi
 
-  if $(echo "$INDEX" | grep '^UU ' &> /dev/null); then
+  if $(echo "$INDEX" | grep '^UU ' &>/dev/null); then
     STATUS="$ZSH_THEME_GIT_PROMPT_UNMERGED$STATUS"
   fi
 
-  if $(echo "$INDEX" | grep '^## [^ ]\+ .*ahead' &> /dev/null); then
+  if $(echo "$INDEX" | grep '^## [^ ]\+ .*ahead' &>/dev/null); then
     STATUS="$ZSH_THEME_GIT_PROMPT_AHEAD$STATUS"
   fi
 
-  if $(echo "$INDEX" | grep '^## [^ ]\+ .*behind' &> /dev/null); then
+  if $(echo "$INDEX" | grep '^## [^ ]\+ .*behind' &>/dev/null); then
     STATUS="$ZSH_THEME_GIT_PROMPT_BEHIND$STATUS"
   fi
 
-  if $(echo "$INDEX" | grep '^## [^ ]\+ .*diverged' &> /dev/null); then
+  if $(echo "$INDEX" | grep '^## [^ ]\+ .*diverged' &>/dev/null); then
     STATUS="$ZSH_THEME_GIT_PROMPT_DIVERGED$STATUS"
   fi
 
@@ -76,11 +76,10 @@ _git_prompt_status() {
   fi
 }
 
-
 _prompt_git_branch() {
   autoload -Uz vcs_info
-  precmd_vcs_info() { vcs_info }
-  precmd_functions+=( precmd_vcs_info )
+  precmd_vcs_info() { vcs_info; }
+  precmd_functions+=(precmd_vcs_info)
   setopt prompt_subst
   zstyle ':vcs_info:git:*' formats '%b'
 }
@@ -148,9 +147,8 @@ _prompt_setup() {
   ZSH_THEME_GIT_PROMPT_AHEAD="%B%F{#9ece6a}\u2191%f%b "
 
   _prompt_git_branch
-  RPROMPT='$(_prompt_git_info) $(_git_prompt_status) %*'
-  PROMPT=$'%F{#c0caf5}%n%f@%F{#7aa2f7}%m:%F{#c0caf5}%~\n%B%F{#7aa2f7}>%f%b '
+  #  RPROMPT='$(_prompt_git_info) $(_git_prompt_status) %*'
+  PROMPT=$'%F{#c0caf5}%n%f@%F{#7aa2f7}%m:%F{#c0caf5}%~ $(_prompt_git_info) $(_git_prompt_status)\n%B%F{#7aa2f7}>%f%b '
 }
 
 _prompt_setup
-
