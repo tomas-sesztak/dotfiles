@@ -2,19 +2,6 @@
   "permissions": {
     "defaultMode": "auto"
   },
-  "worktree": {
-    "baseRef": "fresh"
-  },
-  "statusLine": {
-    "type": "command",
-    "command": "bash ~/.claude/statusline-command.sh"
-  },
-  "theme": "dark",
-  "editorMode": "vim",
-  "preferredNotifChannel": "auto",
-  "terminalProgressBarEnabled": true,
-  "remoteControlAtStartup": true,
-  "agentPushNotifEnabled": true,
   "hooks": {
     "SessionStart": [
       {
@@ -28,5 +15,18 @@
         ]
       }
     ]
-  }
+  },
+  "worktree": {
+    "baseRef": "fresh"
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "bash ~/.claude/statusline-command.sh"
+  },
+  "theme": "dark",
+  "editorMode": "normal",
+  "preferredNotifChannel": "auto",
+  "terminalProgressBarEnabled": true,
+  "remoteControlAtStartup": true,
+  "agentPushNotifEnabled": true
 }
