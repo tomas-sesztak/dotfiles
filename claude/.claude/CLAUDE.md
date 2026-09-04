@@ -12,12 +12,16 @@
 ## Code Style & Formatting
 - Write concise, self-documenting code. Favor strong typing (TypeScript, type hints in Python)
 - Do not add unnecessary code comments or docstrings explaining obvious logic; only comment on complex domain logic
+    - When adding comments, keep them as short as possible
 - Avoid adding third-party dependencies for simple tasks that native/built-in libraries can handle
 
 ## Communication & Formatting
 - **Tone:** Direct, concise, technical. Minimal conversational filler
 - **Errors:** When iterating over a fix, ask user for directions after 3 tries, do not loop endlessly
 - **Refactoring:** Keep diffs small and targeted. Do not rewrite surrounding unchanged code unnecessarily
+
+## Project level CLAUDE.md
+- **Rules:** always respect rules stated in project-level CLAUDE.md/AGENTS.md
 
 ## Decision-Making Protocol
 
