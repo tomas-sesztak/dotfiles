@@ -8,6 +8,7 @@
 
 ## Rules
 - CLAUDE.md / AGENTS.md: Goal and Rules are managed by user, other sections by agents
+- update README.md when hotkeys are changed
 - test every change, note tools used
 - don't read color themes unless instructed to
 
