@@ -4,6 +4,9 @@ claude/.claude/**
 !claude/.claude/statusline-command.sh
 !claude/.claude/hooks/
 !claude/.claude/hooks/herdr-agent-state.sh
+!claude/.claude/skills/
+!claude/.claude/skills/fork-agent/
+!claude/.claude/skills/fork-agent/SKILL.md
 
 herdr/.config/herdr/**
 !herdr/.config/herdr/config.toml
