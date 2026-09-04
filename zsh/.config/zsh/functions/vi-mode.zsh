@@ -1,3 +1,6 @@
+# zle needs a real terminal; skip when sourced without one (e.g. `zsh -ic '...'` via a pipe)
+[[ -t 1 ]] || return
+
 # enable vi-mode
 bindkey -v
 

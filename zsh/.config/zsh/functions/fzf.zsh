@@ -18,6 +18,6 @@ function fs {
   [ -n "$file" ] && "$EDITOR" "$file"
 }
 
-# Enable fzf for zsh
-eval "$(fzf --zsh)"
+# Enable fzf for zsh (keybindings need a real terminal for zle)
+[[ -t 1 ]] && eval "$(fzf --zsh)"
 
