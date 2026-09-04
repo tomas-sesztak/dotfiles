@@ -15,10 +15,11 @@ creation) live in the script. This skill only picks the session **name** and opt
 - **Distill from planning prompt** — free-text prompt → name it max 3 words,
   kebab-case, `-c "/plan <prompt>"`.
 - **Pick a GitHub issue** — `gh issue list --state open`. One issue: confirm via
-  AskUserQuestion. Multiple: pick via AskUserQuestion. Name `<number>_<kebab-title>`,
+  AskUserQuestion. Multiple: pick via AskUserQuestion. Name `i<number>_<kebab-title>`,
   `-c "Work on GitHub issue #<number>: <title>\n\n<body>"` (body from `gh issue view`).
 
-Sanitize any name to `[a-z0-9-]` (lowercase, spaces/underscores → `-`).
+Sanitize any name to `[a-z0-9_-]` (lowercase, spaces → `-`), keeping the leading
+`i<number>_` prefix's underscore intact where that format applies.
 
 ## 2. Launch
 
