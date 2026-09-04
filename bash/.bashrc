@@ -24,7 +24,3 @@ if [ -d ~/.bashrc.d ]; then
 fi
 unset rc
 
-if [ -t 1 ] && command -v zsh >/dev/null 2>&1 && [ -z "$ZSH_VERSION" ]; then
-    exec zsh
-fi
-
