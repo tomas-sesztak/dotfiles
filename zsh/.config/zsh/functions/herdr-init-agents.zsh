@@ -39,6 +39,7 @@ function herdr-init-agents {
 	existing=("${(@f)$(command herdr workspace list 2>/dev/null | jq -r '.result.workspaces[].label')}")
 
 	local dir name pane
+	local -a agent_args
 	for dir in "$repo_path"/*/; do
 		[ -e "${dir}.git" ] || continue
 		name="$(basename "$dir")"
@@ -49,7 +50,13 @@ function herdr-init-agents {
 			echo "herdr-init-agents: failed to create workspace for $name" >&2
 			continue
 		fi
-		command herdr agent start "$name" --kind "$agent" --pane "$pane" >/dev/null 2>&1
+
+		agent_args=()
+		case "$agent" in
+			claude) agent_args=(-n "$name") ;;
+			copilot) agent_args=(--name "$name") ;;
+		esac
+		command herdr agent start "$name" --kind "$agent" --pane "$pane" -- "${agent_args[@]}" >/dev/null 2>&1
 	done
 }
 
@@ -67,7 +74,9 @@ function herdr-init-agents-help {
 
 	  -a <agent>   Agent kind to launch (passed to \`herdr agent start --kind\`).
 	               Run \`herdr agent start --help\` for the supported list
-	               (e.g. claude, codex, copilot, gemini).
+	               (e.g. claude, codex, copilot, gemini). When agent is
+	               "claude" or "copilot", it is also given a matching
+	               session/display name (-n / --name).
 	  -p <path>    Directory whose top-level git repos should get workspaces.
 	  -h, --help   Show this help.
 	EOF
