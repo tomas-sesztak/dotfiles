@@ -1,6 +1,6 @@
 ---
 name: fork-agent
-description: Fork the current repo into a new git worktree and launch an agent there via the fork-agent zsh script, naming the session by direct input, a distilled planning prompt, or a picked GitHub issue. Use when the user wants to spin up a new agent/session in a worktree, e.g. "fork a new agent", "start a session for this issue", "spawn an agent to plan X".
+description: Fork the current repo into a new git worktree and launch an agent there via the fork-agent zsh function, naming the session by direct input, a distilled planning prompt, or a picked GitHub issue. Use when user wants to spin up a new agent/session in a worktree, e.g. "fork a new agent", "start a session for this issue", "spawn an agent to plan X".
 ---
 
 # Fork Agent
@@ -15,10 +15,11 @@ creation) live in the script. This skill only picks the session **name** and opt
 - **Distill from planning prompt** — free-text prompt → name it max 3 words,
   kebab-case, `-c "/plan <prompt>"`.
 - **Pick a GitHub issue** — `gh issue list --state open`. One issue: confirm via
-  AskUserQuestion. Multiple: pick via AskUserQuestion. Name `<number>_<kebab-title>`,
+  AskUserQuestion. Multiple: pick via AskUserQuestion. Name `i<number>_<kebab-title>`,
   `-c "Work on GitHub issue #<number>: <title>\n\n<body>"` (body from `gh issue view`).
 
-Sanitize any name to `[a-z0-9-]` (lowercase, spaces/underscores → `-`).
+Sanitize any name to `[a-z0-9_-]` (lowercase, spaces → `-`), keeping the leading
+`i<number>_` prefix's underscore intact where that format applies.
 
 ## 2. Launch
 
