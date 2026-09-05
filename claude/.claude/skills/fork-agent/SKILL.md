@@ -1,6 +1,6 @@
 ---
 name: fork-agent
-description: Fork the current repo into a new git worktree and launch an agent there via the fork-agent zsh function, naming the session by direct input, a distilled planning prompt, or a picked GitHub issue. Use when user wants to spin up a new agent/session in a worktree, e.g. "fork a new agent", "start a session for this issue", "spawn an agent to plan X".
+description: Fork the current repo into a new git worktree and launch an agent there via the fork-agent zsh function, naming the session by direct input, a distilled planning prompt, or a picked GitHub issue. Use when user wants to spin up a new agent/session or in a worktree or whenever he wants to work on an issue, e.g. "fork a new agent", "start a session for this issue", "spawn an agent to plan X".
 ---
 
 # Fork Agent
