@@ -3,6 +3,7 @@ set -euo pipefail
 shopt -s nullglob
 
 SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
+MODULES_DIR="$SCRIPT_DIR/stow_modules"
 
 usage() {
 	echo "Usage: $(basename "$0") [deploy|undeploy] [--no-claude]" >&2
@@ -46,17 +47,16 @@ if ! command -v stow &>/dev/null; then
 fi
 
 packages=()
-for entry in "$SCRIPT_DIR"/*/; do
+for entry in "$MODULES_DIR"/*/; do
 	name="$(basename "$entry")"
-	[[ "$name" == ".git" ]] && continue
 	[[ "$no_claude" -eq 1 && "$name" == "claude" ]] && continue
 	packages+=("$name")
 done
 
 if [[ ${#packages[@]} -eq 0 ]]; then
-	echo "No packages found in $SCRIPT_DIR; nothing to do."
+	echo "No packages found in $MODULES_DIR; nothing to do."
 	exit 0
 fi
 
-stow "$stow_flag" -t "$HOME" -d "$SCRIPT_DIR" "${packages[@]}"
+stow "$stow_flag" -t "$HOME" -d "$MODULES_DIR" "${packages[@]}"
 echo "${action}ed: ${packages[*]}"

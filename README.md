@@ -1,9 +1,9 @@
 # dotfiles
 
 Personal dotfiles, managed with [GNU Stow](https://www.gnu.org/software/stow/) and
-deployed to `$HOME`. Each top-level directory in this repo is a Stow package that
-mirrors the layout it targets under `$HOME` (e.g. `nvim/.config/nvim/` deploys to
-`~/.config/nvim`).
+deployed to `$HOME`. Each top-level directory under `stow_modules/` is a Stow
+package that mirrors the layout it targets under `$HOME` (e.g.
+`stow_modules/nvim/.config/nvim/` deploys to `~/.config/nvim`).
 
 ## Getting started
 
@@ -14,16 +14,18 @@ Prerequisite: [GNU Stow](https://www.gnu.org/software/stow/) must be installed.
 ./setup.sh undeploy    # remove all symlinks from $HOME
 ```
 
-Packages are auto-discovered — every top-level directory in the repo (except `.git`)
-is treated as a Stow package, so no changes to `setup.sh` are needed when adding a
-new one.
+Packages are auto-discovered — every top-level directory under `stow_modules/` is
+treated as a Stow package, so no changes to `setup.sh` are needed when adding a new
+one.
 
 ## Packages
+
+Packages live under `stow_modules/`.
 
 | Package | Deploys to | Notes |
 |---|---|---|
 | `claude/` | `~/.claude` | Only `CLAUDE.md` and `settings.json` are tracked; the rest of `~/.claude` is runtime/secret state, excluded via `.gitignore` allowlisting. |
-| `copilot/` | `~/.copilot` | Only file is `copilot-instructions.md`, a symlink to `claude/.claude/CLAUDE.md` so both tools share one global instructions source. |
+| `copilot/` | `~/.copilot` | Only file is `copilot-instructions.md`, a symlink to `../../claude/.claude/CLAUDE.md` so both tools share one global instructions source. |
 | `herdr/` | `~/.config/herdr` | `config.toml` and `scripts/smart-pane-nav.sh` are tracked; the rest (logs, sockets, session state) is runtime state, excluded via `.gitignore` allowlisting. |
 | `nvim/` | `~/.config/nvim` | Fully tracked — no runtime state lives under this directory. |
 | `tmux/` | `~/.tmux.conf` | Fully tracked — no runtime state lives under this directory. |
