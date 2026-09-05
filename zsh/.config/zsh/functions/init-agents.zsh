@@ -88,7 +88,16 @@ function _init-agents-herdr {
 			claude) agent_args=(-n "$name") ;;
 			copilot) agent_args=(--name "$name") ;;
 		esac
-		command herdr agent start "$name" --kind "$agent" --pane "$pane" -- "${agent_args[@]}" >/dev/null 2>&1
+
+		local tries=0
+		until command herdr agent get "$name" >/dev/null 2>&1; do
+			command herdr agent start "$name" --kind "$agent" --pane "$pane" -- "${agent_args[@]}" >/dev/null 2>&1
+			(( tries++ >= 10 )) && {
+				echo "init-agents: failed to start agent for $name" >&2
+				break
+			}
+			sleep 0.3
+		done
 	done
 }
 
