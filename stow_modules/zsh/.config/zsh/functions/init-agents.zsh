@@ -37,7 +37,9 @@ function _init-agents-tmux {
 			claude) cmd+=(-n "$name") ;;
 			copilot) cmd+=(--name "$name") ;;
 		esac
-		command tmux new-window -d -n "$name" -c "$dir" -- "${cmd[@]}"
+		local window_id
+		window_id="$(command tmux new-window -d -n "$name" -c "$dir" -P -F '#{window_id}' -- "${cmd[@]}")"
+		command tmux split-window -d -v -t "$window_id" -c "$dir"
 	done
 }
 
@@ -83,6 +85,8 @@ function _init-agents-herdr {
 			continue
 		fi
 
+		command herdr pane split --pane "$pane" --direction down --cwd "$dir" --no-focus >/dev/null 2>&1
+
 		agent_args=()
 		case "$agent" in
 			claude) agent_args=(-n "$name") ;;
@@ -107,8 +111,10 @@ function init-agents-help {
 
 	  For each top-level git repository directory under <path>, ensure a
 	  window/workspace named after that directory exists in the current
-	  multiplexer session. If missing, create it and launch <agent> inside it
-	  (cwd set to the repo). Entries that already exist are left untouched.
+	  multiplexer session. If missing, create it with a horizontal split:
+	  <agent> running in the top pane (cwd set to the repo), and a blank
+	  interactive shell (same cwd) in the bottom pane for manual commands.
+	  Entries that already exist are left untouched.
 
 	  Detects which multiplexer is active and behaves accordingly (herdr is
 	  checked first, then tmux):
