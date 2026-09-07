@@ -22,5 +22,8 @@ alias gds="git diff --staged"
 
 alias gp="git push"
 
+# github cli
+alias ghic="gh issue create"
+
 # tmux
 alias tmux="tmux attach -t ${USER} || tmux new -s ${USER}"
