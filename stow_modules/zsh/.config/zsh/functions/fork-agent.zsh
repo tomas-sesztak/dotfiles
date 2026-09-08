@@ -38,6 +38,9 @@ function _fork-agent-herdr {
 		return 1
 	}
 
+	local agent_name
+	agent_name="$(_agent-sanitize-name "$worktree_name")"
+
 	local pane
 	pane="$(command herdr worktree create --workspace "$HERDR_WORKSPACE_ID" --branch "$worktree_name" --label "$worktree_name" --no-focus 2>/dev/null | jq -r '.result.root_pane.pane_id // empty')"
 	if [ -z "$pane" ]; then
@@ -45,9 +48,9 @@ function _fork-agent-herdr {
 		return 1
 	fi
 
-	local -a start_args=(agent start "$worktree_name" --kind "$agent" --pane "$pane")
+	local -a start_args=(agent start "$agent_name" --kind "$agent" --pane "$pane")
 	case "$agent" in
-		claude) start_args+=(-- -n "$worktree_name") ;;
+		claude) start_args+=(-- -n "$agent_name") ;;
 	esac
 
 	local tries=0
@@ -60,7 +63,7 @@ function _fork-agent-herdr {
 	done
 
 	if (( $#command_arg )); then
-		command herdr agent prompt "$worktree_name" "${command_arg[-1]}" >/dev/null 2>&1
+		command herdr agent prompt "$agent_name" "${command_arg[-1]}" >/dev/null 2>&1
 	fi
 	return 0
 }
@@ -88,10 +91,13 @@ function _fork-agent-tmux {
 		return 1
 	}
 
+	local agent_name
+	agent_name="$(_agent-sanitize-name "$worktree_name")"
+
 	local -a cmd=("$agent")
 	case "$agent" in
-		claude) cmd+=(-n "$worktree_name") ;;
-		copilot) cmd+=(--name "$worktree_name") ;;
+		claude) cmd+=(-n "$agent_name") ;;
+		copilot) cmd+=(--name "$agent_name") ;;
 	esac
 	(( $#command_arg )) && cmd+=("${command_arg[-1]}")
 
