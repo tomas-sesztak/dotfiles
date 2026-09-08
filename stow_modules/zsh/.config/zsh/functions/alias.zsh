@@ -24,6 +24,8 @@ alias gp="git push"
 
 # github cli
 alias ghic="gh issue create"
+alias ghil="gh issue list"
+alias ghie="gh issue edit"
 
 # tmux
 alias tmux="tmux attach -t ${USER} || tmux new -s ${USER}"
