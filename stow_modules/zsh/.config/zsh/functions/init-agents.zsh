@@ -24,7 +24,7 @@ function init-agents {
 
 function _init-agents-tmux {
 	local agent="$1" repo_path="$2"
-	local dir name
+	local dir name agent_name
 	local -a cmd
 
 	for dir in "$repo_path"/*/; do
@@ -32,10 +32,11 @@ function _init-agents-tmux {
 		name="$(basename "$dir")"
 		command tmux list-windows -F '#W' | grep -qx "$name" && continue
 
+		agent_name="$(_agent-sanitize-name "$name")"
 		cmd=("$agent")
 		case "$agent" in
-			claude) cmd+=(-n "$name") ;;
-			copilot) cmd+=(--name "$name") ;;
+			claude) cmd+=(-n "$agent_name") ;;
+			copilot) cmd+=(--name "$agent_name") ;;
 		esac
 		local window_id
 		window_id="$(command tmux new-window -d -n "$name" -c "$dir" -P -F '#{window_id}' -- "${cmd[@]}")"
@@ -72,12 +73,14 @@ function _init-agents-herdr {
 	local -a existing
 	existing=("${(@f)$(command herdr workspace list 2>/dev/null | jq -r '.result.workspaces[].label')}")
 
-	local dir name pane
+	local dir name agent_name pane
 	local -a agent_args
 	for dir in "$repo_path"/*/; do
 		[ -e "${dir}.git" ] || continue
 		name="$(basename "$dir")"
 		(( ${existing[(Ie)$name]} )) && continue
+
+		agent_name="$(_agent-sanitize-name "$name")"
 
 		pane="$(command herdr workspace create --cwd "$dir" --label "$name" --no-focus 2>/dev/null | jq -r '.result.root_pane.pane_id // empty')"
 		if [ -z "$pane" ]; then
@@ -89,13 +92,13 @@ function _init-agents-herdr {
 
 		agent_args=()
 		case "$agent" in
-			claude) agent_args=(-n "$name") ;;
-			copilot) agent_args=(--name "$name") ;;
+			claude) agent_args=(-n "$agent_name") ;;
+			copilot) agent_args=(--name "$agent_name") ;;
 		esac
 
 		local tries=0
-		until command herdr agent get "$name" >/dev/null 2>&1; do
-			command herdr agent start "$name" --kind "$agent" --pane "$pane" -- "${agent_args[@]}" >/dev/null 2>&1
+		until command herdr agent get "$agent_name" >/dev/null 2>&1; do
+			command herdr agent start "$agent_name" --kind "$agent" --pane "$pane" -- "${agent_args[@]}" >/dev/null 2>&1
 			(( tries++ >= 10 )) && {
 				echo "init-agents: failed to start agent for $name" >&2
 				break
