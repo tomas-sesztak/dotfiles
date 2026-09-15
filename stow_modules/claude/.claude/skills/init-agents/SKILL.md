@@ -1,34 +1,33 @@
 ---
 name: init-agents
-description: Ensure a window/workspace with an agent running exists for every top-level git repo under a path, via the init-agents zsh function. Use when the user wants to bulk-launch agents across sibling repos, e.g. "spin up agents for all my repos", "init agents under ~/worktrees".
+description: Start agent in every repo under a path. Use for bulk-launch agents across sibling repos.
+model: haiku
+disable-model-invocation: true
 ---
 
 # Init Agents
 
-Wraps the `init-agents` zsh function — multiplexer detection (herdr vs tmux) and the
-per-repo loop live in the script. This skill only picks the **agent** and the **path**.
+Script do work. Skill just pick agent and path.
 
 ## 1. Pick agent (AskUserQuestion)
 
 - **claude**
 - **copilot**
 
-(The tool's automatic "Other" choice covers any other agent/command name.)
+("Other" covers any other agent name.)
 
 ## 2. Pick path (AskUserQuestion)
 
-- **Parent of current repo** — compute and show in the option description:
+- **Parent of current repo** — show in description:
   ```sh
   dirname "$(git worktree list | head -1 | awk '{print $1}')"
   ```
-  (`git worktree list`'s first line is always the main checkout, even when run from a
-  linked worktree)
-- **Enter a path myself** — if chosen, ask the user directly for the literal path.
+- **Enter a path myself** — ask user for literal path.
 
-## 3. Launch
+## 3. Run script
 
 ```sh
 zsh -ic 'init-agents -a "$1" -p "$2"' _ "<agent>" "<path>"
 ```
 
-Report the function's output (which windows/workspaces got created, if any) to the user.
+Done. No report, no return-code check.
