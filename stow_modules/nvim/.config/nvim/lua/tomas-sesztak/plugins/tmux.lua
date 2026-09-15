@@ -11,7 +11,7 @@ function M.move(direction)
   if old_win == vim.api.nvim_get_current_win() then
     if vim.env.HERDR_ENV == "1" then
       local herdr_dir = { h = 'left', j = 'down', k = 'up', l = 'right' }
-      os.execute('herdr pane focus --direction ' .. herdr_dir[direction])
+      os.execute('herdr pane focus --direction ' .. herdr_dir[direction] .. ' >/dev/null 2>&1')
     elseif vim.env.TMUX then
       local tmux_dir = { h = 'L', j = 'D', k = 'U', l = 'R' }
       -- Execute the tmux command via a system call
