@@ -11,6 +11,8 @@ stow_modules/claude/.claude/**
 !stow_modules/claude/.claude/skills/init-agents/SKILL.md
 !stow_modules/claude/.claude/skills/fix-issues/
 !stow_modules/claude/.claude/skills/fix-issues/SKILL.md
+!stow_modules/claude/.claude/skills/cleanup-agents/
+!stow_modules/claude/.claude/skills/cleanup-agents/SKILL.md
 
 stow_modules/herdr/.config/herdr/**
 !stow_modules/herdr/.config/herdr/config.toml
