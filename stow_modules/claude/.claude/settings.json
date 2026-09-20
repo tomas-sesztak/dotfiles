@@ -24,7 +24,7 @@
     "command": "bash ~/.claude/statusline-command.sh"
   },
   "theme": "dark",
-  "editorMode": "normal",
+  "editorMode": "vim",
   "preferredNotifChannel": "auto",
   "terminalProgressBarEnabled": true,
   "remoteControlAtStartup": true,
