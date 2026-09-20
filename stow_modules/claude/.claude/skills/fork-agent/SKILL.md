@@ -2,7 +2,6 @@
 name: fork-agent
 description: Fork repo, start agent in new worktree. Use for new agent, new session, worktree, or GitHub issue.
 model: haiku
-disable-model-invocation: true
 ---
 
 # Fork Agent
