@@ -5,6 +5,10 @@ alias ll="ls -la"
 # tree shows all files
 alias tree="tree -a -I '.git'"
 
+# editors
+alias n="nvim"
+alias v="vim"
+
 # git
 alias ga="git add"
 alias ga.="git add ."
