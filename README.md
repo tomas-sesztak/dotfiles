@@ -56,8 +56,8 @@ reached, so movement feels seamless across editor and multiplexer.
 
 | Action | nvim | vim | tmux | herdr |
 |---|---|---|---|---|
-| Split vertically | `<leader>sv` | `<leader>sv` | `<prefix> s` then `h` | `<prefix> v` |
-| Split horizontally | `<leader>sh` | `<leader>sh` | `<prefix> s` then `v` | `<prefix> h` |
+| Split vertically | `<leader>sv` | `<leader>sv` | `<prefix> v` | `<prefix> v` |
+| Split horizontally | `<leader>sh` | `<leader>sh` | `<prefix> h` | `<prefix> h` |
 | Make splits equal size | `<leader>se` | `<leader>se` | ❌ | ❌ |
 | Close current split/pane | `<leader>sx` | `<leader>sx` | ❌ | ❌ |
 | Toggle fullscreen (zoom) pane | ❌ | ❌ | `<prefix> z` | ❌ |
