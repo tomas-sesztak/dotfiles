@@ -111,7 +111,7 @@ function M.fzf_buffer_picker()
   local win = vim.api.nvim_open_win(buf, true, win_opts)
 
   -- Launch fzf
-  local fzf_cmd = string.format("printf '%s' | fzf --reverse --cycle", input_data)
+  local fzf_cmd = string.format("printf '%s' | fzf --reverse --cycle --preview 'less {}'", input_data)
 
   vim.fn.termopen(fzf_cmd, {
     on_exit = function(_, exit_code)
