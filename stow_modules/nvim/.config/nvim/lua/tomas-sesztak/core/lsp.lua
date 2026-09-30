@@ -44,9 +44,9 @@ vim.api.nvim_create_autocmd('LspAttach', {
     local client = vim.lsp.get_client_by_id(ev.data.client_id)
     local bufnr = ev.buf
 
-    -- If this is the YAML server but the file is Ansible, detach it.
-    if client.name == "yaml-ls" and vim.bo[bufnr].filetype == 'yaml.ansible' then
-      vim.lsp.buf_detach_client(bufnr, client.id)
+    -- Only ansiblels may serve Ansible buffers. Scheduled: attach completes after LspAttach.
+    if client.name == "yamlls" and vim.bo[bufnr].filetype == 'yaml.ansible' then
+      vim.schedule(function() vim.lsp.buf_detach_client(bufnr, client.id) end)
       return
     end
 
