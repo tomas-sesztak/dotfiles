@@ -10,6 +10,7 @@ Requires GNU Stow.
 
 ```sh
 ./setup.sh deploy      # stow all packages into $HOME (safe to re-run)
+./setup.sh deploy --adopt  # take over existing files in $HOME (then `git diff` / `git checkout` to review)
 ./setup.sh undeploy    # remove all symlinks from $HOME
 ```
 
