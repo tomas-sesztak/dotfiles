@@ -1,49 +1,38 @@
 # dotfiles
 
-Personal dotfiles, managed with [GNU Stow](https://www.gnu.org/software/stow/) and
-deployed to `$HOME`. Each top-level directory under `stow_modules/` is a Stow
-package that mirrors the layout it targets under `$HOME` (e.g.
-`stow_modules/nvim/.config/nvim/` deploys to `~/.config/nvim`).
+Personal dotfiles, deployed to `$HOME` with [GNU Stow](https://www.gnu.org/software/stow/).
+Each top-level directory under `stow_modules/` is an auto-discovered Stow package
+mirroring its target layout (e.g. `stow_modules/nvim/.config/nvim/` → `~/.config/nvim`).
 
 ## Getting started
 
-Prerequisite: [GNU Stow](https://www.gnu.org/software/stow/) must be installed.
+Requires GNU Stow.
 
 ```sh
 ./setup.sh deploy      # stow all packages into $HOME (safe to re-run)
 ./setup.sh undeploy    # remove all symlinks from $HOME
 ```
 
-Packages are auto-discovered — every top-level directory under `stow_modules/` is
-treated as a Stow package, so no changes to `setup.sh` are needed when adding a new
-one.
-
 ## Packages
-
-Packages live under `stow_modules/`.
 
 | Package | Deploys to | Notes |
 |---|---|---|
-| `claude/` | `~/.claude` | Only `CLAUDE.md`, `settings.json`, `statusline-command.sh`, `hooks/` and `skills/` are tracked; the rest of `~/.claude` is runtime/secret state, excluded via `.gitignore` allowlisting. |
-| `copilot/` | `~/.copilot` | Tracks `settings.json` (Copilot CLI settings, e.g. vim editor mode and footer fields) and `copilot-instructions.md`, a symlink to `../../claude/.claude/CLAUDE.md` so both tools share one global instructions source. |
-| `herdr/` | `~/.config/herdr` | `config.toml` and `scripts/smart-pane-nav.sh` are tracked; the rest (logs, sockets, session state) is runtime state, excluded via `.gitignore` allowlisting. |
-| `nvim/` | `~/.config/nvim` | Fully tracked — no runtime state lives under this directory. |
-| `tmux/` | `~/.tmux.conf`, `~/.tmux` | Fully tracked — no runtime state lives under this directory. `~/.tmux.conf` sources `~/.tmux/plugins/init.conf`, which sources each plugin file in `~/.tmux/plugins/`. |
-| `vim/` | `~/.vimrc`, `~/.vim` | Fully tracked — no runtime state lives under this directory. `~/.vimrc` sources `~/.vim/config/{deps,fzf,tmux}.vim`; `tmux.vim` defines `TmuxMove()` for seamless vim↔tmux pane movement. |
-| `zsh/` | `~/.zshrc`, `~/.config/zsh/functions`, `~/.config/zsh/completions` | Completion files are tracked; regenerate them with `generate_completions` and commit the diff. `.zshrc` prepends the [XDG](https://specifications.freedesktop.org/basedir-spec/latest/) standard `~/.local/bin` to `PATH` (if present) for user-supplied binaries. |
+| `claude/` | `~/.claude` | Config, hooks and skills tracked; runtime/secret state excluded via `.gitignore` allowlist. |
+| `copilot/` | `~/.copilot` | Whole directory tracked; `copilot-instructions.md` symlinks to Claude's `CLAUDE.md`. |
+| `herdr/` | `~/.config/herdr` | Config and scripts tracked; runtime state excluded via `.gitignore` allowlist. |
+| `nvim/` | `~/.config/nvim` | Whole directory tracked. |
+| `tmux/` | `~/.tmux.conf`, `~/.tmux` | Whole directory tracked. |
+| `vim/` | `~/.vimrc`, `~/.vim` | Whole directory tracked. |
+| `zsh/` | `~/.zshrc`, `~/.config/zsh/{functions,completions}` | Whole directory tracked; regenerate completions with `generate_completions`. |
 
 ## Hotkeys
 
-Neovim's and vim's leader key is `<Space>`. tmux's and herdr's prefix is both `C-a`
-(tmux's remapped from the default `C-b`; herdr's set to match). Claude Code has no
-custom keybindings configured in this repo, so it isn't listed below. ❌ marks an
-action a tool doesn't support/configure.
+Leader (nvim, vim): `<Space>`. Prefix (tmux, herdr): `C-a`. ❌ = not supported/configured.
 
 ### Pane & window movement
 
-Same physical keys move focus in all four tools — nvim's, vim's, and herdr's bindings
-fall back to a multiplexer (tmux or herdr; vim: tmux only) pane select when the split boundary is
-reached, so movement feels seamless across editor and multiplexer.
+Same keys everywhere; nvim, vim and herdr hand off to the neighbouring editor/multiplexer
+pane at the split edge (vim: tmux only).
 
 | Action | nvim | vim | tmux | herdr |
 |---|---|---|---|---|
@@ -104,9 +93,7 @@ reached, so movement feels seamless across editor and multiplexer.
 
 ### Shell (zsh)
 
-`functions/vi-mode.zsh` enables zsh's vi line-editing mode (`bindkey -v`),
-independent of the tools above — it applies to any zsh prompt, including inside
-tmux/herdr panes.
+vi line-editing mode (`bindkey -v`).
 
 | Action | Key |
 |---|---|
