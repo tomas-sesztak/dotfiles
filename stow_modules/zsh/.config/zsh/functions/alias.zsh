@@ -33,4 +33,4 @@ alias ghie="gh issue edit"
 
 # tmux
 alias tmux="tmux attach -t ${USER} || tmux new -s ${USER}"
-alias tks="tmux kill-server"
+alias tks="command tmux kill-server"
