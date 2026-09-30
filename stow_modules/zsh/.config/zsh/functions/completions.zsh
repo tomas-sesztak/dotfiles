@@ -2,6 +2,7 @@
 export COMPLETIONS_MANAGED=(
   "gh completion -s zsh"
   "oc completion zsh"
+  "herdr completion zsh"
 )
 
 # where custom completion lives
