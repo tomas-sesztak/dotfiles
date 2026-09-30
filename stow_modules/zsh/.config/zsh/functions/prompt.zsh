@@ -10,111 +10,69 @@ setopt transient_rprompt
 # %m => shortname host
 # %(?..) => prompt conditional - %(condition.true.false)
 
-_git_prompt_status() {
-  local INDEX STATUS
+_prompt_git_update() {
+  _PROMPT_GIT_COLOR=""
+  _PROMPT_GIT_STATUS=""
 
-  INDEX=$(command git status --porcelain -b 2>/dev/null)
+  local output
+  output=$(command git status --porcelain=v2 --branch 2>/dev/null) || return
 
-  STATUS=""
+  local line xy dirty=0 ahead=0 behind=0
+  local added=0 modified=0 deleted=0 renamed=0 unmerged=0 untracked=0
+  for line in "${(@f)output}"; do
+    case $line in
+      '# branch.ab '*)
+        local ab=(${=line})
+        ahead=${ab[3]#+}
+        behind=${ab[4]#-}
+        continue
+        ;;
+      '#'*) continue ;;
+      '? '*) untracked=1 ;;
+      'u '*) unmerged=1 ;;
+      [12]' '*)
+        xy=${line[3,4]}
+        [[ ${xy[1]} == [AM] ]] && added=1
+        [[ ${xy[2]} == [MT] ]] && modified=1
+        [[ $xy == *D* ]] && deleted=1
+        [[ ${xy[1]} == R ]] && renamed=1
+        ;;
+    esac
+    dirty=1
+  done
 
-  if $(echo "$INDEX" | command grep -E '^\?\? ' &>/dev/null); then
-    STATUS="$ZSH_THEME_GIT_PROMPT_UNTRACKED$STATUS"
+  if (( dirty || ahead || behind )); then
+    _PROMPT_GIT_COLOR="%F{#f7768e}"
+  else
+    _PROMPT_GIT_COLOR="%F{#9ece6a}"
   fi
 
-  if $(echo "$INDEX" | grep '^A  ' &>/dev/null); then
-    STATUS="$ZSH_THEME_GIT_PROMPT_ADDED$STATUS"
-  elif $(echo "$INDEX" | grep '^M  ' &>/dev/null); then
-    STATUS="$ZSH_THEME_GIT_PROMPT_ADDED$STATUS"
-  elif $(echo "$INDEX" | grep '^MM ' &>/dev/null); then
-    STATUS="$ZSH_THEME_GIT_PROMPT_ADDED$STATUS"
-  fi
-
-  if $(echo "$INDEX" | grep '^ M ' &>/dev/null); then
-    STATUS="$ZSH_THEME_GIT_PROMPT_MODIFIED$STATUS"
-  elif $(echo "$INDEX" | grep '^AM ' &>/dev/null); then
-    STATUS="$ZSH_THEME_GIT_PROMPT_MODIFIED$STATUS"
-  elif $(echo "$INDEX" | grep '^MM ' &>/dev/null); then
-    STATUS="$ZSH_THEME_GIT_PROMPT_MODIFIED$STATUS"
-  elif $(echo "$INDEX" | grep '^ T ' &>/dev/null); then
-    STATUS="$ZSH_THEME_GIT_PROMPT_MODIFIED$STATUS"
-  fi
-
-  if $(echo "$INDEX" | grep '^R  ' &>/dev/null); then
-    STATUS="$ZSH_THEME_GIT_PROMPT_RENAMED$STATUS"
-  fi
-
-  if $(echo "$INDEX" | grep '^ D ' &>/dev/null); then
-    STATUS="$ZSH_THEME_GIT_PROMPT_DELETED$STATUS"
-  elif $(echo "$INDEX" | grep '^D  ' &>/dev/null); then
-    STATUS="$ZSH_THEME_GIT_PROMPT_DELETED$STATUS"
-  elif $(echo "$INDEX" | grep '^AD ' &>/dev/null); then
-    STATUS="$ZSH_THEME_GIT_PROMPT_DELETED$STATUS"
-  fi
-
-  if $(command git rev-parse --verify refs/stash >/dev/null 2>&1); then
-    STATUS="$ZSH_THEME_GIT_PROMPT_STASHED$STATUS"
-  fi
-
-  if $(echo "$INDEX" | grep '^UU ' &>/dev/null); then
-    STATUS="$ZSH_THEME_GIT_PROMPT_UNMERGED$STATUS"
-  fi
-
-  if $(echo "$INDEX" | grep '^## [^ ]\+ .*ahead' &>/dev/null); then
-    STATUS="$ZSH_THEME_GIT_PROMPT_AHEAD$STATUS"
-  fi
-
-  if $(echo "$INDEX" | grep '^## [^ ]\+ .*behind' &>/dev/null); then
-    STATUS="$ZSH_THEME_GIT_PROMPT_BEHIND$STATUS"
-  fi
-
-  if $(echo "$INDEX" | grep '^## [^ ]\+ .*diverged' &>/dev/null); then
-    STATUS="$ZSH_THEME_GIT_PROMPT_DIVERGED$STATUS"
-  fi
-
-  if [[ ! -z "$STATUS" ]]; then
-    echo " [ $STATUS]"
-  fi
+  local s=""
+  (( behind )) && s+=$ZSH_THEME_GIT_PROMPT_BEHIND
+  (( ahead )) && s+=$ZSH_THEME_GIT_PROMPT_AHEAD
+  (( unmerged )) && s+=$ZSH_THEME_GIT_PROMPT_UNMERGED
+  command git rev-parse --verify --quiet refs/stash >/dev/null && s+=$ZSH_THEME_GIT_PROMPT_STASHED
+  (( deleted )) && s+=$ZSH_THEME_GIT_PROMPT_DELETED
+  (( renamed )) && s+=$ZSH_THEME_GIT_PROMPT_RENAMED
+  (( modified )) && s+=$ZSH_THEME_GIT_PROMPT_MODIFIED
+  (( added )) && s+=$ZSH_THEME_GIT_PROMPT_ADDED
+  (( untracked )) && s+=$ZSH_THEME_GIT_PROMPT_UNTRACKED
+  [[ -n $s ]] && _PROMPT_GIT_STATUS=" [ $s]"
 }
 
 _prompt_git_branch() {
   autoload -Uz vcs_info
-  precmd_vcs_info() { vcs_info; }
-  precmd_functions+=(precmd_vcs_info)
   setopt prompt_subst
   zstyle ':vcs_info:git:*' formats '%b'
-}
-
-_prompt_git_status_color() {
-  # Check if we are in a git repo
-  if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
-    ZSH_THEME_GIT_PROMPT_PREFIX_COLOR=""
-    return
-  fi
-
-  # 1. Check for local changes (Modified, Added, Deleted, etc.)
-  local dirty=$(git status --porcelain 2>/dev/null)
-
-  # 2. Check for remote sync (Ahead/Behind)
-  # This counts commits between local and upstream
-  local ahead_behind=$(git rev-list --count --left-right @{u}...HEAD 2>/dev/null)
-
-  # Logic: If 'dirty' is not empty OR 'ahead_behind' contains any number > 0
-  if [[ -n "$dirty" ]] || [[ "$ahead_behind" =~ [1-9] ]]; then
-    ZSH_THEME_GIT_PROMPT_PREFIX_COLOR="%F{#f7768e}" # Red if changes exist
-  else
-    ZSH_THEME_GIT_PROMPT_PREFIX_COLOR="%F{#9ece6a}" # Green if totally clean/synced
-  fi
-}
-
-_prompt_git_info() {
-  _prompt_git_status_color
-  [ ! -z "$vcs_info_msg_0_" ] && echo "${ZSH_THEME_GIT_PROMPT_PREFIX_COLOR}$ZSH_THEME_GIT_PROMPT_PREFIX%F{#c0caf5}$vcs_info_msg_0_%f$ZSH_THEME_GIT_PROMPT_SUFFIX"
 }
 
 _prompt_precmd() {
   # Pass a line before each prompt
   print -P ''
-  _prompt_git_status_color
+  vcs_info
+  _prompt_git_update
+  _PROMPT_GIT_INFO=""
+  [[ -n $vcs_info_msg_0_ ]] && _PROMPT_GIT_INFO="${_PROMPT_GIT_COLOR}${ZSH_THEME_GIT_PROMPT_PREFIX}%F{#c0caf5}${vcs_info_msg_0_}%f"
 }
 
 _prompt_setup() {
@@ -132,23 +90,23 @@ _prompt_setup() {
   autoload -Uz add-zsh-hook
   add-zsh-hook precmd _prompt_precmd
 
-  ZSH_THEME_GIT_PROMPT_PREFIX="\u03bb%f:"
+  ZSH_THEME_GIT_PROMPT_PREFIX=$'\u03bb%f:'
   ZSH_THEME_GIT_PROMPT_DIRTY=""
   ZSH_THEME_GIT_PROMPT_CLEAN=""
 
   ZSH_THEME_GIT_PROMPT_ADDED="%F{#9ece6a}+%f "
-  ZSH_THEME_GIT_PROMPT_MODIFIED="%F{#7aa2f7}\u2605%f "
+  ZSH_THEME_GIT_PROMPT_MODIFIED=$'%F{#7aa2f7}\u2605%f '
   ZSH_THEME_GIT_PROMPT_DELETED="%F{#f7768e}x%f "
-  ZSH_THEME_GIT_PROMPT_RENAMED="%F{#bb9af7}\u279c%f "
+  ZSH_THEME_GIT_PROMPT_RENAMED=$'%F{#bb9af7}\u279c%f '
   ZSH_THEME_GIT_PROMPT_UNMERGED="%F{#e0af68}=%f "
-  ZSH_THEME_GIT_PROMPT_UNTRACKED="%F{#c0caf5}\u25cf%f "
-  ZSH_THEME_GIT_PROMPT_STASHED="%B%F{#f7768e}\u2757%f%b "
-  ZSH_THEME_GIT_PROMPT_BEHIND="%B%F{#f7768e}\u2193%f%b "
-  ZSH_THEME_GIT_PROMPT_AHEAD="%B%F{#9ece6a}\u2191%f%b "
+  ZSH_THEME_GIT_PROMPT_UNTRACKED=$'%F{#c0caf5}\u25cf%f '
+  ZSH_THEME_GIT_PROMPT_STASHED=$'%B%F{#f7768e}\u2757%f%b '
+  ZSH_THEME_GIT_PROMPT_BEHIND=$'%B%F{#f7768e}\u2193%f%b '
+  ZSH_THEME_GIT_PROMPT_AHEAD=$'%B%F{#9ece6a}\u2191%f%b '
 
   _prompt_git_branch
-  #  RPROMPT='$(_prompt_git_info) $(_git_prompt_status) %*'
-  PROMPT=$'%F{#c0caf5}%n%f@%F{#7aa2f7}%m:%F{#c0caf5}%~ $(_prompt_git_info) $(_git_prompt_status)\n%B%F{#7aa2f7}>%f%b '
+  #  RPROMPT='${_PROMPT_GIT_INFO} ${_PROMPT_GIT_STATUS} %*'
+  PROMPT=$'%F{#c0caf5}%n%f@%F{#7aa2f7}%m:%F{#c0caf5}%~ ${_PROMPT_GIT_INFO} ${_PROMPT_GIT_STATUS}\n%B%F{#7aa2f7}>%f%b '
 }
 
 _prompt_setup
