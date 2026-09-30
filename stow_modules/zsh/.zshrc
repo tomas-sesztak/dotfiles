@@ -17,7 +17,13 @@ fi
 # Load custom configuration from ~/.config/zsh
 
 for FILE in "${HOME}"/.config/zsh/functions/**/*.zsh; do
+  [[ $FILE == */late/* ]] && continue
   if [ -f "$FILE" ]; then
     source "$FILE"
   fi
+done
+
+# Sourced last (e.g. zsh-syntax-highlighting must follow all widget definitions)
+for FILE in "${HOME}"/.config/zsh/functions/late/*.zsh(N); do
+  source "$FILE"
 done

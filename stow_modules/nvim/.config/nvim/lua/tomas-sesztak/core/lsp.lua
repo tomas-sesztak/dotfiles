@@ -40,17 +40,21 @@ vim.filetype.add({
 })
 
 vim.api.nvim_create_autocmd('LspAttach', {
+  group = vim.api.nvim_create_augroup("tomas-sesztak.lsp", { clear = true }),
   callback = function(ev)
     local client = vim.lsp.get_client_by_id(ev.data.client_id)
     local bufnr = ev.buf
 
-    -- If this is the YAML server but the file is Ansible, detach it.
-    if client.name == "yaml-ls" and vim.bo[bufnr].filetype == 'yaml.ansible' then
-      vim.lsp.buf_detach_client(bufnr, client.id)
+    -- Only ansiblels may serve Ansible buffers. Scheduled: attach completes after LspAttach.
+    if client.name == "yamlls" and vim.bo[bufnr].filetype == 'yaml.ansible' then
+      vim.schedule(function() vim.lsp.buf_detach_client(bufnr, client.id) end)
       return
     end
 
     vim.keymap.set('n', '<leader>ds', vim.diagnostic.open_float, { buffer = bufnr })
+    vim.keymap.set('n', '<leader>cf', function()
+      vim.lsp.buf.format({ async = true })
+    end, { buffer = bufnr, desc = "LSP Format Buffer" })
 
     if client:supports_method('textDocument/completion') then
       vim.opt.completeopt = { 'menu', 'menuone', 'noinsert', 'fuzzy', 'popup' }
@@ -59,35 +63,18 @@ vim.api.nvim_create_autocmd('LspAttach', {
         vim.lsp.completion.get()
       end)
     end
-  end
-})
 
-vim.api.nvim_create_autocmd('LspAttach', {
-  callback = function(args)
-    local client = vim.lsp.get_client_by_id(args.data.client_id)
-
-    -- Only setup format-on-save if the server supports formatting
-    if client.server_capabilities.documentFormattingProvider then
+    -- Keyed by client name so :LspRestart replaces rather than duplicates.
+    if client:supports_method('textDocument/formatting') then
       vim.api.nvim_create_autocmd("BufWritePre", {
-        buffer = args.buf,
+        group = vim.api.nvim_create_augroup(
+          "tomas-sesztak.lsp.format." .. bufnr .. "." .. client.name, { clear = true }),
+        buffer = bufnr,
         callback = function()
-          vim.lsp.buf.format({
-            bufnr = args.buf,
-            id = client.id
-          })
+          vim.lsp.buf.format({ bufnr = bufnr, id = client.id })
         end,
       })
     end
-  end,
-})
-
-vim.api.nvim_create_autocmd('LspAttach', {
-  callback = function(args)
-    local opts = { buffer = args.buf, desc = "LSP Format Buffer" }
-    -- The Manual Shortcut
-    vim.keymap.set('n', '<leader>cf', function()
-      vim.lsp.buf.format({ async = true })
-    end, opts)
   end,
 })
 
