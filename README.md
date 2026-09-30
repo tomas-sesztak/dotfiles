@@ -28,7 +28,7 @@ Packages live under `stow_modules/`.
 | `copilot/` | `~/.copilot` | Only file is `copilot-instructions.md`, a symlink to `../../claude/.claude/CLAUDE.md` so both tools share one global instructions source. |
 | `herdr/` | `~/.config/herdr` | `config.toml` and `scripts/smart-pane-nav.sh` are tracked; the rest (logs, sockets, session state) is runtime state, excluded via `.gitignore` allowlisting. |
 | `nvim/` | `~/.config/nvim` | Fully tracked — no runtime state lives under this directory. |
-| `tmux/` | `~/.tmux.conf` | Fully tracked — no runtime state lives under this directory. |
+| `tmux/` | `~/.tmux.conf`, `~/.tmux` | Fully tracked — no runtime state lives under this directory. `~/.tmux.conf` sources `~/.tmux/plugins/init.conf`, which sources each plugin file in `~/.tmux/plugins/`. |
 | `vim/` | `~/.vimrc`, `~/.vim` | Fully tracked — no runtime state lives under this directory. `~/.vimrc` sources `~/.vim/config/tmux.vim`, which isn't tracked (never existed on disk); that `source` line errors on load until the file is added. |
 | `zsh/` | `~/.zshrc`, `~/.config/zsh/functions` | `~/.config/zsh/completions` is excluded — it's generated at runtime and isn't tracked. `.zshrc` prepends the [XDG](https://specifications.freedesktop.org/basedir-spec/latest/) standard `~/.local/bin` to `PATH` (if present) for user-supplied binaries. |
 
