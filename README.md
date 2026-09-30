@@ -25,7 +25,7 @@ Packages live under `stow_modules/`.
 | Package | Deploys to | Notes |
 |---|---|---|
 | `claude/` | `~/.claude` | Only `CLAUDE.md` and `settings.json` are tracked; the rest of `~/.claude` is runtime/secret state, excluded via `.gitignore` allowlisting. |
-| `copilot/` | `~/.copilot` | Only file is `copilot-instructions.md`, a symlink to `../../claude/.claude/CLAUDE.md` so both tools share one global instructions source. |
+| `copilot/` | `~/.copilot` | Tracks `settings.json` (Copilot CLI settings, e.g. vim editor mode and footer fields) and `copilot-instructions.md`, a symlink to `../../claude/.claude/CLAUDE.md` so both tools share one global instructions source. |
 | `herdr/` | `~/.config/herdr` | `config.toml` and `scripts/smart-pane-nav.sh` are tracked; the rest (logs, sockets, session state) is runtime state, excluded via `.gitignore` allowlisting. |
 | `nvim/` | `~/.config/nvim` | Fully tracked — no runtime state lives under this directory. |
 | `tmux/` | `~/.tmux.conf`, `~/.tmux` | Fully tracked — no runtime state lives under this directory. `~/.tmux.conf` sources `~/.tmux/plugins/init.conf`, which sources each plugin file in `~/.tmux/plugins/`. |
