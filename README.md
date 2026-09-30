@@ -25,12 +25,12 @@ Packages live under `stow_modules/`.
 | Package | Deploys to | Notes |
 |---|---|---|
 | `claude/` | `~/.claude` | Only `CLAUDE.md`, `settings.json`, `statusline-command.sh`, `hooks/` and `skills/` are tracked; the rest of `~/.claude` is runtime/secret state, excluded via `.gitignore` allowlisting. |
-| `copilot/` | `~/.copilot` | Only file is `copilot-instructions.md`, a symlink to `../../claude/.claude/CLAUDE.md` so both tools share one global instructions source. |
+| `copilot/` | `~/.copilot` | Tracks `settings.json` (Copilot CLI settings, e.g. vim editor mode and footer fields) and `copilot-instructions.md`, a symlink to `../../claude/.claude/CLAUDE.md` so both tools share one global instructions source. |
 | `herdr/` | `~/.config/herdr` | `config.toml` and `scripts/smart-pane-nav.sh` are tracked; the rest (logs, sockets, session state) is runtime state, excluded via `.gitignore` allowlisting. |
 | `nvim/` | `~/.config/nvim` | Fully tracked — no runtime state lives under this directory. |
-| `tmux/` | `~/.tmux.conf` | Fully tracked — no runtime state lives under this directory. |
+| `tmux/` | `~/.tmux.conf`, `~/.tmux` | Fully tracked — no runtime state lives under this directory. `~/.tmux.conf` sources `~/.tmux/plugins/init.conf`, which sources each plugin file in `~/.tmux/plugins/`. |
 | `vim/` | `~/.vimrc`, `~/.vim` | Fully tracked — no runtime state lives under this directory. `~/.vimrc` sources `~/.vim/config/tmux.vim`, which isn't tracked (never existed on disk); that `source` line errors on load until the file is added. |
-| `zsh/` | `~/.zshrc`, `~/.config/zsh/functions` | `~/.config/zsh/completions` is excluded — it's generated at runtime and isn't tracked. `.zshrc` prepends the [XDG](https://specifications.freedesktop.org/basedir-spec/latest/) standard `~/.local/bin` to `PATH` (if present) for user-supplied binaries. |
+| `zsh/` | `~/.zshrc`, `~/.config/zsh/functions`, `~/.config/zsh/completions` | Completion files are tracked; regenerate them with `generate_completions` and commit the diff. `.zshrc` prepends the [XDG](https://specifications.freedesktop.org/basedir-spec/latest/) standard `~/.local/bin` to `PATH` (if present) for user-supplied binaries. |
 
 ## Hotkeys
 

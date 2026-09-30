@@ -1,12 +1,15 @@
 #!/bin/sh
 set -eu
-dir="$1"
+dir="${1:-}"
 case "$dir" in
   left)  key=ctrl+h ;;
   down)  key=ctrl+j ;;
   up)    key=ctrl+k ;;
   right) key=ctrl+l ;;
+  *) echo "usage: $(basename "$0") left|down|up|right" >&2; exit 2 ;;
 esac
+
+command -v jq >/dev/null || { echo "smart-pane-nav: jq not found" >&2; exit 1; }
 
 info=$(herdr pane process-info --current)
 name=$(printf '%s' "$info" | jq -r '.result.process_info.foreground_processes[-1].name // empty')
