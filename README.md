@@ -42,7 +42,7 @@ action a tool doesn't support/configure.
 ### Pane & window movement
 
 Same physical keys move focus in all four tools — nvim's, vim's, and herdr's bindings
-fall back to a multiplexer (tmux or herdr) pane select when the split boundary is
+fall back to a multiplexer (tmux or herdr; vim: tmux only) pane select when the split boundary is
 reached, so movement feels seamless across editor and multiplexer.
 
 | Action | nvim | vim | tmux | herdr |
