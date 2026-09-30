@@ -1,7 +1,9 @@
 function fd {
 	local findPath="${1:-.}"
-	local path="$(find "${findPath}" -type d 2>/dev/null |grep -v -e '\.git' |fzf -i --border=rounded --preview 'ls -ltrh {}')"
-	[ -n "$path" ] && cd "$path" || exit 0
+	local dir
+	dir="$(find "${findPath}" -type d 2>/dev/null |grep -v -e '\.git' |fzf -i --border=rounded --preview 'ls -ltrh {}')"
+	[ -n "$dir" ] || return 0
+	cd "$dir"
 }
 
 function ff {
