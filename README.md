@@ -29,7 +29,7 @@ Packages live under `stow_modules/`.
 | `herdr/` | `~/.config/herdr` | `config.toml` and `scripts/smart-pane-nav.sh` are tracked; the rest (logs, sockets, session state) is runtime state, excluded via `.gitignore` allowlisting. |
 | `nvim/` | `~/.config/nvim` | Fully tracked — no runtime state lives under this directory. |
 | `tmux/` | `~/.tmux.conf`, `~/.tmux` | Fully tracked — no runtime state lives under this directory. `~/.tmux.conf` sources `~/.tmux/plugins/init.conf`, which sources each plugin file in `~/.tmux/plugins/`. |
-| `vim/` | `~/.vimrc`, `~/.vim` | Fully tracked — no runtime state lives under this directory. `~/.vimrc` sources `~/.vim/config/tmux.vim`, which isn't tracked (never existed on disk); that `source` line errors on load until the file is added. |
+| `vim/` | `~/.vimrc`, `~/.vim` | Fully tracked — no runtime state lives under this directory. `~/.vimrc` sources `~/.vim/config/{deps,fzf,tmux}.vim`; `tmux.vim` defines `TmuxMove()` for seamless vim↔tmux pane movement. |
 | `zsh/` | `~/.zshrc`, `~/.config/zsh/functions`, `~/.config/zsh/completions` | Completion files are tracked; regenerate them with `generate_completions` and commit the diff. `.zshrc` prepends the [XDG](https://specifications.freedesktop.org/basedir-spec/latest/) standard `~/.local/bin` to `PATH` (if present) for user-supplied binaries. |
 
 ## Hotkeys
@@ -42,7 +42,7 @@ action a tool doesn't support/configure.
 ### Pane & window movement
 
 Same physical keys move focus in all four tools — nvim's, vim's, and herdr's bindings
-fall back to a multiplexer (tmux or herdr) pane select when the split boundary is
+fall back to a multiplexer (tmux or herdr; vim: tmux only) pane select when the split boundary is
 reached, so movement feels seamless across editor and multiplexer.
 
 | Action | nvim | vim | tmux | herdr |
