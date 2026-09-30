@@ -99,3 +99,11 @@ vi line-editing mode (`bindkey -v`).
 |---|---|
 | Enter normal (vi command) mode | `jk` (from insert mode) |
 | Edit command line in `$EDITOR` | `v` (from normal mode) |
+
+Fuzzy commands (fzf; args default to `.`):
+
+| Command | Action |
+|---|---|
+| `fd [path]` | Fuzzy-pick a directory and `cd` into it |
+| `ff [path]` | Fuzzy-pick a file by name and open it in `$EDITOR` |
+| `fs [pattern]` | Fuzzy-pick a line matching `pattern` (ripgrep) and open its file in `$EDITOR` |
