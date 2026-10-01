@@ -49,3 +49,29 @@ bindkey -M vicmd v edit-command-line
 # Use jk to enter normal mode
 bindkey -M viins 'jk' vi-cmd-mode
 
+
+# Report vi-mode to tmux as pane option @vimode (shown in status-left); unset while a command runs
+if [[ -n $TMUX ]]; then
+  autoload -Uz add-zle-hook-widget
+
+  function _tmux_vimode_update() {
+    local mode=INSERT
+    if (( REGION_ACTIVE )); then
+      mode=VISUAL
+    elif [[ $KEYMAP == vicmd ]]; then
+      mode=NORMAL
+    fi
+    [[ $mode == $_tmux_vimode ]] && return
+    _tmux_vimode=$mode
+    tmux set-option -pq @vimode $mode
+  }
+
+  function _tmux_vimode_clear() {
+    _tmux_vimode=
+    tmux set-option -puq @vimode
+  }
+
+  add-zle-hook-widget line-init _tmux_vimode_update
+  add-zle-hook-widget line-pre-redraw _tmux_vimode_update
+  add-zle-hook-widget line-finish _tmux_vimode_clear
+fi
