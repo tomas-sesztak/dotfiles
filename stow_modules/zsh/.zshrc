@@ -1,6 +1,6 @@
 # macOS: add Homebrew paths (Apple Silicon and Intel)
 if [[ "$OSTYPE" == darwin* ]]; then
-  for BREW_PATH in /opt/homebrew/bin /opt/homebrew/sbin /usr/local/bin /usr/local/sbin; do
+  for BREW_PATH in /opt/homebrew/bin /opt/homebrew/sbin /usr/local/bin /usr/local/sbin /opt/homebrew/opt/gnu-sed/libexec/gnubin; do
     if [ -d "$BREW_PATH" ]; then
       PATH="${BREW_PATH}:${PATH}"
     fi
