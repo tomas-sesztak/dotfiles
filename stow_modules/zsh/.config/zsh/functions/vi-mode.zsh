@@ -63,12 +63,12 @@ if [[ -n $TMUX ]]; then
     fi
     [[ $mode == $_tmux_vimode ]] && return
     _tmux_vimode=$mode
-    tmux set-option -pq @vimode $mode
+    command tmux set-option -pq @vimode $mode
   }
 
   function _tmux_vimode_clear() {
     _tmux_vimode=
-    tmux set-option -puq @vimode
+    command tmux set-option -puq @vimode
   }
 
   add-zle-hook-widget line-init _tmux_vimode_update
