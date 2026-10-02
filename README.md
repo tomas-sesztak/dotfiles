@@ -17,9 +17,11 @@ Requires GNU Stow.
 
 | Package | Deploys to | Notes |
 |---|---|---|
+| `bash/` | `~/.bashrc` | Single file; `.bash_profile`, `.bash_logout` and `.bash_history` left unmanaged. |
 | `claude/` | `~/.claude` | Config, hooks and skills tracked; runtime/secret state excluded via `.gitignore` allowlist. |
 | `copilot/` | `~/.copilot` | Whole directory tracked; `copilot-instructions.md` symlinks to Claude's `CLAUDE.md`. |
 | `herdr/` | `~/.config/herdr` | Config and scripts tracked; runtime state excluded via `.gitignore` allowlist. |
+| `homebrew/` | `~/.Brewfile` | Single file (`brew bundle --global` default); sync Homebrew to it with `brew_update`. |
 | `nvim/` | `~/.config/nvim` | Whole directory tracked. |
 | `tmux/` | `~/.tmux.conf`, `~/.tmux` | Whole directory tracked. |
 | `vim/` | `~/.vimrc`, `~/.vim` | Whole directory tracked. |
