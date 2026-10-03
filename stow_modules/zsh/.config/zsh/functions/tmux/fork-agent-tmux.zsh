@@ -31,5 +31,7 @@ function _fork-agent-tmux {
 	esac
 	(( $#command_arg )) && cmd+=("${command_arg[-1]}")
 
-	command tmux new-window -d -n "$worktree_name" -c "$worktree_path" -- "${cmd[@]}"
+	local window_id
+	window_id="$(command tmux new-window -d -n "$worktree_name" -c "$worktree_path" -P -F '#{window_id}' -- "${cmd[@]}")"
+	command tmux set-option -wq -t "$window_id" @repo "$(_git-repo-key "$repo_root")"
 }
