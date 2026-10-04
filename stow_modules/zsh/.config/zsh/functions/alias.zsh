@@ -1,6 +1,6 @@
 # ensure ls support colors
 alias ls="ls --color"
-alias ll="ls -la"
+alias l="ls -lah"
 
 # tree shows all files
 alias tree="tree -a -I '.git'"
