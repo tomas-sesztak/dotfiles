@@ -60,3 +60,25 @@ fi
 
 stow "$stow_flag" -t "$HOME" -d "$MODULES_DIR" "${packages[@]}"
 echo "${action}ed: ${packages[*]}"
+
+ensure_zshrc_sources_init() {
+	local zshrc="$HOME/.zshrc"
+	local init="$MODULES_DIR/zsh/.config/zsh/functions/init/init.zsh"
+
+	# ~/.zshrc used to be stowed; drop the leftover link so it becomes a user-owned file
+	if [[ -L "$zshrc" ]]; then
+		rm "$zshrc"
+		echo "removed stale ~/.zshrc symlink"
+	fi
+
+	if [[ -f "$zshrc" ]] && grep -qF "$init" "$zshrc"; then
+		return
+	fi
+
+	printf '\n# this initializes the dotfiles, should be the last line\nsource "%s"\n' "$init" >>"$zshrc"
+	echo "added init.zsh source line to ~/.zshrc"
+}
+
+if [[ "$action" == "deploy" && " ${packages[*]} " == *" zsh "* ]]; then
+	ensure_zshrc_sources_init
+fi

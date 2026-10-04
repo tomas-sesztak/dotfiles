@@ -14,7 +14,7 @@ export PATH="${HOME}/.local/bin:${PATH}"
 # Load custom configuration from ~/.config/zsh
 
 for FILE in "${HOME}"/.config/zsh/functions/**/*.zsh; do
-  [[ $FILE == */late/* ]] && continue
+  [[ $FILE == */late/* || $FILE == */init/* ]] && continue
   if [ -f "$FILE" ]; then
     source "$FILE"
   fi
