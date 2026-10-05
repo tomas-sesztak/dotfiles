@@ -21,7 +21,7 @@ Requires GNU Stow.
 | `claude/` | `~/.claude` | Config, hooks and skills tracked; runtime/secret state excluded via `.gitignore` allowlist. |
 | `copilot/` | `~/.copilot` | Whole directory tracked; `copilot-instructions.md` symlinks to Claude's `CLAUDE.md`. |
 | `herdr/` | `~/.config/herdr` | Config and scripts tracked; runtime state excluded via `.gitignore` allowlist. |
-| `homebrew/` | `~/.Brewfile` | Single file (`brew bundle --global` default); sync Homebrew to it with `brew_update`. |
+| `homebrew/` | `~/.Brewfile_dotfiles` | Single file; `brew_update` merges it with an optional user-owned `~/.Brewfile` (unique entries) and syncs Homebrew to the result. |
 | `nvim/` | `~/.config/nvim` | Whole directory tracked. |
 | `tmux/` | `~/.tmux.conf`, `~/.tmux` | Whole directory tracked. |
 | `vim/` | `~/.vimrc`, `~/.vim` | Whole directory tracked. |
