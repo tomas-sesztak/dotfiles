@@ -1,0 +1,33 @@
+# Rules for guard-destructive.sh: a matching shell command requires user confirmation.
+#
+# Format (fields separated by " :: ", surrounding whitespace ignored):
+#   flags :: label :: pattern [:: unless-pattern]
+#
+#   flags           "-" = case-sensitive, "i" = case-insensitive (applies to both patterns)
+#   label           shown in the confirmation prompt
+#   pattern         grep -E regex matched against the full command string
+#   unless-pattern  optional; rule is skipped if this also matches
+#
+# Lines starting with "#" and blank lines are ignored.
+
+-  :: find -delete          :: \bfind\b.*[[:space:]]-delete\b
+-  :: git push --force      :: \bgit\b.*\bpush\b.*([[:space:]]--force|[[:space:]]-[[:alpha:]]*f\b|[[:space:]]\+[^[:space:]])
+
+# kubectl / oc (OpenShift): nothing changes a cluster (or the active kubeconfig/context) without
+# confirmation; also exec/shell into pods and printing secret values. "kubectl|oc" may be a full path;
+# the matched word must be the subcommand (only flags, with optional values, may precede it).
+# Specific rules first (for clearer labels), catch-all "k8s cluster change" last; a standalone
+# --dry-run[=client|server] command (no ; & |) is exempt from scale and the catch-all only.
+-  :: k8s delete                    :: (^|[;&|(`/[:space:]])(kubectl|oc)([[:space:]]+-[^[:space:]]+([[:space:]]+[^-[:space:]][^[:space:]]*)?)*[[:space:]]+delete([[:space:]]|$)
+-  :: k8s node drain/cordon/taint   :: (^|[;&|(`/[:space:]])(kubectl|oc)([[:space:]]+-[^[:space:]]+([[:space:]]+[^-[:space:]][^[:space:]]*)?)*[[:space:]]+(drain|cordon|uncordon|taint)([[:space:]]|$)
+-  :: k8s replace                   :: (^|[;&|(`/[:space:]])(kubectl|oc)([[:space:]]+-[^[:space:]]+([[:space:]]+[^-[:space:]][^[:space:]]*)?)*[[:space:]]+replace([[:space:]]|$)
+-  :: k8s apply --prune/--force     :: (^|[;&|(`/[:space:]])(kubectl|oc)([[:space:]]+-[^[:space:]]+([[:space:]]+[^-[:space:]][^[:space:]]*)?)*[[:space:]]+apply[[:space:]][^;&|]*--(prune|force|force-conflicts)([[:space:]]|$)
+-  :: k8s scale/idle/autoscale      :: (^|[;&|(`/[:space:]])(kubectl|oc)([[:space:]]+-[^[:space:]]+([[:space:]]+[^-[:space:]][^[:space:]]*)?)*[[:space:]]+(scale|idle|autoscale)([[:space:]]|$) :: ^[^;&|]*--dry-run(=client|=server)?([[:space:]]|$)[^;&|]*$
+-  :: k8s rollout change            :: (^|[;&|(`/[:space:]])(kubectl|oc)([[:space:]]+-[^[:space:]]+([[:space:]]+[^-[:space:]][^[:space:]]*)?)*[[:space:]]+(rollout[[:space:]]+(restart|undo|pause|resume|retry|cancel|latest)|rollback)([[:space:]]|$)
+-  :: k8s exec/shell/copy into pod  :: (^|[;&|(`/[:space:]])(kubectl|oc)([[:space:]]+-[^[:space:]]+([[:space:]]+[^-[:space:]][^[:space:]]*)?)*[[:space:]]+(exec|attach|debug|cp|rsh|rsync)([[:space:]]|$)
+-  :: k8s RBAC change               :: (^|[;&|(`/[:space:]])(kubectl|oc)([[:space:]]+-[^[:space:]]+([[:space:]]+[^-[:space:]][^[:space:]]*)?)*[[:space:]]+(create[[:space:]]+(cluster)?role(binding)?|auth[[:space:]]+reconcile|policy)([[:space:]]|$) :: (^|[;&|(`/[:space:]])(kubectl|oc)([[:space:]]+-[^[:space:]]+([[:space:]]+[^-[:space:]][^[:space:]]*)?)*[[:space:]]+policy[[:space:]]+(who-can|scc-)
+-  :: k8s certificate approve/deny  :: (^|[;&|(`/[:space:]])(kubectl|oc)([[:space:]]+-[^[:space:]]+([[:space:]]+[^-[:space:]][^[:space:]]*)?)*[[:space:]]+certificate[[:space:]]+(approve|deny)([[:space:]]|$)
+-  :: k8s kubeconfig/context change :: (^|[;&|(`/[:space:]])(kubectl|oc)([[:space:]]+-[^[:space:]]+([[:space:]]+[^-[:space:]][^[:space:]]*)?)*[[:space:]]+(config[[:space:]]+(set|unset|delete-|rename-context|use-context|use)|login([[:space:]]|$)|logout([[:space:]]|$)|project[[:space:]]+[^-[:space:]])
+-  :: oc adm (cluster admin)        :: (^|[;&|(`/[:space:]])(kubectl|oc)([[:space:]]+-[^[:space:]]+([[:space:]]+[^-[:space:]][^[:space:]]*)?)*[[:space:]]+adm([[:space:]]|$) :: (^|[;&|(`/[:space:]])(kubectl|oc)([[:space:]]+-[^[:space:]]+([[:space:]]+[^-[:space:]][^[:space:]]*)?)*[[:space:]]+adm[[:space:]]+(top|inspect|must-gather|node-logs|who-can|release[[:space:]]+info)([[:space:]]|$)
+-  :: k8s print secret values       :: (^|[;&|(`/[:space:]])(kubectl|oc)([[:space:]]+-[^[:space:]]+([[:space:]]+[^-[:space:]][^[:space:]]*)?)*[[:space:]]+(get[[:space:]]+(secrets?|secret/[^[:space:]]+)[[:space:]][^;&|]*-o|extract([[:space:]]|$))
+-  :: k8s cluster change            :: (^|[;&|(`/[:space:]])(kubectl|oc)([[:space:]]+-[^[:space:]]+([[:space:]]+[^-[:space:]][^[:space:]]*)?)*[[:space:]]+(create|apply|patch|edit|set|label|annotate|expose|run|new-app|new-build|new-project|start-build|cancel-build|import-image|tag|secrets|serviceaccounts|sa|image[[:space:]]+(mirror|append))([[:space:]]|$) :: ^[^;&|]*--dry-run(=client|=server)?([[:space:]]|$)[^;&|]*$
