@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "hooks": {
+    "preToolUse": [
+      {
+        "type": "command",
+        "matcher": "bash",
+        "bash": "\"$HOME/.copilot/hooks/guard-destructive.sh\"",
+        "timeoutSec": 5
+      }
+    ]
+  }
+}
