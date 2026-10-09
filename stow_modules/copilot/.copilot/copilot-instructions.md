@@ -3,25 +3,24 @@
 ## Tooling & Workflows
 - **Git:**
     - Never commit directly to `main` or `master`, always pull fresh main and create new branch
-    - When finished commit, push, PR
-    - Delete feature branch after merging
+    - Never commit, push, or open PRs without explicit permission
 - **Podman:**
-    - Ask before running commands containing prune rm or delete
+    - Ask before running destructive commands: `podman … prune`, `podman rm`, `podman rmi`, `podman volume rm`, `podman network rm`
 - **Safety:** Do not execute destructive file system operations (`rm -rf`, raw database drops) without explicit permission
 
 ## Code Style & Formatting
 - Write concise, self-documenting code. Favor strong typing (TypeScript, type hints in Python)
-- Do not add unnecessary code comments or docstrings explaining obvious logic; only comment on complex domain logic
-    - When adding comments, keep them as short as possible
+- Comment only non-obvious "why" (e.g. complex domain logic), one line max; no docstrings for obvious code
 - Avoid adding third-party dependencies for simple tasks that native/built-in libraries can handle
+- **Refactoring:** Keep diffs small and targeted. Do not rewrite surrounding unchanged code unnecessarily
 
 ## Communication & Formatting
 - **Tone:** Direct, concise, technical. Minimal conversational filler
 - **Errors:** When iterating over a fix, ask user for directions after 3 tries, do not loop endlessly
-- **Refactoring:** Keep diffs small and targeted. Do not rewrite surrounding unchanged code unnecessarily
 
 ## Project level instructions
-- **Rules:** always respect rules stated in project-level AGENTS.md/CLAUDE.md/.github/copilot-instructions.md
+- **Rules:** always respect rules stated in project-level AGENTS.md/CLAUDE.md/copilot-instructions.md
+- **Precedence:** project-level rules override these global rules on conflict
 
 ## Decision-Making Protocol
 
@@ -42,4 +41,6 @@ Do NOT ask for:
 - Formatting/style (follow existing conventions)
 - Obvious bug fixes
 - Anything with only one reasonable approach
+
+**Autopilot/autonomous mode:** don't ask (this protocol and the 3-tries rule included). Make the call, state assumptions, and report blockers in the final summary. Explicit-permission rules (commit, push, destructive ops) still apply: skip those actions and report them.
 
