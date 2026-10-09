@@ -1,5 +1,6 @@
 {
   "askUser": true,
+  "model": "claude-opus-5.5",
   "editorMode": "vim",
   "mergeStrategy": "rebase",
   "footer": {
