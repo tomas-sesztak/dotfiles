@@ -8,7 +8,6 @@
 - **Podman:**
     - Ask before running commands containing prune rm or delete
 - **Safety:** Do not execute destructive file system operations (`rm -rf`, raw database drops) without explicit permission
-    - Dangerous shell commands are gated by `hooks/command-approval.sh`; never try to work around an approval prompt
 
 ## Code Style & Formatting
 - Write concise, self-documenting code. Favor strong typing (TypeScript, type hints in Python)
