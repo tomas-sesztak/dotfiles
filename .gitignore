@@ -14,6 +14,13 @@ stow_modules/claude/.claude/**
 !stow_modules/claude/.claude/skills/cleanup-agents/
 !stow_modules/claude/.claude/skills/cleanup-agents/SKILL.md
 
+stow_modules/copilot/.copilot/**
+!stow_modules/copilot/.copilot/settings.json
+!stow_modules/copilot/.copilot/copilot-instructions.md
+!stow_modules/copilot/.copilot/hooks/
+!stow_modules/copilot/.copilot/hooks/command-approval.json
+!stow_modules/copilot/.copilot/hooks/command-approval.sh
+
 stow_modules/herdr/.config/herdr/**
 !stow_modules/herdr/.config/herdr/config.toml
 !stow_modules/herdr/.config/herdr/scripts/

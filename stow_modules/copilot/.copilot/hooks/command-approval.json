@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "hooks": {
+    "preToolUse": [
+      {
+        "type": "command",
+        "bash": "bash ~/.copilot/hooks/command-approval.sh",
+        "timeoutSec": 10
+      }
+    ]
+  }
+}
