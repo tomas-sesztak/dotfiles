@@ -25,3 +25,4 @@
 	- `homebrew/` → `~/.Brewfile_dotfiles`; `brew_update` (`zsh/.../brew.zsh`) merges it with optional user-owned `~/.Brewfile` into a `mktemp` file (unique entries, taps first) and syncs Homebrew to it.
 	- `herdr/` → `~/.config/herdr` (whole dir stowed). Same allowlist trick as `claude/`: only `config.toml` tracked; rest (`session.json`, `*.log`, `*.sock`, `.plugins.lock`) is untracked runtime state.
 - No build/lint/test tooling; verify via `./setup.sh deploy` + `ls -la` on the resulting symlinks.
+- `tmux` is a shell alias (attach/new session) that swallows flags; use `command tmux -S <sock> -f /dev/null …` for isolated-server tests.
