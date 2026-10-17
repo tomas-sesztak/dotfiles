@@ -23,7 +23,7 @@ Requires GNU Stow.
 | `herdr/` | `~/.config/herdr` | Config and scripts tracked; runtime state excluded via `.gitignore` allowlist. |
 | `homebrew/` | `~/.Brewfile_dotfiles` | Single file; `brew_update` merges it with an optional user-owned `~/.Brewfile` (unique entries) and syncs Homebrew to the result. |
 | `nvim/` | `~/.config/nvim` | Whole directory tracked. |
-| `tmux/` | `~/.tmux.conf`, `~/.tmux` | Whole directory tracked. |
+| `tmux/` | `~/.tmux` | Whole directory tracked; `~/.tmux.conf` stays user-owned — `setup.sh deploy` appends a `source-file …/.tmux/tmux.conf` line to it. |
 | `vim/` | `~/.vimrc`, `~/.vim` | Whole directory tracked. |
 | `zsh/` | `~/.config/zsh/{functions,completions}` | Whole directory tracked; `~/.zshrc` stays user-owned — `setup.sh deploy` appends a `source …/functions/init/init.zsh` line to it. Regenerate completions with `generate_completions`. |
 

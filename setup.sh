@@ -82,3 +82,25 @@ ensure_zshrc_sources_init() {
 if [[ "$action" == "deploy" && " ${packages[*]} " == *" zsh "* ]]; then
 	ensure_zshrc_sources_init
 fi
+
+ensure_tmux_conf_sources_config() {
+	local tmux_conf="$HOME/.tmux.conf"
+	local config="$MODULES_DIR/tmux/.tmux/tmux.conf"
+
+	# ~/.tmux.conf used to be stowed; drop the leftover link so it becomes a user-owned file
+	if [[ -L "$tmux_conf" ]]; then
+		rm "$tmux_conf"
+		echo "removed stale ~/.tmux.conf symlink"
+	fi
+
+	if [[ -f "$tmux_conf" ]] && grep -qF "$config" "$tmux_conf"; then
+		return
+	fi
+
+	printf '\n# this initializes the dotfiles\nsource-file "%s"\n' "$config" >>"$tmux_conf"
+	echo "added tmux.conf source line to ~/.tmux.conf"
+}
+
+if [[ "$action" == "deploy" && " ${packages[*]} " == *" tmux "* ]]; then
+	ensure_tmux_conf_sources_config
+fi
