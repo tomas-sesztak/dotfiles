@@ -28,5 +28,6 @@
   "preferredNotifChannel": "auto",
   "terminalProgressBarEnabled": true,
   "remoteControlAtStartup": true,
-  "agentPushNotifEnabled": true
+  "agentPushNotifEnabled": true,
+  "model": "opus"
 }
