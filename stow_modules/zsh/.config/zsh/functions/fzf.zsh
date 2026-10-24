@@ -8,9 +8,15 @@ function fd {
 
 function ff {
 	local findPath="${1:-.}"
-	local file
+	local file header
 	file="$(find "${findPath}" -type f 2>/dev/null |grep -v -e '\.git' |fzf -i --border=rounded --preview 'less {}')"
-	[ -n "$file" ] && "$EDITOR" "$file"
+	[ -n "$file" ] || return 0
+	IFS= read -r header < "$file"
+	if [[ $header == '$ANSIBLE_VAULT;'* ]]; then
+		ansible-vault edit "$file"
+	else
+		"$EDITOR" "$file"
+	fi
 }
 
 function fs {
