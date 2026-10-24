@@ -3,7 +3,7 @@
 ## Tooling & Workflows
 - **Git:**
     - Never commit directly to `main` or `master`
-    - Always pull fresh main and create new branch
+    - Always pull fresh main and create new branch before you start working
     - Delete feature branch after merging
 - **Podman:**
     - Ask before running commands containing prune rm or delete
