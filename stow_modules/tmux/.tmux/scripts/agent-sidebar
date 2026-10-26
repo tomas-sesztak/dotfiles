@@ -1,0 +1,95 @@
+#!/usr/bin/env bash
+# Agent sidebar: lists agents (pane options @agent*) grouped by repo.
+# Redraws on `wait-for agents-changed` (signalled by agent-report) and every 30s for git changes.
+TAB=$'\t'
+ESC=$'\e'
+c() { printf '%s[38;2;%sm' "$ESC" "$1"; }
+RESET="${ESC}[0m" BOLD="${ESC}[1m"
+FG=$(c '169;177;214') BLUE=$(c '122;162;247') GREY=$(c '86;95;137')
+YELLOW=$(c '224;175;104') RED=$(c '247;118;142') GREEN=$(c '158;206;106')
+
+timeout_cmd=$(command -v timeout || command -v gtimeout)
+
+# prints "<repo key>\t<repo name>\t<git summary>" for a path
+git_info() {
+	local key head='' oid='' ab='' dirty=0 line out
+	key=$(git -C "$1" rev-parse --path-format=absolute --git-common-dir 2>/dev/null) || {
+		printf '~\t(no repo)\t\n'
+		return
+	}
+	while IFS= read -r line; do
+		case $line in
+		'# branch.head '*) head=${line#\# branch.head } ;;
+		'# branch.oid '*) oid=${line#\# branch.oid } ;;
+		'# branch.ab '*) ab=${line#\# branch.ab } ;;
+		'# '*) ;;
+		?*) dirty=$((dirty + 1)) ;;
+		esac
+	done <<<"$(git -C "$1" status --porcelain=v2 --branch 2>/dev/null)"
+	[ "$head" = '(detached)' ] && head=${oid:0:7}
+	out=$head
+	[ "$dirty" -gt 0 ] && out+=" *$dirty"
+	# shellcheck disable=SC2086 # split "+A -B"
+	set -- $ab
+	[ "${1#+}" != "" ] && [ "${1#+}" != 0 ] && out+=" ↑${1#+}"
+	[ "${2#-}" != "" ] && [ "${2#-}" != 0 ] && out+=" ↓${2#-}"
+	key=${key%/}
+	local name=${key%/.git}
+	printf '%s\t%s\t%s\n' "$key" "${name##*/}" "$out"
+}
+
+render() {
+	local width active rows pane agent cmd state name path key repo git last='' glyph color
+	width=$(tmux display -p -t "$TMUX_PANE" '#{pane_width}')
+	active=$(tmux display -p -t "$TMUX_PANE" '#{@active_repo}')
+	rows=$(
+		tmux list-panes -a -F "#{?@agent_state,#{pane_id}$TAB#{@agent}$TAB#{pane_current_command}$TAB#{@agent_state}$TAB#{@agent_name}$TAB#{pane_current_path},}" |
+			sort -u |
+			while IFS=$TAB read -r pane agent cmd state name path; do
+				# skip stale state: agent exited without SessionEnd
+				[ -n "$pane" ] && [ "$cmd" = "$agent" ] || continue
+				printf '%s\t%s\t%s\n' "$(git_info "$path")" "$name" "$state"
+			done | sort -t "$TAB" -k2,2 -k4,4
+	)
+	[ -n "$rows" ] || {
+		printf ' %sno agents%s' "$GREY" "$RESET"
+		return
+	}
+	while IFS=$TAB read -r key repo git name state; do
+		if [ "$key" != "$last" ]; then
+			[ -n "$last" ] && printf '\n'
+			[ "$key" = "$active" ] && color=$BLUE || color=$FG
+			printf '%s%s %.*s%s\n' "$BOLD" "$color" "$((width - 1))" "$repo" "$RESET"
+			last=$key
+		fi
+		case $state in
+		working) glyph='●' color=$YELLOW ;;
+		blocked) glyph='▲' color=$RED ;;
+		done) glyph='○' color=$GREEN ;;
+		*) glyph='·' color=$GREY ;;
+		esac
+		printf ' %s%s %-8s%s %s%.*s%s\n' "$color" "$glyph" "$state" "$RESET" "$FG" "$((width - 12))" "$name" "$RESET"
+		printf '   %s%.*s%s\n' "$GREY" "$((width - 4))" "$git" "$RESET"
+	done <<<"$rows"
+}
+
+stty -echo 2>/dev/null
+printf '%s[?25l' "$ESC"
+trap 'printf "%s[?25h" "$ESC"' EXIT
+trap '[ -n "$waiter" ] && kill "$waiter" 2>/dev/null' WINCH
+waiter=''
+while :; do
+	gen=$(tmux show -gv @agents_gen 2>/dev/null)
+	frame=$(render)
+	printf '%s[H%s[2J%s' "$ESC" "$ESC" "$frame"
+	# an agent reported while rendering: redraw instead of waiting
+	[ "$(tmux show -gv @agents_gen 2>/dev/null)" != "$gen" ] && continue
+	if [ -n "$timeout_cmd" ]; then
+		"$timeout_cmd" 30 tmux wait-for agents-changed &
+	else
+		tmux wait-for agents-changed &
+	fi
+	waiter=$!
+	wait "$waiter"
+	waiter=''
+done
