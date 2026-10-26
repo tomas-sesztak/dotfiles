@@ -4,6 +4,7 @@ stow_modules/claude/.claude/**
 !stow_modules/claude/.claude/statusline-command.sh
 !stow_modules/claude/.claude/hooks/
 !stow_modules/claude/.claude/hooks/herdr-agent-state.sh
+!stow_modules/claude/.claude/hooks/tmux-agent-state.sh
 !stow_modules/claude/.claude/skills/
 !stow_modules/claude/.claude/skills/fork-agent/
 !stow_modules/claude/.claude/skills/fork-agent/SKILL.md

@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# agent-report <agent> <idle|working|blocked|done|clear> [name]
+# Stores agent state as pane options on $TMUX_PANE and wakes the sidebars; called by per-agent hooks.
+[ -n "${TMUX_PANE:-}" ] && [ $# -ge 2 ] || exit 0
+agent=$1 state=$2 name=${3:-} pane=$TMUX_PANE
+
+if [ "$state" = clear ]; then
+	tmux set -pu -t "$pane" @agent \; set -pu -t "$pane" @agent_name \; set -pu -t "$pane" @agent_state
+else
+	# done while visible to an attached client counts as seen
+	visible=$(tmux display -p -t "$pane" '#{&&:#{pane_active},#{&&:#{window_active},#{session_attached}}}')
+	[ "$state" = "done" ] && [ "$visible" = 1 ] && state=idle
+	[ -n "$name" ] || name=$(tmux display -p -t "$pane" '#{?@agent_name,#{@agent_name},#{b:pane_current_path}}')
+	tmux set -p -t "$pane" @agent "$agent" \; set -p -t "$pane" @agent_name "$name" \; set -p -t "$pane" @agent_state "$state"
+fi
+tmux set -gF @agents_gen '#{e|+:#{@agents_gen},1}' \; wait-for -S agents-changed
