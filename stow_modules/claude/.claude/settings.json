@@ -2,6 +2,7 @@
   "permissions": {
     "defaultMode": "auto"
   },
+  "model": "opus",
   "hooks": {
     "SessionStart": [
       {
@@ -28,6 +29,5 @@
   "preferredNotifChannel": "auto",
   "terminalProgressBarEnabled": true,
   "remoteControlAtStartup": true,
-  "agentPushNotifEnabled": true,
-  "model": "opus"
+  "agentPushNotifEnabled": true
 }
