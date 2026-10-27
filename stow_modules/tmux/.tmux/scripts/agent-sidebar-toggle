@@ -1,22 +1,20 @@
 #!/usr/bin/env bash
-# agent-sidebar-toggle [toggle|ensure|fix]
-#   toggle: flip global @sidebar_enabled, add/remove sidebars in all windows
-#   ensure: add a sidebar to every window lacking one (when enabled)
+# agent-sidebar-toggle [toggle <window>|fix]
+#   toggle: add/remove the sidebar in one window
 #   fix:    close windows holding only sidebars, restore sidebar width
 sidebar=~/.tmux/scripts/agent-sidebar
 
 sidebars() { tmux list-panes -a -F '#{?@sidebar,#{pane_id},}' | grep .; }
 
-ensure() {
-	[ "$(tmux show -gv @sidebar_enabled 2>/dev/null)" = 1 ] || return 0
-	local width has w id
-	width=$(tmux show -gv @sidebar_width)
-	has=$(tmux list-panes -a -F '#{?@sidebar,#{window_id},}' | sort -u)
-	for w in $(tmux list-windows -a -F '#{window_id}' | sort -u); do
-		grep -qx "$w" <<<"$has" && continue
-		id=$(tmux split-window -hbdf -l "$width" -t "$w" -P -F '#{pane_id}' "$sidebar") &&
+toggle() {
+	local w=$1 id
+	id=$(tmux list-panes -t "$w" -F '#{?@sidebar,#{pane_id},}' | grep .)
+	if [ -n "$id" ]; then
+		tmux kill-pane -t "$id"
+	else
+		id=$(tmux split-window -hbdf -l "$(tmux show -gv @sidebar_width)" -t "$w" -P -F '#{pane_id}' "$sidebar") &&
 			tmux set -p -t "$id" @sidebar 1
-	done
+	fi
 }
 
 fix() {
@@ -28,16 +26,7 @@ fix() {
 	for id in $(sidebars); do tmux resize-pane -t "$id" -x "$width"; done
 }
 
-case ${1:-toggle} in
-toggle)
-	if [ "$(tmux show -gv @sidebar_enabled 2>/dev/null)" = 1 ]; then
-		tmux set -g @sidebar_enabled 0
-		for id in $(sidebars); do tmux kill-pane -t "$id"; done
-	else
-		tmux set -g @sidebar_enabled 1
-		ensure
-	fi
-	;;
-ensure) ensure ;;
+case ${1:-} in
+toggle) toggle "${2:?window}" ;;
 fix) fix ;;
 esac
