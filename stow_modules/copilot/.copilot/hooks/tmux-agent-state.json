@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "hooks": {
+    "SessionStart": [
+      { "type": "command", "bash": "sh \"$HOME/.copilot/hooks/tmux-agent-state.sh\"", "timeoutSec": 5 }
+    ],
+    "UserPromptSubmit": [
+      { "type": "command", "bash": "sh \"$HOME/.copilot/hooks/tmux-agent-state.sh\"", "timeoutSec": 5 }
+    ],
+    "PreToolUse": [
+      { "type": "command", "matcher": "ask_user", "bash": "sh \"$HOME/.copilot/hooks/tmux-agent-state.sh\"", "timeoutSec": 5 }
+    ],
+    "PostToolUse": [
+      { "type": "command", "bash": "sh \"$HOME/.copilot/hooks/tmux-agent-state.sh\"", "timeoutSec": 5 }
+    ],
+    "PostToolUseFailure": [
+      { "type": "command", "bash": "sh \"$HOME/.copilot/hooks/tmux-agent-state.sh\"", "timeoutSec": 5 }
+    ],
+    "notification": [
+      { "type": "command", "matcher": "permission_prompt|elicitation_dialog", "bash": "sh \"$HOME/.copilot/hooks/tmux-agent-state.sh\"", "timeoutSec": 5 }
+    ],
+    "Stop": [
+      { "type": "command", "bash": "sh \"$HOME/.copilot/hooks/tmux-agent-state.sh\"", "timeoutSec": 5 }
+    ],
+    "SessionEnd": [
+      { "type": "command", "bash": "sh \"$HOME/.copilot/hooks/tmux-agent-state.sh\"", "timeoutSec": 5 }
+    ]
+  }
+}

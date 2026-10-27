@@ -35,6 +35,13 @@
         ]
       }
     ],
+    "PostToolUseFailure": [
+      {
+        "hooks": [
+          { "type": "command", "command": "sh ~/.claude/hooks/tmux-agent-state.sh", "timeout": 5 }
+        ]
+      }
+    ],
     "PreToolUse": [
       {
         "matcher": "^(AskUserQuestion|ExitPlanMode)$",
