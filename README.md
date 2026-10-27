@@ -65,7 +65,7 @@ pane at the split edge (vim: tmux only).
 | Open current buffer in new tab | `<leader>tf` | `<leader>tf` | ❌ | ❌ |
 | Switch to tab/window #1-9 | `<leader>t1` … `<leader>t9` | `<leader>t1` … `<leader>t9` | ❌ | ❌ |
 | Fuzzy window switcher | ❌ | ❌ | `<prefix> w` | ❌ |
-| Toggle agent sidebar (all windows) | ❌ | ❌ | `<prefix> s` | ❌ |
+| Toggle agent sidebar (current window) | ❌ | ❌ | `<prefix> s` | ❌ |
 | Fuzzy agent picker (blocked → done → working → idle) | ❌ | ❌ | `<prefix> a` | ❌ |
 
 ### Fuzzy find
