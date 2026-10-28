@@ -43,7 +43,7 @@ render() {
 	width=$(tmux display -p -t "$TMUX_PANE" '#{pane_width}')
 	active=$(tmux display -p -t "$TMUX_PANE" '#{@active_repo}')
 	rows=$(
-		tmux list-panes -a -F "#{?@agent_state,#{pane_id}$TAB#{@agent}$TAB#{pane_current_command}$TAB#{@agent_state}$TAB#{@agent_name}$TAB#{pane_current_path},}" |
+		tmux list-panes -a -F "#{?@agent_state,#{pane_id}$TAB#{@agent_cmd}$TAB#{pane_current_command}$TAB#{@agent_state}$TAB#{@agent_name}$TAB#{pane_current_path},}" |
 			sort -u |
 			while IFS=$TAB read -r pane agent cmd state name path; do
 				# skip stale state: agent exited without SessionEnd

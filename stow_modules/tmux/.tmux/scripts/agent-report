@@ -5,12 +5,14 @@
 agent=$1 state=$2 name=${3:-} pane=$TMUX_PANE
 
 if [ "$state" = clear ]; then
-	tmux set -pu -t "$pane" @agent \; set -pu -t "$pane" @agent_name \; set -pu -t "$pane" @agent_state
+	tmux set -pu -t "$pane" @agent \; set -pu -t "$pane" @agent_name \; set -pu -t "$pane" @agent_state \; set -pu -t "$pane" @agent_cmd
 else
 	# done while visible to an attached client counts as seen
 	visible=$(tmux display -p -t "$pane" '#{&&:#{pane_active},#{&&:#{window_active},#{session_attached}}}')
 	[ "$state" = "done" ] && [ "$visible" = 1 ] && state=idle
 	[ -n "$name" ] || name=$(tmux display -p -t "$pane" '#{?@agent_name,#{@agent_name},#{b:pane_current_path}}')
-	tmux set -p -t "$pane" @agent "$agent" \; set -p -t "$pane" @agent_name "$name" \; set -p -t "$pane" @agent_state "$state"
+	# hooks run while the agent is foreground: remember its command (e.g. node) for staleness checks
+	cmd=$(tmux display -p -t "$pane" '#{pane_current_command}')
+	tmux set -p -t "$pane" @agent "$agent" \; set -p -t "$pane" @agent_name "$name" \; set -p -t "$pane" @agent_state "$state" \; set -p -t "$pane" @agent_cmd "$cmd"
 fi
 tmux set -gF @agents_gen '#{e|+:#{@agents_gen},1}' \; wait-for -S agents-changed

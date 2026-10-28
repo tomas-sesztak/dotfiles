@@ -25,13 +25,16 @@ function _cleanup-agents-tmux {
 		esac
 	done
 
-	local name pane_cmds
+	local name busy
 	for wt_path in "${worktrees[@]}"; do
 		name="$(command basename "$wt_path")"
 		command tmux list-windows -F '#W' | grep -qx "$name" || continue
 
-		pane_cmds="$(command tmux list-panes -t "$name" -F '#{pane_current_command}')"
-		print -r -- "$pane_cmds" | grep -qxE 'claude|copilot' && continue
+		# busy: live agent not idle/done, or an agent-like process that never reported state
+		busy="$(command tmux list-panes -t "$name" -F '#{pane_current_command}	#{@agent_cmd}	#{@agent_state}' |
+			awk -F '\t' '$2 != "" && $1 == $2 { if ($3 != "idle" && $3 != "done") print; next }
+				$1 ~ /^(claude|copilot|node)$/ { print }')"
+		[ -n "$busy" ] && continue
 
 		if [ -n "$(command git -C "$wt_path" status --porcelain)" ]; then
 			echo "cleanup-agents: skipping $name, worktree has uncommitted changes" >&2

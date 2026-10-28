@@ -3,7 +3,7 @@
 TAB=$'\t'
 client=$1
 pane=$(
-	tmux list-panes -a -F "#{?@agent_state,#{pane_id}$TAB#{@agent}$TAB#{pane_current_command}$TAB#{@agent_state}$TAB#{@agent_name}$TAB#{b:pane_current_path}$TAB#{session_name}:#{window_name},}" |
+	tmux list-panes -a -F "#{?@agent_state,#{pane_id}$TAB#{@agent_cmd}$TAB#{pane_current_command}$TAB#{@agent_state}$TAB#{@agent_name}$TAB#{b:pane_current_path}$TAB#{session_name}:#{window_name},}" |
 		awk -F "$TAB" -v OFS="$TAB" '
 			BEGIN { rank["blocked"] = 0; rank["done"] = 1; rank["working"] = 2; rank["idle"] = 3 }
 			$1 != "" && $2 == $3 { print ($4 in rank ? rank[$4] : 4), $5, $1, sprintf("%-8s %-24s %-20s %s", $4, $5, $6, $7) }' |

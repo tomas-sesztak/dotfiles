@@ -7,7 +7,7 @@ eval "$(jq -r '@sh "event=\(.hook_event_name // "") transcript=\(.transcript_pat
 
 case ${event:-} in
 SessionStart) state=idle ;;
-UserPromptSubmit | PostToolUse) state=working ;;
+UserPromptSubmit | PostToolUse | PostToolUseFailure) state=working ;;
 PreToolUse | PermissionRequest | Notification) state=blocked ;;
 Stop) state="done" ;;
 SessionEnd) exec "$report" claude clear ;;
