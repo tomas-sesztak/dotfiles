@@ -21,6 +21,9 @@ cask "font-meslo-lg-nerd-font"
 # Terminals
 cask "iterm2"
 
+# Password management
+cask "keepassxc"
+
 # Kubernetes/Openshift
 brew "k9s"
 brew "kubernetes-cli"
