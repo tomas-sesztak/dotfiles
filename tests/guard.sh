@@ -73,6 +73,14 @@ output=$(jq -nc --arg a '{"command":"oc delete pod x"}' '{toolArgs: $a}' | "$GUA
 assert_eq "toolArgs as JSON string" ask "$(verdict "$output")"
 
 assert_eq "no command prints nothing" "" "$(jq -nc '{toolArgs: {}}' | "$GUARD")"
+assert_eq "other tool args print nothing" "" "$("$GUARD" <<<'{"toolArgs":{"path":"x"}}')"
+assert_eq "empty command prints nothing" "" "$("$GUARD" <<<'{"toolArgs":{"command":""}}')"
+
+for bad in 'not json' '' '[]' '{"toolArgs":"not json"}'; do
+	output=$(printf '%s' "$bad" | "$GUARD")
+	assert_eq "unparsable input asks: '$bad'" ask "$(verdict "$output")"
+	assert_contains "unparsable input reason: '$bad'" "cannot parse hook input" "$output"
+done
 
 copy="$SANDBOX/guard"
 mkdir "$copy"

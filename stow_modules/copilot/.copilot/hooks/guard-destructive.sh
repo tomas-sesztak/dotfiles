@@ -17,7 +17,8 @@ if ! command -v jq >/dev/null 2>&1; then
 fi
 
 # toolArgs may arrive as an object or a JSON-encoded string
-cmd=$(jq -r '.toolArgs | (if type == "string" then (fromjson? // .) else . end) | .command? // empty' 2>/dev/null)
+cmd=$(jq -er '.toolArgs | (if type == "string" then fromjson else . end) | .command? // ""' 2>/dev/null) ||
+    ask "cannot parse hook input"
 [[ -z "$cmd" ]] && exit 0
 
 [[ -r "$rules_file" ]] || ask "rules file missing: $rules_file"
