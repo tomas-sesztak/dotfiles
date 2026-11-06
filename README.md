@@ -13,6 +13,17 @@ Requires GNU Stow.
 ./setup.sh undeploy    # remove all symlinks from $HOME
 ```
 
+## Testing
+
+Local only. Tests run in a temp `$HOME` with a private tmux server, so they don't touch your real setup.
+
+```sh
+make              # everything below
+make lint         # syntax checks, shellcheck, JSON and TOML parsing
+make unit         # guard rules, name sanitizer, agent state hooks
+make integration  # setup.sh, tmux config and agent scripts, nvim and vim startup
+```
+
 ## Packages
 
 | Package | Deploys to | Notes |
