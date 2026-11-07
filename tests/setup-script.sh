@@ -41,6 +41,7 @@ TMUX_INIT=".tmux/tmux.conf"
 fresh_home
 assert_status "deploy" 0 "$SETUP" deploy
 assert_deployed
+assert_true "AGENTS.md not deployed" absent "$HOME/AGENTS.md"
 assert_eq ".zshrc source line" 1 "$(source_lines "$HOME/.zshrc" "$ZSH_INIT")"
 assert_eq ".tmux.conf source line" 1 "$(source_lines "$HOME/.tmux.conf" "$TMUX_INIT")"
 

@@ -58,7 +58,8 @@ if [[ ${#packages[@]} -eq 0 ]]; then
 	exit 0
 fi
 
-stow "$stow_flag" -t "$HOME" -d "$MODULES_DIR" "${packages[@]}"
+# per-package agent docs stay in the repo
+stow "$stow_flag" --ignore='^AGENTS\.md' -t "$HOME" -d "$MODULES_DIR" "${packages[@]}"
 echo "${action}ed: ${packages[*]}"
 
 ensure_zshrc_sources_init() {
