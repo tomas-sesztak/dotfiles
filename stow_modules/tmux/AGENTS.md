@@ -26,4 +26,5 @@ Deploys `.tmux/` → `~/.tmux` (whole dir stowed, fully tracked, no runtime stat
 - `tests/tmux.sh`, `tests/setup-script.sh`.
 
 ## TODO
-- none
+- Show all windows with at least one matching git repo (all splits count)
+- Window switcher: start new-window creation when input matches no window
