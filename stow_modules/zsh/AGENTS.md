@@ -35,4 +35,4 @@ Deploys `.config/zsh/functions` and `.config/zsh/completions` → `~/.config/zsh
 - `tests/tmux.sh` (agent scripts under tmux), `tests/sanitize.sh`, `tests/setup-script.sh`.
 
 ## TODO
-- none
+- `brew_update`: continue with cleanup steps after an installation error
