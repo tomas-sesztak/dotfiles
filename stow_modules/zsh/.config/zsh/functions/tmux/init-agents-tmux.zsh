@@ -17,7 +17,6 @@ function _init-agents-tmux {
 		local window_id
 		window_id="$(command tmux new-window -d -n "$name" -c "$dir" -P -F '#{window_id}')"
 		command tmux send-keys -t "$window_id" "${(j: :)${(q)cmd[@]}}" Enter
-		command tmux set-option -wq -t "$window_id" @repo "$(_git-repo-key "$dir")"
 		command tmux split-window -d -v -t "$window_id" -c "$dir"
 	done
 }

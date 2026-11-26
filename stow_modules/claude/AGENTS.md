@@ -6,7 +6,7 @@ Deploys `.claude/` → `~/.claude` (whole dir stowed).
 - `settings.json` — Claude Code settings; wires hooks and the status line.
 - `statusline-command.sh` — two-line status line (model/repo/branch, rate-limit bars).
 - `hooks/herdr-agent-state.sh` — herdr session-identity hook (pane labels/notifications), wired into `hooks.SessionStart`.
-- `hooks/tmux-agent-state.sh` — maps Claude hook events to tmux sidebar states via `~/.tmux/scripts/agent-report`; no-op outside tmux.
+- `hooks/tmux-agent-state.sh` — maps Claude hook events to tmux agent states via `~/.tmux/scripts/agent-report`; no-op outside tmux.
 - `skills/*/SKILL.md` — user skills (`fork-agent`, `init-agents`, `cleanup-agents`, `fix-issues`).
 
 ## Decisions

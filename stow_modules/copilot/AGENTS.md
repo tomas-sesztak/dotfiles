@@ -5,7 +5,7 @@ Deploys `.copilot/` → `~/.copilot` (whole dir stowed).
 - `settings.json` — Copilot CLI settings (vim editor mode, footer fields).
 - `copilot-instructions.md` — Copilot CLI global instructions.
 - `hooks/guard-destructive.{json,sh,rules}` — `preToolUse` hook on `bash` returning `permissionDecision: "ask"` for destructive commands.
-- `hooks/tmux-agent-state.{json,sh}` — Copilot counterpart of Claude's tmux sidebar hook.
+- `hooks/tmux-agent-state.{json,sh}` — Copilot counterpart of Claude's tmux agent-state hook.
 
 ## Decisions
 - `copilot-instructions.md` is a regular file, maintained separately from `claude/.claude/CLAUDE.md`.

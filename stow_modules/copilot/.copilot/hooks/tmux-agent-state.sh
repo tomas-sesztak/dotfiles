@@ -1,5 +1,5 @@
 #!/bin/sh
-# Copilot CLI hook → tmux agent sidebar: maps hook events to agent states for ~/.tmux/scripts/agent-report
+# Copilot CLI hook → tmux agent state: maps hook events to agent states for ~/.tmux/scripts/agent-report
 report="$HOME/.tmux/scripts/agent-report"
 [ -n "${TMUX_PANE:-}" ] && [ -x "$report" ] && command -v jq >/dev/null 2>&1 || exit 0
 
