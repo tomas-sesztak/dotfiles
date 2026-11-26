@@ -28,4 +28,4 @@ Deploys `.tmux/` → `~/.tmux` (whole dir stowed, fully tracked, no runtime stat
 - `tests/tmux.sh`, `tests/setup-script.sh`.
 
 ## TODO
-- Show all windows with at least one matching git repo (all splits count)
+- none
