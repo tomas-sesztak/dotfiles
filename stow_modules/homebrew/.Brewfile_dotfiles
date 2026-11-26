@@ -11,10 +11,6 @@ brew "bash"
 brew "coreutils"
 brew "zsh"
 
-# ZSH
-brew "zsh-autosuggestions"
-brew "zsh-syntax-highlighting"
-
 # Fonts
 cask "font-meslo-lg-nerd-font"
 

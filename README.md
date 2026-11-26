@@ -113,6 +113,7 @@ vi line-editing mode (`bindkey -v`).
 |---|---|
 | Enter normal (vi command) mode | `jk` (from insert mode) |
 | Edit command line in `$EDITOR` | `v` (from normal mode) |
+| Accept history autosuggestion | `→` / `End` / `<C-e>` (insert mode) |
 
 Fuzzy commands (fzf; args default to `.`):
 
