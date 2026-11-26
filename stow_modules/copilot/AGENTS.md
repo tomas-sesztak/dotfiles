@@ -20,4 +20,4 @@ Deploys `.copilot/` → `~/.copilot` (whole dir stowed).
 - `tests/guard.sh`, `tests/hooks.sh`.
 
 ## TODO
-- README's package table still says `copilot-instructions.md` symlinks to Claude's `CLAUDE.md`; it's a regular file.
+- none
