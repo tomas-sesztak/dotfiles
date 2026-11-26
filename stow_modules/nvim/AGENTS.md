@@ -12,6 +12,7 @@ Deploys `.config/nvim/` → `~/.config/nvim` (whole dir stowed, fully tracked, n
 - Every plugin/LSP server checks its external binaries on startup via `core/deps.lua` (`vim.fn.executable`, deferred `vim.notify` on ERROR); never blocks startup.
 - `plugins/fzf.lua` notifies on missing deps; `plugins/tmux.lua` has no deps check.
 - `core/lsp.lua` gates `vim.lsp.enable()` per server on its `cmd[1]` binary; secondary tools come from each `lsp/*.lua`'s own `deps` field and notify without blocking (e.g. `shellcheck` for `bashls`; linting only, no formatter).
+- `lsp/lua_ls.lua` passes `--logpath`/`--metapath` under `stdpath("cache")`; the default (install dir under read-only `/usr`) crashes the server.
 
 ## Tests
 - `tests/editors.sh` (headless startup without errors).
