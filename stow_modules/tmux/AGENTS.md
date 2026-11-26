@@ -9,6 +9,7 @@ Deploys `.tmux/` → `~/.tmux` (whole dir stowed, fully tracked, no runtime stat
 - `scripts/agent-report <agent> <state|clear> [name]` — agents report state into pane options.
 - `scripts/agent-sidebar`, `scripts/agent-sidebar-toggle` — sidebar render loop and `<prefix>+s` toggle.
 - `scripts/agent-picker` — `<prefix>+a` fzf agent picker.
+- `scripts/window-switcher [dir]` — `<prefix>+w` fzf window switcher; creates a window on no match.
 
 ## Decisions
 - `~/.tmux.conf` is user-owned, not tracked; `setup.sh deploy` appends a `source-file <repo>/…/.tmux/tmux.conf` line if missing and replaces a stale stowed `~/.tmux.conf` symlink.
@@ -20,6 +21,7 @@ Deploys `.tmux/` → `~/.tmux` (whole dir stowed, fully tracked, no runtime stat
 - Agent state lives in pane options `@agent`/`@agent_name`/`@agent_state`/`@agent_cmd`; panes whose current command differs from `@agent_cmd` are stale. Reports signal `wait-for agents-changed`.
 - Sidebar is a left `@sidebar` pane in the current window only; render loop blocks on wait-for with a 30s git refresh tick. `<prefix>+s` overrides the default session chooser.
 - Focus bounces off sidebars; `done` turns `idle` on pane focus.
+- Window switcher: Enter with no match (or alt-enter) asks for a dir: children of the pane dir's parent, or a typed existing path; Esc cancels.
 - Test with `command tmux -S <sock> -f /dev/null …`; `tmux` is a shell alias that swallows flags.
 
 ## Tests
@@ -27,4 +29,3 @@ Deploys `.tmux/` → `~/.tmux` (whole dir stowed, fully tracked, no runtime stat
 
 ## TODO
 - Show all windows with at least one matching git repo (all splits count)
-- Window switcher: start new-window creation when input matches no window

@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+# window-switcher [dir]: fzf over windows; a query matching none (or alt-enter) creates a window named after it,
+# in a dir picked from the children of dir's parent (default $PWD) or typed as a path
+pick() {
+	fzf --reverse --print-query --bind 'alt-enter:print-query' "$@"
+}
+
+out=$(tmux list-windows -F '#{window_index} #{window_name}' |
+	pick --prompt 'window> ' --header 'alt-enter: new window')
+[ $? -eq 130 ] && exit 0
+name=$(sed -n 1p <<<"$out")
+sel=$(sed -n 2p <<<"$out")
+if [ -n "$sel" ]; then
+	exec tmux select-window -t ":${sel%% *}"
+fi
+[ -n "$name" ] || exit 0
+
+base=$(dirname -- "${1:-$PWD}")
+query='' header="new window '$name' (alt-enter: use typed path)"
+while :; do
+	out=$( (
+		echo .
+		for d in "$base"/*/; do [ -d "$d" ] && basename -- "$d"; done
+	) | pick --prompt "dir ($base)> " --query "$query" --header "$header")
+	[ $? -eq 130 ] && exit 0
+	query=$(sed -n 1p <<<"$out")
+	path=$(sed -n 2p <<<"$out")
+	[ -n "$path" ] || path=$query
+	[ -n "$path" ] || exit 0
+	case $path in
+	\~) path=$HOME ;;
+	\~/*) path=$HOME/${path#"~/"} ;;
+	/*) ;;
+	.) path=$base ;;
+	*) path=$base/$path ;;
+	esac
+	[ -d "$path" ] && break
+	header="not a directory: $path"
+done
+exec tmux new-window -n "$name" -c "$path"
