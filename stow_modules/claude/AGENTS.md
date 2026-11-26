@@ -8,6 +8,7 @@ Deploys `.claude/` → `~/.claude` (whole dir stowed).
 - `hooks/herdr-agent-state.sh` — herdr session-identity hook (pane labels/notifications), wired into `hooks.SessionStart`.
 - `hooks/tmux-agent-state.sh` — maps Claude hook events to tmux agent states via `~/.tmux/scripts/agent-report`; no-op outside tmux.
 - `skills/*/SKILL.md` — user skills (`fork-agent`, `init-agents`, `cleanup-agents`, `fix-issues`).
+- `agents/tester.md` — Haiku subagent that runs tests and reports failures; no edit tools.
 
 ## Decisions
 - `~/.claude` holds real runtime/secret state; root `.gitignore` ignores `stow_modules/claude/.claude/**` and `!`-negates tracked files (nested files need their dir negated too).
