@@ -30,8 +30,8 @@ lint:
 	@echo "lint: ok"
 
 unit:
-	$(call require,bash zsh jq)
-	$(call run_tests,guard sanitize hooks brew)
+	$(call require,bash zsh jq git)
+	$(call run_tests,guard sanitize hooks brew update-check)
 
 integration:
 	$(call require,bash zsh git jq stow tmux nvim vim)

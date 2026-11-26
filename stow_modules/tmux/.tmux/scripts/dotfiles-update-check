@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+# tmux #() segment: commits on origin/main not yet in local main; fetches in the background at most hourly
+set -uo pipefail
+
+repo="${DOTFILES_REPO:-$(git -C "$(dirname -- "$(readlink -f -- "$0")")" rev-parse --show-toplevel 2>/dev/null)}" || exit 0
+[[ -n "$repo" ]] || exit 0
+
+stamp="${XDG_CACHE_HOME:-$HOME/.cache}/dotfiles/last-fetch"
+if [[ -z "$(find "$stamp" -mmin -60 2>/dev/null)" ]]; then
+	mkdir -p "$(dirname -- "$stamp")" && touch "$stamp"
+	(
+		GIT_TERMINAL_PROMPT=0 GIT_SSH_COMMAND='ssh -o BatchMode=yes -o ConnectTimeout=10' \
+			git -C "$repo" fetch --quiet origin main </dev/null >/dev/null 2>&1 &
+	)
+fi
+
+behind=$(git -C "$repo" rev-list --count main..origin/main 2>/dev/null) || exit 0
+((behind > 0)) && printf '#[fg=#e0af68]⬇ dotfiles %s#[default] ' "$behind"
+exit 0
