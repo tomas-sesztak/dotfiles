@@ -3,9 +3,10 @@ Deploys `.config/zsh/functions` and `.config/zsh/completions` → `~/.config/zsh
 
 ## Files
 - `functions/init/init.zsh` — entry point; Homebrew paths (incl. gnu-sed `gnubin`) on macOS, then sources everything else.
-- `functions/late/syntax.zsh` — zsh-syntax-highlighting, sourced last.
+- `functions/late/syntax.zsh` — native minimal syntax highlighting (commands green/red, strings, comments, separators), sourced last.
+- `functions/autosuggestions.zsh` — native history autosuggestions (grey ghost text; →/End/`^E` accept).
 - `functions/options.zsh` — global env exports (`EDITOR`, `HELM_REPOSITORY_CONFIG`).
-- `functions/{alias,autosuggestions,fzf,history,path,prompt,oc,weather}.zsh` — shell config and small functions.
+- `functions/{alias,fzf,history,path,prompt,oc,weather}.zsh` — shell config and small functions.
 - `functions/vi-mode.zsh` — vi line editing; sets tmux pane option `@vimode` via ZLE hooks.
 - `functions/brew.zsh` — `brew_update` (see `homebrew/AGENTS.md`).
 - `functions/completions.zsh` — `generate_completions()`.
@@ -17,6 +18,7 @@ Deploys `.config/zsh/functions` and `.config/zsh/completions` → `~/.config/zsh
 
 ## Decisions
 - `~/.zshrc` is user-owned, not tracked; `setup.sh deploy` appends a `source <repo>/…/functions/init/init.zsh` line if missing and replaces a stale stowed `~/.zshrc` symlink.
+- Autosuggestions/highlighting are native (no brew or system plugin packages): `line-pre-redraw` hooks that must return 0 (a failing hook stops later ones), each owning its `region_highlight` entries via `memo=autosuggest`/`memo=synhl` (zsh ≥ 5.9).
 - `init.zsh` globs and sources `functions/**/*.zsh` except `init/` and `late/`, then `late/*.zsh`; syntax highlighting must load after all ZLE widgets.
 - Completion files are tracked; regenerate via `generate_completions()` and commit the diff.
 - Agent scripts auto-detect the multiplexer: herdr first (`$HERDR_ENV`/`$HERDR_WORKSPACE_ID`), then tmux (`$TMUX`); error outside both. All take `-h`/`--help`.
@@ -31,7 +33,7 @@ Deploys `.config/zsh/functions` and `.config/zsh/completions` → `~/.config/zsh
 - `cleanup-agents` under tmux: a window is closable once every live agent pane (`@agent_cmd` match) is idle/done and no unreported `claude`/`copilot`/`node` process runs in it.
 
 ## Tests
-- `tests/tmux.sh` (agent scripts under tmux), `tests/sanitize.sh`, `tests/setup-script.sh`, `tests/brew.sh`.
+- `tests/tmux.sh` (agent scripts under tmux), `tests/sanitize.sh`, `tests/setup-script.sh`, `tests/brew.sh`, `tests/zsh-plugins.sh`.
 
 ## TODO
 - none
