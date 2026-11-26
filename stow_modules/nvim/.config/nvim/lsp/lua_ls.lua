@@ -1,5 +1,8 @@
+-- default log/meta dirs live in the read-only install dir
+local cache = vim.fn.stdpath("cache") .. "/lua-language-server"
+
 return {
-  cmd = { "lua-language-server" },
+  cmd = { "lua-language-server", "--logpath=" .. cache .. "/log", "--metapath=" .. cache .. "/meta" },
   filetypes = { "lua" },
   root_markers = {
     ".luarc.json",
