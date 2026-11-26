@@ -91,8 +91,6 @@ _prompt_setup() {
   add-zsh-hook precmd _prompt_precmd
 
   ZSH_THEME_GIT_PROMPT_PREFIX=$'\u03bb%f:'
-  ZSH_THEME_GIT_PROMPT_DIRTY=""
-  ZSH_THEME_GIT_PROMPT_CLEAN=""
 
   ZSH_THEME_GIT_PROMPT_ADDED="%F{#9ece6a}+%f "
   ZSH_THEME_GIT_PROMPT_MODIFIED=$'%F{#7aa2f7}\u2605%f '
@@ -105,7 +103,6 @@ _prompt_setup() {
   ZSH_THEME_GIT_PROMPT_AHEAD=$'%B%F{#9ece6a}\u2191%f%b '
 
   _prompt_git_branch
-  #  RPROMPT='${_PROMPT_GIT_INFO} ${_PROMPT_GIT_STATUS} %*'
   PROMPT=$'%F{#c0caf5}%n%f@%F{#7aa2f7}%m:%F{#c0caf5}%~ ${_PROMPT_GIT_INFO} ${_PROMPT_GIT_STATUS}\n%B%F{#7aa2f7}>%f%b '
 }
 

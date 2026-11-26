@@ -1,5 +1,4 @@
 return {
-  name = "ansible-ls",
   cmd = { "ansible-language-server", "--stdio" },
   filetypes = { "yaml.ansible" },
   deps = { "ansible", "python3", "ansible-lint" },

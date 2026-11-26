@@ -51,17 +51,14 @@ vim.api.nvim_create_autocmd('LspAttach', {
       return
     end
 
-    vim.keymap.set('n', '<leader>ds', vim.diagnostic.open_float, { buffer = bufnr })
+    vim.keymap.set('n', '<leader>ds', vim.diagnostic.open_float, { buffer = bufnr, desc = "Show diagnostics" })
     vim.keymap.set('n', '<leader>cf', function()
       vim.lsp.buf.format({ async = true })
     end, { buffer = bufnr, desc = "LSP Format Buffer" })
 
     if client:supports_method('textDocument/completion') then
-      vim.opt.completeopt = { 'menu', 'menuone', 'noinsert', 'fuzzy', 'popup' }
       vim.lsp.completion.enable(true, client.id, bufnr, { autotrigger = true })
-      vim.keymap.set('i', '<leader>cc', function()
-        vim.lsp.completion.get()
-      end)
+      vim.keymap.set('i', '<C-Space>', vim.lsp.completion.get, { buffer = bufnr, desc = "Trigger completion" })
     end
 
     -- Keyed by client name so :LspRestart replaces rather than duplicates.
