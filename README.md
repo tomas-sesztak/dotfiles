@@ -75,7 +75,7 @@ pane at the split edge (vim: tmux only).
 | Go to previous tab/workspace | `<leader>tp` | `<leader>tp` | ❌ | `<prefix> {` |
 | Open current buffer in new tab | `<leader>tf` | `<leader>tf` | ❌ | ❌ |
 | Switch to tab/window #1-9 | `<leader>t1` … `<leader>t9` | `<leader>t1` … `<leader>t9` | ❌ | ❌ |
-| Fuzzy window switcher | ❌ | ❌ | `<prefix> w` | ❌ |
+| Fuzzy window switcher (no match / `alt-enter`: new window, pick dir) | ❌ | ❌ | `<prefix> w` | ❌ |
 | Toggle agent sidebar (current window) | ❌ | ❌ | `<prefix> s` | ❌ |
 | Fuzzy agent picker (blocked → done → working → idle) | ❌ | ❌ | `<prefix> a` | ❌ |
 

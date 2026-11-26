@@ -76,6 +76,54 @@ TMUX_PANE=$pane "$report" claude clear
 assert_eq "agent-report clears options" "||" "$(agent_options "$pane")"
 assert_status "agent-report without pane is a no-op" 0 "$report" claude working
 
+# fzf stub: each call consumes the next "<exit code>|<line>|<line>…" from $FZF_REPLIES
+mkdir -p "$SANDBOX/bin"
+cat >"$SANDBOX/bin/fzf" <<'STUB'
+#!/usr/bin/env bash
+cat >/dev/null
+n=$(($(cat "$FZF_CALLS" 2>/dev/null || echo 0) + 1))
+echo "$n" >"$FZF_CALLS"
+IFS='|' read -ra reply <<<"$(sed -n "${n}p" "$FZF_REPLIES")"
+printf '%s\n' "${reply[@]:1}"
+exit "${reply[0]}"
+STUB
+chmod +x "$SANDBOX/bin/fzf"
+export FZF_REPLIES="$SANDBOX/fzf-replies" FZF_CALLS="$SANDBOX/fzf-calls"
+BASE="$SANDBOX/ws"
+mkdir -p "$BASE/cur" "$BASE/sub" "$HOME/x"
+switcher() {
+	printf '%s\n' "$@" >"$FZF_REPLIES"
+	rm -f "$FZF_CALLS"
+	PATH="$SANDBOX/bin:$PATH" "$HOME/.tmux/scripts/window-switcher" "$BASE/cur"
+}
+window_dir() {
+	tmux display -p -t "test:$1" '#{pane_current_path}'
+}
+window_count() {
+	tmux list-windows | wc -l | tr -d ' '
+}
+
+assert_contains "switcher binding" "window-switcher" "$keys"
+tmux new-window -d -n other
+switcher "0|q|$(tmux display -p -t test:other '#{window_index}') other"
+assert_eq "switcher selects window" other "$(tmux display -p -t test '#{window_name}')"
+switcher "1|w-sub" "0|su|sub"
+assert_eq "switcher picks child dir" "$BASE/sub" "$(window_dir w-sub)"
+switcher "1|w-base" "0||."
+assert_eq "switcher picks parent dir" "$BASE" "$(window_dir w-base)"
+switcher "1|w-home" "1|~/x"
+assert_eq "switcher resolves ~ path" "$HOME/x" "$(window_dir w-home)"
+switcher "0|w-alt" "0|sub"
+assert_eq "switcher alt-enter uses typed relative path" "$BASE/sub" "$(window_dir w-alt)"
+switcher "1|w-retry" "1|nope" "0||sub"
+assert_eq "switcher re-prompts on missing dir" 3 "$(cat "$FZF_CALLS")"
+assert_eq "switcher uses dir after re-prompt" "$BASE/sub" "$(window_dir w-retry)"
+count=$(window_count)
+switcher "130|"
+switcher "1|w-esc" "130|"
+switcher "1|"
+assert_eq "switcher cancel creates nothing" "$count" "$(window_count)"
+
 mkdir -p "$REPO"
 git -C "$REPO" init -q -b main
 git -C "$REPO" commit -q --allow-empty -m init
