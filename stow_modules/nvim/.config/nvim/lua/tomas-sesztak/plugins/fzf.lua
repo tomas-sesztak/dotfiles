@@ -48,8 +48,9 @@ function M.run(mode)
 
   local stdout_data = ""
 
-  -- We use vim.fn.termopen to run fzf inside the floating window
-  vim.fn.termopen(cmd, {
+  -- Run fzf in a terminal inside the floating window
+  vim.fn.jobstart(cmd, {
+    term = true,
     on_stdout = function(_, data)
       -- We keep track of the last non-empty line emitted
       for _, line in ipairs(data) do
@@ -113,7 +114,8 @@ function M.fzf_buffer_picker()
   -- Launch fzf
   local fzf_cmd = string.format("printf '%s' | fzf --reverse --cycle --preview 'less {}'", input_data)
 
-  vim.fn.termopen(fzf_cmd, {
+  vim.fn.jobstart(fzf_cmd, {
+    term = true,
     on_exit = function(_, exit_code)
       if exit_code == 0 then
         -- Grab the last line (the selection) from the terminal buffer

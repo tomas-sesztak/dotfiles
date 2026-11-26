@@ -1,5 +1,4 @@
 return {
-  name = "bashls",
   cmd = { "bash-language-server", "start" },
   filetypes = { "sh", "bash", "zsh" },
   deps = { "shellcheck" },

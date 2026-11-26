@@ -9,7 +9,7 @@ keymap.set("n", "<leader>,", ":nohl<CR>", { desc = "Clear search highlights" })
 
 -- increment decrement numbers
 keymap.set("n", "<leader>+", "<C-a>", { desc = "Increment number" }) -- increment number
-keymap.set("n", "<leader>-", "<C-x>", { desc = "Decrement number" }) -- increment number
+keymap.set("n", "<leader>-", "<C-x>", { desc = "Decrement number" }) -- decrement number
 
 -- window management
 keymap.set("n", "<leader>sv", "<C-w>v", { desc = "Split window vertically" })                   -- split window vertically
@@ -29,7 +29,7 @@ keymap.set("n", "<C-j>", function() tmux.move('j') end, { silent = true, desc = 
 keymap.set("n", "<C-k>", function() tmux.move('k') end, { silent = true, desc = "Move Up" })
 keymap.set("n", "<C-l>", function() tmux.move('l') end, { silent = true, desc = "Move Right" })
 
--- moving metween tabs
+-- moving between tabs
 keymap.set("n", "<leader>t1", "1gt", { desc = "Switch to tab #1" })
 keymap.set("n", "<leader>t2", "2gt", { desc = "Switch to tab #2" })
 keymap.set("n", "<leader>t3", "3gt", { desc = "Switch to tab #3" })

@@ -20,7 +20,7 @@ Local only. Tests run in a temp `$HOME` with a private tmux server, so they don'
 ```sh
 make              # everything below
 make lint         # syntax checks, shellcheck, JSON and TOML parsing
-make unit         # guard rules, name sanitizer, agent state hooks
+make unit         # guard rules, name sanitizer, agent state hooks, brew_update
 make integration  # setup.sh, tmux config and agent scripts, nvim and vim startup
 ```
 
@@ -101,7 +101,7 @@ pane at the split edge (vim: tmux only).
 | Action | nvim | vim | tmux | herdr |
 |---|---|---|---|---|
 | Open diagnostic float | `<leader>ds` | ❌ | ❌ | ❌ |
-| Trigger completion (insert mode) | `<leader>cc` | ❌ | ❌ | ❌ |
+| Trigger completion (insert mode) | `<C-Space>` | ❌ | ❌ | ❌ |
 | Format buffer | `<leader>cf` | ❌ | ❌ | ❌ |
 | Navigate completion popup (insert mode) | `<C-j>` / `<C-k>` | ❌ | ❌ | ❌ |
 

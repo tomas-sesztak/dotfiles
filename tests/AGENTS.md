@@ -1,5 +1,5 @@
 # tests
-Local only (no hooks/CI); run via `make` (`lint`, `unit`, `integration`).
+Local only (no git hooks or test CI); run via `make` (`lint`, `unit`, `integration`).
 
 ## Files
 - `lib.sh` — sourced by each test: assertions, temp `HOME`/XDG dirs, private tmux socket, cleanup trap.

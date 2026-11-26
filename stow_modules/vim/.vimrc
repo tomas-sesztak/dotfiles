@@ -12,7 +12,7 @@ filetype indent on
 set autoread
 au FocusGained,BufEnter * silent! checktime
 
-" Map leader to ,
+" Map leader to space
 let mapleader = " "
 
 " Turn on WildMenu
@@ -142,7 +142,7 @@ nnoremap <leader>- <C-x>
 " Reload configuration
 map <leader>r :source ~/.vimrc<cr>
 
-" Bind your Ctrl keys to the new function
+" Pane movement across vim/tmux
 nnoremap <silent> <C-h> :call TmuxMove('h')<CR>
 nnoremap <silent> <C-j> :call TmuxMove('j')<CR>
 nnoremap <silent> <C-k> :call TmuxMove('k')<CR>

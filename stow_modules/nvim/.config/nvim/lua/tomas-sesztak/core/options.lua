@@ -35,9 +35,6 @@ opt.signcolumn = "yes"  -- show sign column so that text doesn't shift
 -- backspace
 opt.backspace = "indent,eol,start" -- allow backspace on indent, EOL or insert mode start position
 
--- clipboard
---opt.clipboard:append("unnamedplus") -- use system clipboard as default register, enable copy&paste between neovim and system
-
 -- split windows
 opt.splitright = true -- split vertical window to the right
 opt.splitbelow = true -- split horizontal window to the bottom
@@ -45,3 +42,5 @@ opt.splitbelow = true -- split horizontal window to the bottom
 -- whitespace highlighting
 opt.list = true
 opt.listchars = { trail = "~", tab = ">~" }
+
+opt.completeopt = { "menu", "menuone", "noinsert", "fuzzy", "popup" }

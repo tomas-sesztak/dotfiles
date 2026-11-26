@@ -35,12 +35,10 @@ function cleanup-agents-help {
 	            that are idle or done, then \`herdr worktree remove\` to close
 	            the workspace and delete the checkout in one step.
 
-	    tmux    Active when \$TMUX is set. Plain tmux has no idle/working
-	            signal, so a window is only closable when none of its panes
-	            are still running \`claude\` or \`copilot\` (the agent process
-	            already exited but the window is still open, e.g. a shell
-	            pane left over from a split). A window whose agent is idle
-	            but still running is left alone under tmux.
+	    tmux    Active when \$TMUX is set. Uses the agent state reported by
+	            the claude/copilot hooks: a window is closable once every
+	            live agent pane is idle or done and no \`claude\`, \`copilot\`
+	            or \`node\` process without reported state runs in it.
 
 	  If neither multiplexer is detected, prints an error and exits.
 
