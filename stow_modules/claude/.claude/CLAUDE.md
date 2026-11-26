@@ -8,6 +8,7 @@
 - **Podman:**
     - Ask before running commands containing prune rm or delete
 - **Safety:** Do not execute destructive file system operations (`rm -rf`, raw database drops) without explicit permission
+- **Testing:** delegate test/lint runs to the `tester` agent
 
 ## Code Style & Formatting
 - Write concise, self-documenting code. Favor strong typing (TypeScript, type hints in Python)
