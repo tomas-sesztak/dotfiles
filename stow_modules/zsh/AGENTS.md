@@ -7,13 +7,12 @@ Deploys `.config/zsh/functions` and `.config/zsh/completions` → `~/.config/zsh
 - `functions/options.zsh` — global env exports (`EDITOR`, `HELM_REPOSITORY_CONFIG`).
 - `functions/{alias,autosuggestions,fzf,history,path,prompt,oc,weather}.zsh` — shell config and small functions.
 - `functions/vi-mode.zsh` — vi line editing; sets tmux pane option `@vimode` via ZLE hooks.
-- `functions/tmux-repo.zsh` — tags tmux windows with `@repo`.
 - `functions/brew.zsh` — `brew_update` (see `homebrew/AGENTS.md`).
 - `functions/completions.zsh` — `generate_completions()`.
 - `functions/{init-agents,fork-agent,cleanup-agents}.zsh` — dispatchers and `-help` functions.
 - `functions/tmux/*-tmux.zsh`, `functions/herdr/*-herdr.zsh` — per-multiplexer implementations.
 - `functions/herdr/herdr-reset.zsh` — `herdr-reset [-y]`: closes every workspace (current one last), opens a fresh one in `$HOME`; prompts unless `-y`.
-- `functions/helpers/_agent-sanitize-name.zsh`, `functions/helpers/_git-repo-key.zsh` — shared helpers.
+- `functions/helpers/_agent-sanitize-name.zsh` — shared helper.
 - `completions/_*` — generated completion files.
 
 ## Decisions
@@ -25,7 +24,7 @@ Deploys `.config/zsh/functions` and `.config/zsh/completions` → `~/.config/zsh
 - `init-agents -a <agent> -p <path>`: one window/workspace per top-level git repo under `<path>`, launching `<agent>` where missing; herdr mode auto-starts the herdr server.
 - `fork-agent -a <agent> -w <name> [-c "<cmd>"]` under herdr: `herdr worktree create` (repo from `$HERDR_WORKSPACE_ID`); `<cmd>` sent via `herdr agent prompt` once the agent runs.
 - `fork-agent` under tmux: plain `git worktree add` at `<parent-of-repo>/git-worktrees/<name>`, new unfocused window `<name>`; `<cmd>` is a trailing launch argument (no send-after mechanism).
-- Under tmux, scripts type the agent command into the pane shell (`send-keys`) so the pane survives the agent exiting; new windows get `@repo` via `_git-repo-key`.
+- Under tmux, scripts type the agent command into the pane shell (`send-keys`) so the pane survives the agent exiting.
 - Agent identities (herdr agent names, claude/copilot `-n`/`--name`) go through `_agent-sanitize-name` (lowercase, disallowed chars → `-`, strip leading non-letters, max 32) to match herdr's `^[a-z][a-z0-9_-]{0,31}$`; window/workspace labels and branch names stay unsanitized.
 - `cleanup-agents [-n]` closes only linked-worktree agents (never the main checkout) that are idle/done with a clean worktree (untracked counts as dirty), removing the worktree; `-n` is a dry run.
 - `cleanup-agents` under herdr: `herdr agent list`'s `agent_status`, then one `herdr worktree remove --workspace <id>`.

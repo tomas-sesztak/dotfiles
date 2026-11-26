@@ -60,7 +60,6 @@ start_tmux
 assert_status "tmux.conf loads" 0 tmux source-file "$HOME/.tmux.conf"
 keys=$(tmux list-keys)
 assert_contains "core binding" "resize-pane -Z" "$keys"
-assert_contains "sidebar plugin binding" "agent-sidebar-toggle" "$keys"
 assert_contains "picker binding" "agent-picker" "$keys"
 assert_contains "vim-integration binding" "select-pane -L" "$keys"
 assert_eq "pane border option" double "$(tmux show-options -gv pane-border-lines)"
@@ -75,6 +74,19 @@ assert_not_contains "agent_cmd recorded" "||" "$(tmux display -p -t "$pane" '|#{
 TMUX_PANE=$pane "$report" claude clear
 assert_eq "agent-report clears options" "||" "$(agent_options "$pane")"
 assert_status "agent-report without pane is a no-op" 0 "$report" claude working
+
+status_of() {
+	tmux display -p -t "test:$1" "$(tmux show -gv window-status-format)"
+}
+tmux new-window -d -n plain
+wait_for "plain pane ready" pane_idle_in_shell plain
+assert_eq "status hides window without agent" "" "$(status_of plain)"
+mark_agent plain "done"
+assert_contains "status shows window with live agent" plain "$(status_of plain)"
+tmux set -p -t test:plain @agent_cmd node
+assert_eq "status hides stale agent" "" "$(status_of plain)"
+tmux kill-window -t test:plain
+assert_eq "s restores session chooser" "choose-tree -Zs" "$(tmux list-keys -T prefix s | sed 's/.* s *//')"
 
 # fzf stub: each call consumes the next "<exit code>|<line>|<line>…" from $FZF_REPLIES
 mkdir -p "$SANDBOX/bin"
@@ -127,13 +139,11 @@ assert_eq "switcher cancel creates nothing" "$count" "$(window_count)"
 mkdir -p "$REPO"
 git -C "$REPO" init -q -b main
 git -C "$REPO" commit -q --allow-empty -m init
-REPO_KEY=$(git -C "$REPO" rev-parse --path-format=absolute --git-common-dir)
 
 fork wt-a
 assert_true "fork creates the worktree" test -e "$WORKTREES/wt-a/.git"
 assert_eq "fork creates the branch" wt-a "$(git -C "$WORKTREES/wt-a" branch --show-current)"
 assert_true "fork opens the window" has_window wt-a
-assert_eq "fork tags @repo" "$REPO_KEY" "$(tmux show-options -wqv -t test:wt-a @repo)"
 assert_not_contains "fork does not switch focus" wt-a "$(tmux display -p -t test '#W')"
 assert_contains "fork starts the agent" true "$(tmux capture-pane -p -t test:wt-a)"
 

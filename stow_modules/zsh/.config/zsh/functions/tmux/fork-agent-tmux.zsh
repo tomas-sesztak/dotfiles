@@ -34,5 +34,4 @@ function _fork-agent-tmux {
 	local window_id
 	window_id="$(command tmux new-window -d -n "$worktree_name" -c "$worktree_path" -P -F '#{window_id}')"
 	command tmux send-keys -t "$window_id" "${(j: :)${(q)cmd[@]}}" Enter
-	command tmux set-option -wq -t "$window_id" @repo "$(_git-repo-key "$repo_root")"
 }
