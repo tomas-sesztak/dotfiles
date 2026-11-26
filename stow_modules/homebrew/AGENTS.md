@@ -6,6 +6,7 @@ Deploys `.Brewfile_dotfiles` → `~/.Brewfile_dotfiles`.
 
 ## Decisions
 - `brew_update` (`zsh/.../brew.zsh`) merges it with optional user-owned `~/.Brewfile` into a `mktemp` file (unique entries, taps first) and syncs Homebrew to it.
+- An install failure still runs cleanup/upgrade/autoremove and returns non-zero; a failed `brew update` aborts.
 
 ## TODO
 - none

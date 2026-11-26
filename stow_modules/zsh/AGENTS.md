@@ -32,7 +32,7 @@ Deploys `.config/zsh/functions` and `.config/zsh/completions` → `~/.config/zsh
 - `cleanup-agents` under tmux: a window is closable once every live agent pane (`@agent_cmd` match) is idle/done and no unreported `claude`/`copilot`/`node` process runs in it.
 
 ## Tests
-- `tests/tmux.sh` (agent scripts under tmux), `tests/sanitize.sh`, `tests/setup-script.sh`.
+- `tests/tmux.sh` (agent scripts under tmux), `tests/sanitize.sh`, `tests/setup-script.sh`, `tests/brew.sh`.
 
 ## TODO
-- `brew_update`: continue with cleanup steps after an installation error
+- none

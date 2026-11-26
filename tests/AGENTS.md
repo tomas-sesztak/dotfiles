@@ -6,6 +6,7 @@ Local only (no hooks/CI); run via `make` (`lint`, `unit`, `integration`).
 - `guard.sh` (unit) — copilot `guard-destructive` rules.
 - `sanitize.sh` (unit) — `_agent-sanitize-name`.
 - `hooks.sh` (unit) — claude/copilot tmux agent-state hooks.
+- `brew.sh` (unit) — `brew_update` step order and failure handling, via a stub `brew`.
 - `setup-script.sh` (integration) — `setup.sh` deploy/undeploy, source lines, `--no-claude`, conflicts.
 - `tmux.sh` (integration) — tmux config and agent scripts on an isolated server.
 - `editors.sh` (integration) — nvim and vim start without errors.

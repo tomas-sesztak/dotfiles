@@ -31,7 +31,7 @@ lint:
 
 unit:
 	$(call require,bash zsh jq)
-	$(call run_tests,guard sanitize hooks)
+	$(call run_tests,guard sanitize hooks brew)
 
 integration:
 	$(call require,bash zsh git jq stow tmux nvim vim)
