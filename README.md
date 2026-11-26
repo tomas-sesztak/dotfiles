@@ -30,7 +30,7 @@ make integration  # setup.sh, tmux config and agent scripts, nvim and vim startu
 |---|---|---|
 | `bash/` | `~/.bashrc` | Single file; `.bash_profile`, `.bash_logout` and `.bash_history` left unmanaged. |
 | `claude/` | `~/.claude` | Config, hooks and skills tracked; runtime/secret state excluded via `.gitignore` allowlist. |
-| `copilot/` | `~/.copilot` | Whole directory tracked; `copilot-instructions.md` symlinks to Claude's `CLAUDE.md`. |
+| `copilot/` | `~/.copilot` | Whole directory tracked; `copilot-instructions.md` is maintained separately from Claude's `CLAUDE.md`. |
 | `herdr/` | `~/.config/herdr` | Config and scripts tracked; runtime state excluded via `.gitignore` allowlist. |
 | `homebrew/` | `~/.Brewfile_dotfiles` | Single file; `brew_update` merges it with an optional user-owned `~/.Brewfile` (unique entries) and syncs Homebrew to the result. |
 | `nvim/` | `~/.config/nvim` | Whole directory tracked. |
