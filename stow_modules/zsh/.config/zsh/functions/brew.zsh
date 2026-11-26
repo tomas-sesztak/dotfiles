@@ -15,12 +15,17 @@ function brew_update() {
     # Taps first so formulae from them resolve
     { grep '^tap ' <<<"$entries"; grep -v '^tap ' <<<"$entries"; } >"$brewfile"
 
-    brew update &&
-      brew bundle install --file="$brewfile" --upgrade &&
+    brew update || return 1
+    local rc=0
+    # An install failure must not skip cleanup
+    brew bundle install --file="$brewfile" --upgrade || rc=1
+    {
       brew bundle cleanup --file="$brewfile" --force &&
-      brew upgrade &&
-      brew autoremove &&
-      brew cleanup
+        brew upgrade &&
+        brew autoremove &&
+        brew cleanup
+    } || rc=1
+    return $rc
   } always {
     rm -f "$brewfile"
   }
