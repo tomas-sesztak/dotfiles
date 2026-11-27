@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
-# agent-picker <client>: fzf over agents (blocked, done, working, idle; then by name), jump to the chosen pane
+# agent-picker [client] (default $AGENT_CLIENT): fzf over agents (blocked, done, working, idle; then by name), jump to the chosen pane
 TAB=$'\t'
-client=$1
+client=${1:-$AGENT_CLIENT}
 pane=$(
 	tmux list-panes -a -F "#{?@agent_state,#{pane_id}$TAB#{@agent_cmd}$TAB#{pane_current_command}$TAB#{@agent_state}$TAB#{@agent_name}$TAB#{b:pane_current_path}$TAB#{session_name}:#{window_name},}" |
 		awk -F "$TAB" -v OFS="$TAB" '

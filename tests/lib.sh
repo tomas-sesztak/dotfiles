@@ -103,3 +103,24 @@ start_tmux() {
 	}
 	export TMUX="$TMUX_SOCK,0,0"
 }
+
+# attach_client: attaches a client on a pty (needed for key bindings and popups), prints its name
+attach_client() {
+	# shellcheck disable=SC2016
+	python3 -I -c '
+import os, sys
+pid, fd = os.forkpty()
+if pid == 0:
+    os.environ["TERM"] = "xterm-256color"
+    os.execvp(sys.argv[1], sys.argv[1:])
+while True:
+    try: os.read(fd, 65536)
+    except OSError: break
+' tmux -S "$TMUX_SOCK" attach -t test >/dev/null 2>&1 &
+	local _
+	for _ in {1..50}; do
+		tmux list-clients -F '#{client_name}' | grep . && return 0
+		sleep 0.1
+	done
+	return 1
+}

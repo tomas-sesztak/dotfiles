@@ -136,6 +136,33 @@ switcher "1|w-esc" "130|"
 switcher "1|"
 assert_eq "switcher cancel creates nothing" "$count" "$(window_count)"
 
+# popup bindings must not run a crafted cwd or client name as shell code
+EVIL="$SANDBOX/ev\$(touch pwned)'\"il"
+mkdir -p "$EVIL/cur"
+tmux set-environment -g PATH "$SANDBOX/bin:$PATH"
+tmux set-environment -g FZF_REPLIES "$FZF_REPLIES"
+tmux set-environment -g FZF_CALLS "$FZF_CALLS"
+tmux new-window -n evil -c "$EVIL/cur"
+client=$(attach_client) || fail "pty client failed to attach"
+popup_done() {
+	[[ -z "$(tmux list-clients -F '#{?popup_active,1,}')" ]] && [[ -e "$FZF_CALLS" ]]
+}
+printf '%s\n' "1|w-evil" "0||." >"$FZF_REPLIES"
+rm -f "$FZF_CALLS"
+tmux send-keys -K -c "$client" "$(tmux show -gv prefix)" w
+wait_for "w-evil window opens" has_window w-evil
+assert_eq "switcher popup gets the pane's dir" "$EVIL" "$(window_dir w-evil)"
+target=$(tmux display -p -t test:evil '#{pane_id}')
+printf '%s\n' "0|$target" >"$FZF_REPLIES"
+rm -f "$FZF_CALLS"
+tmux send-keys -K -c "$client" "$(tmux show -gv prefix)" a
+wait_for "agent picker popup ran" popup_done
+client_on_target() {
+	[[ "$(tmux display -p -c "$client" '#{pane_id}')" == "$target" ]]
+}
+wait_for "agent picker switches the client" client_on_target
+assert_eq "crafted names run no code" "" "$(find "$SANDBOX" -name pwned)"
+
 mkdir -p "$REPO"
 git -C "$REPO" init -q -b main
 git -C "$REPO" commit -q --allow-empty -m init

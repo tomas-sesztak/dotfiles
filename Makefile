@@ -34,5 +34,5 @@ unit:
 	$(call run_tests,guard sanitize hooks brew update-check zsh-plugins)
 
 integration:
-	$(call require,bash zsh git jq stow tmux nvim vim)
+	$(call require,bash zsh git jq stow tmux nvim vim python3)
 	$(call run_tests,setup-script tmux editors)
