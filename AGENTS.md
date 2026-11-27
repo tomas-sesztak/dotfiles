@@ -14,6 +14,7 @@
 - don't read color themes unless instructed to
 - git: branch from fresh `develop` (not main); open PRs with `gh pr create --base develop`
 - `develop` → `main` promotion is done by the user only
+- `develop` is permanent: never delete it (local or remote), incl. after a develop → main merge (`gh pr merge` without `--delete-branch`)
 - every merge to `main` is a release: annotated tag `vMAJOR.MINOR.PATCH` (SemVer) on the merge commit; MAJOR = breaking (removed/renamed hotkeys, changes needing manual steps), MINOR = features, PATCH = fixes
 
 ## Current State
