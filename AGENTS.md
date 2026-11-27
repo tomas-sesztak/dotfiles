@@ -15,7 +15,7 @@
 - git: branch from fresh `develop` (not main); open PRs with `gh pr create --base develop`
 - `develop` → `main` promotion is done by the user only
 - `develop` is permanent: never delete it (local or remote), incl. after a develop → main merge (`gh pr merge` without `--delete-branch`)
-- every merge to `main` is a release: annotated tag `vMAJOR.MINOR.PATCH` (SemVer) on the `develop` commit being released (before merging to `main`), so both branches have it; MAJOR = breaking (removed/renamed hotkeys, changes needing manual steps), MINOR = features, PATCH = fixes
+- every merge to `main` is a release: annotated tag `vMAJOR.MINOR.PATCH` (SemVer) on the merge commit; MAJOR = breaking (removed/renamed hotkeys, changes needing manual steps), MINOR = features, PATCH = fixes
 
 ## Current State
 - `setup.sh [deploy|undeploy] [--no-claude]`: auto-discovers each top-level dir under `stow_modules/` as a Stow package and runs `stow -R`/`stow -D` against `$HOME`; `--no-claude` skips `claude/`. Stow ignores `AGENTS.md` so per-package docs aren't deployed.
