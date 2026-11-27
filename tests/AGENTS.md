@@ -11,7 +11,7 @@ Local only (no git hooks or test CI); run via `make` (`lint`, `unit`, `integrati
 - `zsh-plugins.sh` (unit) — native autosuggestions/syntax highlighting, driven in an interactive zsh via `zsh/zpty`.
 - `setup-script.sh` (integration) — `setup.sh` deploy/undeploy, source lines, `--no-claude`, conflicts.
 - `tmux.sh` (integration) — tmux config and agent scripts on an isolated server, including popup bindings with a crafted cwd.
-- `editors.sh` (integration) — nvim and vim start without errors.
+- `editors.sh` (integration) — nvim and vim start without errors; nvim buffer picker with crafted names, via a stub `fzf`.
 
 ## Decisions
 - Tests never touch the real setup: temp `HOME`, unset `TMUX`/`HERDR_*`/`GIT_DIR`, isolated git config.

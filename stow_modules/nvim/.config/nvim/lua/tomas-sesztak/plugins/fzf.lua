@@ -90,15 +90,22 @@ function M.run(mode)
 end
 
 function M.fzf_buffer_picker()
-  -- Get the list of buffers and join them with newlines
-  local bufs = vim.fn.getcompletion('', 'buffer')
-  if #bufs == 0 then return end
-  local input_data = table.concat(bufs, "\n")
+  local lines = {}
+  for _, b in ipairs(vim.api.nvim_list_bufs()) do
+    local name = vim.api.nvim_buf_get_name(b)
+    if vim.bo[b].buflisted and name ~= "" then
+      table.insert(lines, b .. "\t" .. vim.fn.fnamemodify(name, ":~:."))
+    end
+  end
+  if #lines == 0 then return end
 
-  -- Floating Window UI Logic
+  local input, output = vim.fn.tempname(), vim.fn.tempname()
+  vim.fn.writefile(lines, input)
+
   local width = math.ceil(vim.o.columns * 0.8)
   local height = math.ceil(vim.o.lines * 0.8)
-  local win_opts = {
+  local buf = vim.api.nvim_create_buf(false, true)
+  local win = vim.api.nvim_open_win(buf, true, {
     relative = "editor",
     width = width,
     height = height,
@@ -106,36 +113,25 @@ function M.fzf_buffer_picker()
     col = math.ceil((vim.o.columns - width) / 2),
     style = "minimal",
     border = "rounded"
-  }
+  })
 
-  local buf = vim.api.nvim_create_buf(false, true)
-  local win = vim.api.nvim_open_win(buf, true, win_opts)
-
-  -- Launch fzf
-  local fzf_cmd = string.format("printf '%s' | fzf --reverse --cycle --preview 'less {}'", input_data)
-
-  vim.fn.jobstart(fzf_cmd, {
+  -- buffer names reach fzf only via files, never the shell string
+  vim.fn.jobstart({
+    "sh", "-c",
+    [[fzf --reverse --cycle --delimiter '\t' --with-nth 2 --preview 'less {2}' <"$1" >"$2"]],
+    "_", input, output,
+  }, {
     term = true,
     on_exit = function(_, exit_code)
-      if exit_code == 0 then
-        -- Grab the last line (the selection) from the terminal buffer
-        local lines = vim.api.nvim_buf_get_lines(buf, 0, -1, false)
-        local selection = nil
-
-        for i = #lines, 1, -1 do
-          if lines[i] ~= "" then
-            selection = lines[i]:gsub("%s+$", "") -- Clean trailing whitespace
-            break
-          end
-        end
-
+      if vim.api.nvim_win_is_valid(win) then
         vim.api.nvim_win_close(win, true)
-        if selection and selection ~= "" then
-          vim.cmd("buffer " .. selection)
-        end
-      else
-        -- If user hits ESC or C-c
-        vim.api.nvim_win_close(win, true)
+      end
+      local picked = exit_code == 0 and vim.fn.readfile(output)[1]
+      os.remove(input)
+      os.remove(output)
+      local target = picked and tonumber(picked:match("^(%d+)\t"))
+      if target and vim.api.nvim_buf_is_valid(target) then
+        vim.api.nvim_set_current_buf(target)
       end
     end
   })
