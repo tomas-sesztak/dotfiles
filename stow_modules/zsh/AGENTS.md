@@ -6,7 +6,7 @@ Deploys `.config/zsh/functions` and `.config/zsh/completions` → `~/.config/zsh
 - `functions/late/syntax.zsh` — native minimal syntax highlighting (commands green/red, strings, comments, separators), sourced last.
 - `functions/autosuggestions.zsh` — native history autosuggestions (grey ghost text; →/End/`^E` accept).
 - `functions/options.zsh` — global env exports (`EDITOR`, `HELM_REPOSITORY_CONFIG`).
-- `functions/{alias,fzf,history,path,prompt,oc,weather}.zsh` — shell config and small functions.
+- `functions/{alias,fzf,history,prompt,oc,weather}.zsh` — shell config and small functions.
 - `functions/vi-mode.zsh` — vi line editing; sets tmux pane option `@vimode` via ZLE hooks.
 - `functions/brew.zsh` — `brew_update` (see `homebrew/AGENTS.md`).
 - `functions/completions.zsh` — `generate_completions()`.
