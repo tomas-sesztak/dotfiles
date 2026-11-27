@@ -8,6 +8,7 @@ Local only (no git hooks or test CI); run via `make` (`lint`, `unit`, `integrati
 - `hooks.sh` (unit) — claude/copilot tmux agent-state hooks.
 - `brew.sh` (unit) — `brew_update` step order and failure handling, via a stub `brew`.
 - `update-check.sh` (unit) — tmux `dotfiles-update-check` fetch throttling and behind count, via a local bare remote.
+- `version.sh` (unit) — tmux `dotfiles-version` output on/past/without a tag.
 - `zsh-plugins.sh` (unit) — native autosuggestions/syntax highlighting, driven in an interactive zsh via `zsh/zpty`.
 - `setup-script.sh` (integration) — `setup.sh` deploy/undeploy, source lines, `--no-claude`, conflicts.
 - `tmux.sh` (integration) — tmux config and agent scripts on an isolated server, including popup bindings with a crafted cwd.

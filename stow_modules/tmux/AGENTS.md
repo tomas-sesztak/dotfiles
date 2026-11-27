@@ -10,6 +10,7 @@ Deploys `.tmux/` → `~/.tmux` (whole dir stowed, fully tracked, no runtime stat
 - `scripts/agent-picker [client]` — `<prefix>+a` fzf agent picker.
 - `scripts/window-switcher [dir]` — `<prefix>+w` fzf window switcher; creates a window on no match.
 - `scripts/dotfiles-update-check` — `status-right` segment: red `⬇ dotfiles N` block when local `main` is behind `origin/main`.
+- `scripts/dotfiles-version` — `status-right` segment between update alert and clock: `git describe --tags` of the checkout, clock style.
 
 ## Decisions
 - `~/.tmux.conf` is user-owned, not tracked; `setup.sh deploy` appends a `source-file <repo>/…/.tmux/tmux.conf` line if missing and replaces a stale stowed `~/.tmux.conf` symlink.
