@@ -63,6 +63,7 @@ assert_contains "core binding" "resize-pane -Z" "$keys"
 assert_contains "picker binding" "agent-picker" "$keys"
 assert_contains "vim-integration binding" "select-pane -L" "$keys"
 assert_eq "pane border option" double "$(tmux show-options -gv pane-border-lines)"
+assert_contains "status-right: update, version, clock" "dotfiles-update-check)#(~/.tmux/scripts/dotfiles-version)%H:%M" "$(tmux show-options -gv status-right)"
 
 pane=$(tmux display -p -t test '#{pane_id}')
 report="$HOME/.tmux/scripts/agent-report"
