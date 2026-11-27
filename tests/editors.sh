@@ -21,6 +21,24 @@ assert_contains "nvim loads core" "core=true" "$output"
 assert_contains "nvim loads plugins" "plugins=true" "$output"
 assert_no_errors nvim "$output"
 
+# buffer picker: crafted buffer names must not reach a shell or Ex command line
+mkdir -p "$SANDBOX/bin"
+cat >"$SANDBOX/bin/fzf" <<'STUB'
+#!/usr/bin/env bash
+grep -F pick
+STUB
+chmod +x "$SANDBOX/bin/fzf"
+# shellcheck disable=SC2016
+output=$(PATH="$SANDBOX/bin:$PATH" limited nvim --headless \
+	+'lua for _, n in ipairs({"x'"'"'$(touch pwned)'"'"'", "pick | echo exec"}) do vim.cmd.badd(vim.fn.fnameescape(n)) end' \
+	+'lua require("tomas-sesztak.plugins.fzf").fzf_buffer_picker()' \
+	+'lua vim.wait(3000, function() return vim.fn.bufname():find("pick") ~= nil end)' \
+	+'lua print("picked=" .. vim.fn.bufname())' \
+	+qa! 2>&1)
+assert_contains "buffer picker switches buffer" "picked=pick | echo exec" "$output"
+assert_eq "buffer picker runs no shell code" "" "$(find "$SANDBOX" -name pwned)"
+assert_no_errors "buffer picker" "$output"
+
 log="$SANDBOX/vim.log"
 limited vim -u NONE -N -es \
 	-c "redir! > $log" \
