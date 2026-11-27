@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# tmux #() segment: nearest tag of the dotfiles checkout
+repo="${DOTFILES_REPO:-$(git -C "$(dirname -- "$(readlink -f -- "$0")")" rev-parse --show-toplevel 2>/dev/null)}"
+[[ -n "$repo" ]] || exit 0
+ver=$(git -C "$repo" describe --tags 2>/dev/null) || exit 0
+printf '%s ' "$ver"
