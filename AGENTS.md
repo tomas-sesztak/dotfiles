@@ -12,6 +12,9 @@
 - test every change, note tools used
 - always run `make` before a commit
 - don't read color themes unless instructed to
+- git: branch from fresh `develop` (not main); open PRs with `gh pr create --base develop`
+- `develop` → `main` promotion is done by the user only
+- every merge to `main` is a release: annotated tag `vMAJOR.MINOR.PATCH` (SemVer) on the merge commit; MAJOR = breaking (removed/renamed hotkeys, changes needing manual steps), MINOR = features, PATCH = fixes
 
 ## Current State
 - `setup.sh [deploy|undeploy] [--no-claude]`: auto-discovers each top-level dir under `stow_modules/` as a Stow package and runs `stow -R`/`stow -D` against `$HOME`; `--no-claude` skips `claude/`. Stow ignores `AGENTS.md` so per-package docs aren't deployed.
