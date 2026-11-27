@@ -1,5 +1,5 @@
 # claude package
-Deploys `.claude/` → `~/.claude` (whole dir stowed).
+Deploys `.claude/` → `~/.claude`; `~/.claude` stays a real dir (runtime state), each tracked entry is linked individually.
 
 ## Files
 - `CLAUDE.md` — global Claude Code instructions.
@@ -13,6 +13,7 @@ Deploys `.claude/` → `~/.claude` (whole dir stowed).
 ## Decisions
 - `~/.claude` holds real runtime/secret state; root `.gitignore` ignores `stow_modules/claude/.claude/**` and `!`-negates tracked files (nested files need their dir negated too).
 - `hooks/herdr-agent-state.sh` comes from `herdr integration install claude`; reinstalling overwrites it, tracked for reproducibility.
+- `skills/synced/` is created at runtime by Claude Code skill sync (lands in the repo via the `skills` link); ignored, not tracked.
 - `setup.sh --no-claude` exists so testing other packages doesn't unlink `~/.claude` mid-session.
 
 ## Tests
