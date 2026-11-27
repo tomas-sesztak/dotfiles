@@ -15,5 +15,5 @@ if [[ -z "$(find "$stamp" -mmin -60 2>/dev/null)" ]]; then
 fi
 
 behind=$(git -C "$repo" rev-list --count main..origin/main 2>/dev/null) || exit 0
-((behind > 0)) && printf '#[fg=#e0af68]⬇ dotfiles %s#[default] ' "$behind"
+((behind > 0)) && printf '#[fg=#1a1b26 bg=#f7768e bold] ⬇ dotfiles %s #[default] ' "$behind"
 exit 0
